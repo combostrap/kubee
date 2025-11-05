@@ -41,6 +41,17 @@ a third-party vendor.
 BYOC, the Next Evolution of SaaS
 https://thenewstack.io/saas-is-broken-why-bring-your-own-cloud-byoc-is-the-future/
 
+## Rendered manifest pattern 
+
+We implement the rendered manifest pattern to decouple 
+how we write the config (helm or other) 
+from how we deploy it.
+
+By doing so, you can:
+* automatically generate a new set of yaml for CI integration at every change in the cluster config 
+* deploy the "rendered manifest" into the cluster manually or automatically 
+
+
 ## App examples
 
 * `Admin Dashboard` with [Kubernetes Dashboard](./charts/kubernetes-dashboard)
