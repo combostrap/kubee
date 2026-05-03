@@ -109,7 +109,8 @@ That's why:
 * the unit of execution is one sub-chart by umbrella chart
 * `kubee-cluster` is a common sub-chart of all umbrella chart
 
-## Dev: Cross dependency
+## Dev
+### Dev: Cross dependency
 
 Cross Dependency are only used to share values.
 
@@ -127,7 +128,7 @@ When developing a Chart, you should:
 * Install them locally
 
 ```bash
-kubee helmet update-dependency chart-name
+kubee helmet update-dependencies -f chart-name
 # or
 task dep
 ```
@@ -136,6 +137,26 @@ Example: The chart `kubee-dex` depends on the `kubee-oauth2-proxy` that depends 
 creating a recursion.
 
 To avoid this recursion, we delete all dependency in the `charts/dep/Chart.yaml` file
+
+### Dev Command (tpl, dep, lint, ...)
+
+```bash
+# Generate the template
+task tpl
+# Install the dependencies chart
+task dep
+task dep-force
+# Generate the values.schema.json
+task schema
+# Generate the readme from README.md.gotmpl
+task helm-docs
+```
+* Lint
+```bash
+helm lint .
+# check the link
+task docs-lint
+```
 
 ## FAQ
 

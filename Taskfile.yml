@@ -22,7 +22,7 @@ tasks:
   # recreate the /charts directory
   dep:
     cmds:
-      - kubee helmet update-dependencies -f $(basename {{.USER_WORKING_DIR}})
+      - kubee helmet update-dependencies $(basename {{.USER_WORKING_DIR}})
   # recreate the /charts directory
   dep-force:
     cmds:

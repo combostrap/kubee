@@ -1,0 +1,57 @@
+# @schema
+# title: Enabled
+# type: boolean
+# required: true
+# default: false
+# @schema
+# -- Boolean to indicate that this chart is or will be installed in the cluster
+enabled: false
+
+# @schema
+# const: hetzner-csi
+# @schema
+# @ignored The name of the app (known also as label)
+# Used as app name in label
+name: 'hetzner-csi'
+
+
+# @schema
+# title: Namespace
+# description: The installation namespace
+# required: true
+# minLength: 1
+# @schema
+# -- The installation namespace, kube system to indicate that it has a higher priority
+namespace: 'kube-system'
+
+
+# @schema
+# title: Hetzner Cloud Token
+# description: The hetzner cloud token
+# required: true
+# minLength: 1
+# @schema
+# -- The hetzner cloud token
+# use for the communication with the Hetzner API
+hcloud_token: ''
+
+# Hetzner CSI Chart Values
+# https://github.com/hetznercloud/csi-driver/blob/main/chart/values.yaml
+# https://github.com/hetznercloud/csi-driver/blob/main/chart/example-prod-values.yaml
+# Update the dependencies to get assistance
+# -- @ignored
+hcloud_csi:
+  controller:
+    hcloudToken:
+      existingSecret:
+        name: hcloud
+        key: token
+
+# -- @ignored Internal Kubee constant
+kubee_internal:
+  # @schema
+  # const: false
+  # @schema
+  # Constant used to not output template from kubee cross dependency in Chart.yaml
+  # Don't change, don't touch
+  install_cross_dependency: false

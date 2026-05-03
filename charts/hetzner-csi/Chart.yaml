@@ -1,0 +1,40 @@
+apiVersion: v2
+name: kubee-hetzner-csi
+description: Kubee Hetzner CSI Chart
+
+# A chart can be either an 'application' or a 'library' chart.
+#
+# Application because you can't use the template function with a library type
+type: application
+
+# This is the chart version. This version number should be incremented each time you make changes
+# to the chart and its templates, including the app version.
+# Versions are expected to follow Semantic Versioning (https://semver.org/)
+version: 0.0.1 # The version of the chart (doesn't matter and can stay the same)
+
+# This is the version number of the application being deployed. This version number should be
+# incremented each time you make changes to the application. Versions are not expected to
+# follow Semantic Versioning. They should reflect the version the application is using.
+# It is recommended to use it with quotes.
+appVersion: "0.0.1" # The version of the app packaged
+
+annotations:
+  app.kubernetes.io/name: "hetzner-csi"
+  chart.kubee/status: "beta"
+  chart.kubee/kind: "cluster"
+  chart.kubee/category: "system"
+  chart.kubee/engines: |
+    - helm
+
+dependencies:
+  - name: hcloud-csi
+    # https://github.com/hetznercloud/csi-driver/blob/main/docs/kubernetes/versioning-policy.md
+    # https://github.com/hetznercloud/csi-driver/releases
+    version: "2.20.2"
+    alias: hcloud_csi
+    repository: "https://charts.hetzner.cloud"
+    #condition: xxx.enabled
+  - name: kubee-cluster # kubee-manifest-labels function is in it
+    version: 0.0.1
+    repository: file://../cluster
+    alias: cluster
