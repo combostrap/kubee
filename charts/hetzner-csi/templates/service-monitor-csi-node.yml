@@ -1,0 +1,16 @@
+#  https://github.com/hetznercloud/csi-driver/blob/main/docs/monitoring.md#prometheus-operator-servicemonitor
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: hcloud-csi-node
+  namespace: kube-system
+  labels:
+    release: YOUR_RELEASE
+spec:
+  endpoints:
+    - port: metrics
+      scheme: http
+  jobLabel: app
+  selector:
+    matchLabels:
+      app: hcloud-csi

@@ -1,0 +1,23 @@
+# Hetzner CSI Driver
+
+## Node Configurations and Limitations
+
+The CSI
+plugin [doesn't work on Root Server](https://github.com/hetznercloud/csi-driver/blob/main/docs/kubernetes/integration-with-root-servers.md)
+(ie the server should be provided by cloud, not by robot)
+
+You may need to tag them so that no volume is added to them.
+
+```bash
+kubectl label nodes <node name> instance.hetzner.cloud/provided-by=robot
+```
+
+## Command
+
+### Import a existing volume into CSI
+
+https://github.com/hetznercloud/csi-driver/blob/main/docs/kubernetes/how-to-import-volumes.md
+
+## Ref / Docs (Upgrading, Version Policy, Monitoring)
+
+https://github.com/hetznercloud/csi-driver/tree/main/docs/kubernetes

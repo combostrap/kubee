@@ -14,7 +14,7 @@ FILES=(
   "components/kube-rbac-proxy.libsonnet"
   "components/alertmanager.libsonnet" # needed only for variable reference
   "versions.json"
-  # Custom Mixin (ie general rules, particularly targetdown)
+  # Custom Mixin (ie general rules, particularly target down)
   # https://runbooks.prometheus-operator.dev/runbooks/general/
   "components/mixin/custom.libsonnet"
   "components/mixin/alerts/alerts.libsonnet"
