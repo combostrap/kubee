@@ -35,5 +35,5 @@ annotations:
 dependencies:
   - name: kubee-cluster
     version: 0.0.1
-    #repository: file://../kubee
+    repository: file://../cluster
     alias: cluster

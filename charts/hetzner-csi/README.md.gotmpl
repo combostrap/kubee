@@ -3,8 +3,11 @@
 
 This {{ template "kubee-app-chart-label" "Kubee App Chart"}} installs
 the [Hetzner Csi-driver Helm Chart](https://github.com/hetznercloud/csi-driver/tree/main/chart)
+so that you can create external volumes.
 
 {{ template "kubee-installation-instruction" . }}
+
+The `hcloud_token` is mandatory.
 
 {{ template "chart.valuesSection" . }}
 
@@ -22,9 +25,9 @@ kubectl label nodes <node name> instance.hetzner.cloud/provided-by=robot
 
 ## Command
 
-### Import an existing volume into CSI
+### Migration: import an existing volume into CSI
 
-https://github.com/hetznercloud/csi-driver/blob/main/docs/kubernetes/how-to-import-volumes.md
+See [how-to-import-volumes](https://github.com/hetznercloud/csi-driver/blob/main/docs/kubernetes/how-to-import-volumes.md)
 
 ## Ref / Docs (Upgrading, Version Policy, Monitoring)
 

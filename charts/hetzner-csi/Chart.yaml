@@ -30,6 +30,7 @@ dependencies:
   - name: hcloud-csi
     # https://github.com/hetznercloud/csi-driver/blob/main/docs/kubernetes/versioning-policy.md
     # https://github.com/hetznercloud/csi-driver/releases
+    # https://charts.hetzner.cloud/index.yaml
     version: "2.20.2"
     alias: hcloud_csi
     repository: "https://charts.hetzner.cloud"

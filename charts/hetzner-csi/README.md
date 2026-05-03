@@ -8,6 +8,7 @@
 
 This [Kubee App Chart](https://kubee.bytle.net/helmet/app-chart) installs
 the [Hetzner Csi-driver Helm Chart](https://github.com/hetznercloud/csi-driver/tree/main/chart)
+so that you can create external volumes.
 
 ## Installation
 
@@ -15,10 +16,13 @@ the [Hetzner Csi-driver Helm Chart](https://github.com/hetznercloud/csi-driver/t
 kubee --cluster cluster-name helmet play hetzner-csi
 ```
 
+The `hcloud_token` is mandatory.
+
 ## Values
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| default_location | string | `"nbg1"` | The hetzner volume [default location](https://github.com/hetznercloud/csi-driver/blob/main/docs/kubernetes/getting-started.md#volume-location) |
 | enabled | bool | `false` | Boolean to indicate that this chart is or will be installed in the cluster |
 | hcloud_token | string | `""` | The hetzner cloud token use for the communication with the Hetzner API |
 | namespace | string | `"kube-system"` | The installation namespace, kube system to indicate that it has a higher priority |
@@ -37,9 +41,9 @@ kubectl label nodes <node name> instance.hetzner.cloud/provided-by=robot
 
 ## Command
 
-### Import an existing volume into CSI
+### Migration: import of existing volume into CSI
 
-https://github.com/hetznercloud/csi-driver/blob/main/docs/kubernetes/how-to-import-volumes.md
+See [how-to-import-volumes](https://github.com/hetznercloud/csi-driver/blob/main/docs/kubernetes/how-to-import-volumes.md)
 
 ## Ref / Docs (Upgrading, Version Policy, Monitoring)
 

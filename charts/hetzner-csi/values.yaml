@@ -35,17 +35,98 @@ namespace: 'kube-system'
 # use for the communication with the Hetzner API
 hcloud_token: ''
 
+# @schema
+# title: Hetzner Default Location of Volume creation
+# description: The data center where the volumes are created
+# required: true
+# minLength: 1
+# @schema
+# -- The hetzner volume [default location](https://github.com/hetznercloud/csi-driver/blob/main/docs/kubernetes/getting-started.md#volume-location)
+default_location: &default_location 'nbg1'
+
 # Hetzner CSI Chart Values
 # https://github.com/hetznercloud/csi-driver/blob/main/chart/values.yaml
-# https://github.com/hetznercloud/csi-driver/blob/main/chart/example-prod-values.yaml
+# The values comes from https://github.com/hetznercloud/csi-driver/blob/main/chart/example-prod-values.yaml
 # Update the dependencies to get assistance
 # -- @ignored
 hcloud_csi:
+  # mandatory otherwise the name is the alias (ie hcloud_csi) which contains an underscore which is not permitted by k8s in name (and the chart use that as name)
+  fullnameOverride: "hetzner-csi"
   controller:
     hcloudToken:
       existingSecret:
         name: hcloud
         key: token
+    replicaCount: 1
+    hcloudVolumeDefaultLocation: *default_location
+    priorityClassName: "system-cluster-critical"
+    resources:
+      csiAttacher:
+        limits:
+          memory: 80Mi
+        requests:
+          memory: 20Mi
+      csiResizer:
+        limits:
+          memory: 80Mi
+        requests:
+          memory: 20Mi
+      csiProvisioner:
+        limits:
+          memory: 80Mi
+        requests:
+          memory: 20Mi
+      livenessProbe:
+        limits:
+          memory: 80Mi
+        requests:
+          memory: 20Mi
+      hcloudCSIDriver:
+        limits:
+          memory: 80Mi
+        requests:
+          memory: 40Mi
+    affinity:
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+                - key: csi-hcloud
+                  operator: In
+                  values:
+                    - controller
+            topologyKey: "kubernetes.io/hostname"
+
+  node:
+    priorityClassName: "system-node-critical"
+    resources:
+      csiNodeDriverRegistrar:
+        limits:
+          memory: 40Mi
+        requests:
+          memory: 20Mi
+      livenessProbe:
+        limits:
+          memory: 40Mi
+        requests:
+          memory: 20Mi
+      hcloudCSIDriver:
+        limits:
+          memory: 80Mi
+        requests:
+          memory: 40Mi
+    hostNetwork: true
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: "node-role.kubernetes.io/control-plane"
+                  operator: NotIn
+                  values:
+                    - ""
+  metrics:
+    enabled: true
 
 # -- @ignored Internal Kubee constant
 kubee_internal:
