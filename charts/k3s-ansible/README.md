@@ -14,7 +14,8 @@ with the [official k3s-ansible playbooks](https://github.com/k3s-io/k3s-ansible)
 
 ### Automatic OIDC Configuration
 
-If [dex](../dex/README.md) is enabled, it is configured as [OIDC issuer](https://kubernetes.io/docs/reference/access-authn-authz/authentication/#openid-connect-tokens)
+If [dex](../dex/README.md) is enabled, it is configured
+as [OIDC issuer](https://kubernetes.io/docs/reference/access-authn-authz/authentication/#openid-connect-tokens)
 
 ie in the [template](#template), the following arguments are added:
 ```yaml
@@ -40,15 +41,25 @@ kubee --cluster clusterName helmet template k3s-ansible
 
 The `play` command deploys Kubernetes on the cluster hosts (Repeatable install and configuration)
 
+> [!WARNING] Take
+a [backup](../../website/src/content/docs/runbooks/k3s-upgrade.md#take-a-backup-of-your-cluster-datastore)
+
 ```bash
+kubee --cluster clusterName helmet play k3s-ansible
+# or
 kubee --cluster clusterName --cluster-chart k3s-ansible cluster play
 ```
-Play will execute the [site playbook](https://github.com/gerardnico/ansible-e-base-collection/blob/main/playbooks/kubee_site.yml)
+Play will execute
+the [site playbook](https://github.com/gerardnico/ansible-e-base-collection/blob/main/playbooks/kubee_site.yml)
 
 ### Upgrade
 
+> [!WARNING] Take
+a [backup](../../website/src/content/docs/runbooks/k3s-upgrade.md#take-a-backup-of-your-cluster-datastore)
+
 * [Choose the next minor version](../../website/src/content/docs/runbooks/k3s-upgrade.md)
-* Change it in your [cluster file](../../website/src/content/docs/cluster/cluster-values.md) in the [version value](values.yaml)
+* Change it in your [cluster file](../../website/src/content/docs/cluster/cluster-values.md) in
+  the [version value](values.yaml)
 * Run:
 ```bash
 kubee --cluster clusterName --cluster-chart k3s-ansible cluster upgrade
@@ -72,7 +83,8 @@ Restart k3s
 kubee --cluster clusterName --cluster-chart k3s-ansible cluster restart
 ```
 
-It will execute the [restart playbook](https://github.com/gerardnico/ansible-e-base-collection/blob/main/playbooks/kubee_restart.yml)
+It will execute
+the [restart playbook](https://github.com/gerardnico/ansible-e-base-collection/blob/main/playbooks/kubee_restart.yml)
 
 ### Rotate certs
 
@@ -81,7 +93,8 @@ It will execute the [restart playbook](https://github.com/gerardnico/ansible-e-b
 kubee --cluster clusterName --cluster-chart k3s-ansible cluster rotate-certs
 ```
 
-It will execute the [rotate-certs playbook](https://github.com/gerardnico/ansible-e-base-collection/blob/main/playbooks/kubee_rotate_certs.yml)
+It will execute
+the [rotate-certs playbook](https://github.com/gerardnico/ansible-e-base-collection/blob/main/playbooks/kubee_rotate_certs.yml)
 
 This action is normally not needed as `k3s` will automatically rotate certs at restart but as always
 there was a [change](https://github.com/k3s-io/k3s/discussions/10024#discussioncomment-12073740).
@@ -102,7 +115,7 @@ Reboot will execute the [reboot playbook](https://github.com/k3s-io/k3s-ansible/
 | hosts.all.admin_user | object | `{"public_key":"","username":""}` | [Optional] - An extra admin user added to the Host OS. (ie in the wheel group, used when ssh was hardened by banning root connection). The name and public key should not be empty. |
 | hosts.all.connection | object | `{"type":"ssh","username":"root"}` | Connection |
 | hosts.all.upgrade_cron | string | `"0 2 * * 0"` | [Optional] - Upgrade cron. A cron expression to schedule the upgrade of the os |
-| hosts.servers | list | `[]` | The Servers (Mandatory) The number of hosts server must be odd to avoid split brain issues with etcd The minimum number is: - 1 for a single server cluster - 3 for a [high availability cluster](https://docs.k3s.io/datastore/ha-embedded) |
+| hosts.servers | list | `[]` | The Servers and their properties (Mandatory) The number of hosts server must be odd to avoid split brain issues with etcd The minimum number is: - 1 for a single server cluster - 3 for a [high availability cluster](https://docs.k3s.io/datastore/ha-embedded) |
 | restart_cron | string | `"0 11 * * *"` | A cron expression to schedule a k3s restart A restart is mandatory as k3s performs database operation at startup such as compaction. Restarting k3s does not stop the containers, the apps are still working |
 | server_args | list | `[]` | The [k3s Server Args](https://docs.k3s.io/cli/server) Example: `--kube-apiserver-arg="admission-control-config-file=/var/lib/rancher/k3s/server/psa.yaml"` |
 | token | string | `""` | The [k3s Token](https://docs.k3s.io/cli/token) (Mandatory). A random secret value that should not change ever because it's used to encrypt the data on disk. You can generate one with `openssl rand -base64 64 | tr -d '\n'`) |

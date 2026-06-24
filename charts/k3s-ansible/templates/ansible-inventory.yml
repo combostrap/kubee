@@ -22,6 +22,15 @@ k3s_cluster:
             {{- /* Note: You can run K3s with the --node-name flag or K3S_NODE_NAME environment variable */}}
             {{- /* and this will pass the node name to resolve this issue. */}}
             kubee_os_hostname: "{{$server.fqdn}}"
+
+            {{- if and $server.inotify_max_user_watches (ne $server.inotify_max_user_watches "") }}
+            # The fs.inotify.max_user_watches limit
+            kubee_inotify_max_user_watches: {{ $server.inotify_max_user_watches }}
+            {{- end }}
+            {{- if and $server.inotify_max_user_instances (ne $server.inotify_max_user_instances "") }}
+            # The fs.inotify.max_user_instances limit
+            kubee_inotify_max_user_instances: {{ $server.inotify_max_user_instances }}
+            {{- end }}
         {{- end }}
 
     # No agent yet

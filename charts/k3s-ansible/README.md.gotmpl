@@ -1,4 +1,3 @@
-
 {{ template "kubee-header" .}}
 
 This {{ template "kubee-chart-label" "Kubee chart" }} is a {{ template "kubee-cluster-chart-label" "cluster chart" }}
@@ -9,7 +8,8 @@ with the [official k3s-ansible playbooks](https://github.com/k3s-io/k3s-ansible)
 
 ### Automatic OIDC Configuration
 
-If [dex](../dex/README.md) is enabled, it is configured as [OIDC issuer](https://kubernetes.io/docs/reference/access-authn-authz/authentication/#openid-connect-tokens)
+If [dex](../dex/README.md) is enabled, it is configured
+as [OIDC issuer](https://kubernetes.io/docs/reference/access-authn-authz/authentication/#openid-connect-tokens)
 
 ie in the [template](#template), the following arguments are added:
 ```yaml
@@ -36,16 +36,27 @@ kubee --cluster clusterName helmet template k3s-ansible
 
 The `play` command deploys Kubernetes on the cluster hosts (Repeatable install and configuration)
 
+> [!WARNING] Take
+a [backup](../../website/src/content/docs/runbooks/k3s-upgrade.md#take-a-backup-of-your-cluster-datastore)
+
 ```bash
+kubee --cluster clusterName helmet play k3s-ansible
+# or
 kubee --cluster clusterName --cluster-chart k3s-ansible cluster play
 ```
-Play will execute the [site playbook](https://github.com/gerardnico/ansible-e-base-collection/blob/main/playbooks/kubee_site.yml)
+Play will execute
+the [site playbook](https://github.com/gerardnico/ansible-e-base-collection/blob/main/playbooks/kubee_site.yml)
 
 
 ### Upgrade
 
+> [!WARNING] Take
+a [backup](../../website/src/content/docs/runbooks/k3s-upgrade.md#take-a-backup-of-your-cluster-datastore)
+
+
 * [Choose the next minor version](../../website/src/content/docs/runbooks/k3s-upgrade.md)
-* Change it in your [cluster file](../../website/src/content/docs/cluster/cluster-values.md) in the [version value](values.yaml)
+* Change it in your [cluster file](../../website/src/content/docs/cluster/cluster-values.md) in
+  the [version value](values.yaml)
 * Run:
 ```bash
 kubee --cluster clusterName --cluster-chart k3s-ansible cluster upgrade
@@ -70,7 +81,8 @@ Restart k3s
 kubee --cluster clusterName --cluster-chart k3s-ansible cluster restart
 ```
 
-It will execute the [restart playbook](https://github.com/gerardnico/ansible-e-base-collection/blob/main/playbooks/kubee_restart.yml)
+It will execute
+the [restart playbook](https://github.com/gerardnico/ansible-e-base-collection/blob/main/playbooks/kubee_restart.yml)
 
 ### Rotate certs
 
@@ -79,7 +91,8 @@ It will execute the [restart playbook](https://github.com/gerardnico/ansible-e-b
 kubee --cluster clusterName --cluster-chart k3s-ansible cluster rotate-certs
 ```
 
-It will execute the [rotate-certs playbook](https://github.com/gerardnico/ansible-e-base-collection/blob/main/playbooks/kubee_rotate_certs.yml)
+It will execute
+the [rotate-certs playbook](https://github.com/gerardnico/ansible-e-base-collection/blob/main/playbooks/kubee_rotate_certs.yml)
 
 This action is normally not needed as `k3s` will automatically rotate certs at restart but as always
 there was a [change](https://github.com/k3s-io/k3s/discussions/10024#discussioncomment-12073740).

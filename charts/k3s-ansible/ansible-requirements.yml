@@ -3,10 +3,15 @@
 collections:
   - name: https://github.com/k3s-io/k3s-ansible.git
     type: git
-    version: 2a5a89a  # specify branch/tag/commit - Nov 12, 2024
+    version: 1.2.1  # specify branch/tag/commit - Nov 12, 2024
   # With just the collection name
   # At installation: 'ans_e.ans_e_base:1.0.0' is already installed, skipping.
   # name: ans_e.ans_e_base # for local development only
+  # - name: ans_e.ans_e_base # for local development only
   - name: https://github.com/gerardnico/ansible-e-base-collection
     type: git
-    version: 2b3b8db
+    version: ">=1.0.1"
+  # mandatory to set the fs.inotify.max_user_instances
+  # comes with ansible if installed with pip by default
+  - name: ansible.posix
+    version: ">=2.1.0"

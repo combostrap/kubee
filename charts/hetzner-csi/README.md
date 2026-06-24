@@ -51,3 +51,15 @@ See [how-to-import-volumes](https://github.com/hetznercloud/csi-driver/blob/main
 
 https://github.com/hetznercloud/csi-driver/tree/main/docs/kubernetes
 
+## How to
+
+### How to get the csi driver name
+
+```bash
+kubee kubectl get csidrivers
+```
+```yaml
+NAME                ATTACHREQUIRED   PODINFOONMOUNT   STORAGECAPACITY   TOKENREQUESTS   REQUIRESREPUBLISH   MODES        AGE
+csi.hetzner.cloud   true             true             false             <unset>         false               Persistent   52d
+```
+
