@@ -2,8 +2,10 @@
 
 
 This {{ template "kubee-app-chart-label" "Kubee App Chart"}} installs
-the [Hetzner Csi-driver Helm Chart](https://github.com/hetznercloud/csi-driver/tree/main/chart)
+* the [Hetzner Csi-driver Helm Chart](https://github.com/hetznercloud/csi-driver/tree/main/chart)
 so that you can create external volumes.
+* the [monitoring service monitor](https://github.com/hetznercloud/csi-driver/blob/main/docs/kubernetes/guides/monitoring.md)
+* the [grafana dashboard](https://github.com/hetznercloud/csi-driver/blob/main/docs/kubernetes/guides/monitoring.md#grafana-dashboard)
 
 {{ template "kubee-installation-instruction" . }}
 

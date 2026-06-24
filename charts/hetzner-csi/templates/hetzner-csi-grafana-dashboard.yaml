@@ -1,0 +1,36 @@
+{{- if eq .Values.grafana.enabled true }}
+{{- /* The uid can have a maximum length of 40 characters. */}}
+{{- $folderId := include "kubee-grafana-uid" "folder-hetzner" }}
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaFolder
+metadata:
+  name: {{ include "kubee-name" . }}
+  namespace: {{.Values.namespace}}
+  labels: {{ include "kubee-manifest-labels" . | nindent 4}}
+spec:
+  allowCrossNamespaceImport: true
+  instanceSelector:
+    matchLabels:
+      dashboards: "{{.Values.grafana.name}}"
+  title: 'Hetzner'
+  uid: {{ $folderId }}
+---
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  name: {{ include "kubee-name" . }}
+  namespace: {{.Values.namespace}}
+  labels: {{ include "kubee-manifest-labels" . | nindent 4}}
+spec:
+  allowCrossNamespaceImport: true
+  instanceSelector:
+    matchLabels:
+      dashboards: "{{.Values.grafana.name}}"
+  datasources:
+    - inputName: DS_PROMETHEUS
+      datasourceName: {{.Values.grafana.data_sources.prometheus.name}}
+  configMapRef:
+    name: '{{ include "kubee-name" . }}-grafana-config'
+    key: 'grafana-hetzner-csi.json'
+  folderUID: {{ $folderId }}
+{{- end}}

@@ -83,7 +83,7 @@ By doing so, you can:
 | [Grafana ](https://github.com/bytle/kubee/blob/main/charts/grafana/README.md) | [stable](https://kubee.bytle.net/helmet/helmet-chart#status) | app | monitoring  |
 | [Grafana Crds ](https://github.com/bytle/kubee/blob/main/charts/grafana-crds/README.md) | [stable](https://kubee.bytle.net/helmet/helmet-chart#status) | crds | monitoring  |
 | [Healthchecks ](https://github.com/bytle/kubee/blob/main/charts/healthchecks/README.md) | [stable](https://kubee.bytle.net/helmet/helmet-chart#status) | app | monitoring  |
-| [Hetzner CSI ](https://github.com/bytle/kubee/blob/main/charts/hetzner-csi/README.md) | [beta](https://kubee.bytle.net/helmet/helmet-chart#status) | cluster | system  |
+| [Hetzner CSI ](https://github.com/bytle/kubee/blob/main/charts/hetzner-csi/README.md) | [stable](https://kubee.bytle.net/helmet/helmet-chart#status) | cluster | system  |
 | [K3s-ansible Cluster ](https://github.com/bytle/kubee/blob/main/charts/k3s-ansible/README.md) | [beta](https://kubee.bytle.net/helmet/helmet-chart#status) | cluster | k3s  |
 | [Keycloak ](https://github.com/bytle/kubee/blob/main/charts/keycloak/README.md) | [alpha](https://kubee.bytle.net/helmet/helmet-chart#status) | app | auth  |
 | [Kuberhealthy ](https://github.com/bytle/kubee/blob/main/charts/kuberhealthy/README.md) | [stable](https://kubee.bytle.net/helmet/helmet-chart#status) | app | test  |

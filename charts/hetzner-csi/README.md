@@ -7,8 +7,10 @@
 # Kubee Hetzner CSI Chart
 
 This [Kubee App Chart](https://kubee.bytle.net/helmet/app-chart) installs
-the [Hetzner Csi-driver Helm Chart](https://github.com/hetznercloud/csi-driver/tree/main/chart)
+* the [Hetzner Csi-driver Helm Chart](https://github.com/hetznercloud/csi-driver/tree/main/chart)
 so that you can create external volumes.
+* the [monitoring service monitor](https://github.com/hetznercloud/csi-driver/blob/main/docs/kubernetes/guides/monitoring.md)
+* the [grafana dashboard](https://github.com/hetznercloud/csi-driver/blob/main/docs/kubernetes/guides/monitoring.md#grafana-dashboard)
 
 ## Installation
 
@@ -41,7 +43,7 @@ kubectl label nodes <node name> instance.hetzner.cloud/provided-by=robot
 
 ## Command
 
-### Migration: import of existing volume into CSI
+### Migration: import an existing volume into CSI
 
 See [how-to-import-volumes](https://github.com/hetznercloud/csi-driver/blob/main/docs/kubernetes/how-to-import-volumes.md)
 

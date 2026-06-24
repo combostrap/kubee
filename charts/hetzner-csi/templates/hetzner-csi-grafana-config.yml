@@ -1,0 +1,11 @@
+# ConfigMap: WAL-G and PostgreSQL tuning
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "kubee-name" . }}-grafana-config
+  labels:
+    {{ include "kubee-manifest-labels" . | nindent 4 }}
+data:
+  # Postgresql.conf
+  "grafana-hetzner-csi.json": |
+{{ .Files.Get "resources/grafana-hetzner-csi.json" | indent 4 }}

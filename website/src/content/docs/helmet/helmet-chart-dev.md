@@ -128,7 +128,10 @@ When developing a Chart, you should:
 * Install them locally
 
 ```bash
+# with the installed version (f means force)
 kubee helmet update-dependencies -f chart-name
+# with the next version
+./bin/kubee helmet update-dependencies -f chart-name
 # or
 task dep
 ```

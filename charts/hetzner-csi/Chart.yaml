@@ -20,7 +20,7 @@ appVersion: "0.0.1" # The version of the app packaged
 
 annotations:
   app.kubernetes.io/name: "hetzner-csi"
-  chart.kubee/status: "beta"
+  chart.kubee/status: "stable"
   chart.kubee/kind: "cluster"
   chart.kubee/category: "system"
   chart.kubee/engines: |
@@ -39,3 +39,13 @@ dependencies:
     version: 0.0.1
     repository: file://../cluster
     alias: cluster
+  - name: kubee-prometheus
+    version: 0.0.1
+    repository: file://../prometheus
+    alias: prometheus
+    condition: kubee_internal.install_cross_dependency
+  - name: kubee-grafana
+    version: 0.0.1
+    repository: file://../grafana
+    alias: grafana
+    condition: kubee_internal.install_cross_dependency

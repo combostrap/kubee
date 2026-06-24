@@ -4,29 +4,36 @@ tasks:
   # Generate the template in the out directory
   tpl:
     cmds:
-      - kubee helmet template --out $(basename {{.USER_WORKING_DIR}})
+      - |
+        {{.TASKFILE_DIR}}/bin/kubee helmet template --out $(basename {{.USER_WORKING_DIR}})
   tpl-debug:
     cmds:
-      - kubee --debug helmet template --out $(basename {{.USER_WORKING_DIR}})
+      - |
+         {{.TASKFILE_DIR}}/bin/kubee --debug helmet template --out $(basename {{.USER_WORKING_DIR}})
   # Restart
   restart:
     cmds:
-      - kubee app restart $(basename {{.USER_WORKING_DIR}})
+      - |
+        {{.TASKFILE_DIR}}/bin/kubee app restart $(basename {{.USER_WORKING_DIR}})
   play:
     cmds:
-      - kubee helmet play $(basename {{.USER_WORKING_DIR}})
+      - |
+        {{.TASKFILE_DIR}}/bin/kubee helmet play $(basename {{.USER_WORKING_DIR}})
   # install with debug
   play-debug:
     cmds:
-      - kubee --debug helmet play $(basename {{.USER_WORKING_DIR}})
+      - |
+        {{.TASKFILE_DIR}}/bin/kubee --debug helmet play $(basename {{.USER_WORKING_DIR}})
   # recreate the /charts directory
   dep:
     cmds:
-      - kubee helmet update-dependencies $(basename {{.USER_WORKING_DIR}})
+      - |
+        {{.TASKFILE_DIR}}/bin/kubee helmet update-dependencies $(basename {{.USER_WORKING_DIR}})
   # recreate the /charts directory
   dep-force:
     cmds:
-      - kubee helmet update-dependencies -f $(basename {{.USER_WORKING_DIR}})
+      - |
+        {{.TASKFILE_DIR}}/bin/kubee helmet update-dependencies -f $(basename {{.USER_WORKING_DIR}})
   # Generate the values.schema.json
   schema:
     cmds:
