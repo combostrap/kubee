@@ -48,7 +48,7 @@ The ArgoCd version is:
 
 ### Upgrade Doc
 
-You need to step through: latest 2.x → fix deprecations → 3
+Breaking change are between minor version. ie 3.3 to 3.4
 https://argo-cd.readthedocs.io/en/stable/operator-manual/upgrading/overview/
 
 ### On Upgrade, ArgoCd Controller 

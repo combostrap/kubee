@@ -1,7 +1,7 @@
-
 {{ template "kubee-header" .}}
 
-This {{ template "kubee-app-chart-label" . }} installs [Argo CD](https://argo-cd.readthedocs.io/), Declarative GitOps CD for Kubernetes
+This {{ template "kubee-app-chart-label" . }} installs [Argo CD](https://argo-cd.readthedocs.io/), Declarative GitOps CD
+for Kubernetes
 
 ## Installation/Update
 
@@ -11,23 +11,27 @@ kubee --cluster cluster-name helmet play argocd
 
 ## Features
 
-### Standard Installation 
-It executes [a standard installation with cluster-admin access](https://argo-cd.readthedocs.io/en/stable/operator-manual/installation/#non-high-availability)
+### Standard Installation
+It
+executes [a standard installation with cluster-admin access](https://argo-cd.readthedocs.io/en/stable/operator-manual/installation/#non-high-availability)
 
 ### Git configuration
 
 Configuration of:
-  * a [git repo](https://argo-cd.readthedocs.io/en/stable/operator-manual/argocd-repositories-yaml/)
-  * a [github webhook](https://argo-cd.readthedocs.io/en/latest/operator-manual/webhook/)
+* a [git repo](https://argo-cd.readthedocs.io/en/stable/operator-manual/argocd-repositories-yaml/)
+* a [GitHub webhook](https://argo-cd.readthedocs.io/en/latest/operator-manual/webhook/)
 
 ### Email and On sync/deployment notifications
 
-The {{ template "kubee-admin-user-label" "admin user" }} will get [mailing and a on-deployed notifications](https://argo-cd.readthedocs.io/en/stable/operator-manual/notifications)
+The {{ template "kubee-admin-user-label" "admin user" }} will
+get [mailing and a on-deployed notifications](https://argo-cd.readthedocs.io/en/stable/operator-manual/notifications)
 
 ### Monitoring (Dashboard)
 
-This chart comes prepackaged with the [ArgoCd Monitoring mixin](https://monitoring.mixins.dev/argo-cd-2/) (Prometheus Rules and Dashboards)
-  
+This chart comes prepackaged with the [ArgoCd Monitoring mixin](https://monitoring.mixins.dev/argo-cd-2/) (Prometheus
+Rules and Dashboards)
+
+
 ### CPU and memory control
 CPU and memory spike on Sync needs to be controlled. We [configure them by default](contrib/argocd-cpu-memory-spikes.md)
 
@@ -41,9 +45,24 @@ CPU and memory spike on Sync needs to be controlled. We [configure them by defau
 
 For the whole set of values, see the [values file](values.yaml)
 
+## Concept
 
+### App Health
 
-## Dev / Contrib
+`App Health` is controlled by the
+[resource Health](https://argo-cd.readthedocs.io/en/stable/operator-manual/health/)
+and is [monitored](#monitoring-dashboard).
 
+## Version
+
+### Kustomize version
+
+Starting with Argo CD v3.2, you can set the Kustomize version in the `.argocd-source.yaml` file like this:
+```yaml
+kustomize:
+  version: v4.5.7
+```
+
+## Dev / Contrib / Upgrade
 
 See [contrib](contrib/contrib.md)
