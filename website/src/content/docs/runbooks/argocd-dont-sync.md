@@ -8,7 +8,9 @@ Check that the pod is running.
 
 ## Possible Solutions
 
-By default, during the sync, the ArgoCD controller may see some memory peak.
+By default, during the sync, the ArgoCD controller may see [some memory peak](../../../../../charts/argocd/contrib/argocd-cpu-memory-spikes.md)
+
+### Increase Memory
 
 Therefore, we set a default limit around `400Mi`. 
 The more you add manifests, the more memory it will need.
@@ -25,4 +27,17 @@ argocd:
       resources:
         # increase this value
         memory: '450Mi'
+```
+
+### Decrease History
+
+```yaml
+# nonk8s
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: xxxx
+spec:
+  # Keep only 3 old ReplicaSets (default is 10)
+  revisionHistoryLimit: 3
 ```

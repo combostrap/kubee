@@ -21,7 +21,7 @@ version: 0.0.1
 # incremented each time you make changes to the application. Versions are not expected to
 # follow Semantic Versioning. They should reflect the version the application is using.
 # It is recommended to use it with quotes.
-appVersion: "v2.14.8" # The version of argocd (in kustomization.yml url)
+appVersion: "v2.14.21" # The version of argocd (in kustomization.yml url)
 
 annotations:
   chart.kubee/status: "stable"

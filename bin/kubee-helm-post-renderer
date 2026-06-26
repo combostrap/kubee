@@ -138,14 +138,16 @@ kustomize_processing(){
 jsonnet_processing(){
 
   JSONNET_DIR="jsonnet"
-  if [ ! -d "$JSONNET_DIR" ]; then
+  JSONNET_DIR_ABS="$PWD/jsonnet"
+  if [ ! -d "$JSONNET_DIR_ABS" ]; then
     echo::info "Jsonnet: No directory found"
+    echo::debug "Jsonnet: No directory found at $JSONNET_DIR_ABS"
     return
   fi
   echo::info "Jsonnet: Project processing"
 
-  pushd "$JSONNET_DIR" > /dev/null
-  echo::debug "Working directory for jsonnet processing is $JSONNET_DIR"
+  pushd "$JSONNET_DIR_ABS" > /dev/null
+  echo::debug "Working directory for jsonnet processing is $JSONNET_DIR_ABS"
   # we can't use bash::trap on return because it's a signal processing meaning
   trap "popd > /dev/null" EXIT
 
@@ -200,7 +202,7 @@ jsonnet_processing(){
 
           # xargs post processing command
           # We get the list of generated file from jsonnet net
-          local POST_PROCESSING="xargs -I{} sh -c '"
+          local POST_PROCESSING="xargs -I{} bash -c '"
           local GO_JSON_TO_YAML="gojsontoyaml"
           if command::exists "$GO_JSON_TO_YAML"; then
             # transform the file to yaml

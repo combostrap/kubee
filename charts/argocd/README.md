@@ -23,7 +23,7 @@ It executes [a standard installation with cluster-admin access](https://argo-cd.
 
 Configuration of:
   * a [git repo](https://argo-cd.readthedocs.io/en/stable/operator-manual/argocd-repositories-yaml/)
-  * a [github webhook](https://argo-cd.readthedocs.io/en/latest/operator-manual/webhook/)
+  * a [GitHub webhook](https://argo-cd.readthedocs.io/en/latest/operator-manual/webhook/)
 
 ### Email and On sync/deployment notifications
 

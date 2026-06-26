@@ -1,12 +1,10 @@
 #!/bin/bash
 
 
-
-
 synopsis(){
   cat <<EOF
 \`\`\`bash
-$(basename "$0") [kubee options]  [kubectl args]
+kubee [kubee options]  [kubectl args]
 \`\`\`
 
 where:
@@ -21,7 +19,7 @@ where:
 Example:
 * Execute the kubectl \`cluster-info\` command against the cluster
 \`\`\`bash
-$(basename "$0") -c my-kubee cluster-info
+kubee -c my-kubee kubectl cluster-info
 \`\`\`
 
 EOF
@@ -32,37 +30,9 @@ if [ "${1:-}" == "synopsis" ]; then
   exit
 fi
 
-args=()
-
-KUBEE_CONNECTION_NAMESPACE=${KUBEE_CONNECTION_NAMESPACE:-"default"}
-KUBEE_CLUSTER_NAME=${KUBEE_CLUSTER_NAME:-}
-while [[ $# -gt 0 ]]
-do
-   case  "$1" in
-    -n|--namespace)
-      shift
-      if [ "${1:-}" == "" ]; then
-        echo::err "The -n or --namespace flag expects a value"
-        exit 1
-      fi
-      KUBEE_CONNECTION_NAMESPACE="$1"
-      ;;
-    -c|--cluster)
-      shift
-      KUBEE_CLUSTER_NAME="$1"
-      ;;
-    "--debug")
-      export BASHLIB_ECHO_LEVEL="$BASHLIB_ECHO_DEBUG_LEVEL";
-      ;;
-    *)
-      args+=("$1")
-      ;;
-   esac
-   shift
-done
 
 
-
+# The connection env are mandatory for kubectl
 kubee::set_kubeconfig_env
 
 ###########################
@@ -77,5 +47,5 @@ if [ "$BASHLIB_ECHO_LEVEL" == "$BASHLIB_ECHO_DEBUG_LEVEL" ]; then
   kube::test_connection
 fi
 
-
-kubectl "${args[@]}"
+echo::debug "Executing: kubectl $*"
+kubectl "$@"

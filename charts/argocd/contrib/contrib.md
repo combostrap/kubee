@@ -46,8 +46,13 @@ The ArgoCd version is:
 
 ## Support
 
+### Upgrade Doc
+
+You need to step through: latest 2.x → fix deprecations → 3
+https://argo-cd.readthedocs.io/en/stable/operator-manual/upgrading/overview/
+
 ### On Upgrade, ArgoCd Controller 
 
 ArgoCd Controller may need to:
-* be restarted manually as it's a statefulset
+* be restarted manually as it's a StatefulSet
 * or even to delete the pods to update it

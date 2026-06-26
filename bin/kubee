@@ -114,6 +114,9 @@ while [[ $# -gt 0 ]]; do
       ;;
     -c | --cluster)
       shift
+      # Note that `-c` is the container options for the logs
+      # the first unknown option is the command
+      # so normally it does not leak to kubectl
       KUBEE_CLUSTER_NAME="$1"
       ;;
     "--no-garbage-collection")
