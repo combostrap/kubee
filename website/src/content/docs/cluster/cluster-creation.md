@@ -1,7 +1,6 @@
 ---
-title:  How to create a cluster
+title: How to create a cluster
 ---
-
 
 ## About
 
@@ -64,10 +63,10 @@ Set at minimal the following environment variables in your cluster values files:
 
 Example:
 
-* in the console, generate a k3s token
+* in the console, generate a k3s token with:
 
 ```bash
-with `openssl rand -base64 64 | tr -d '\n'
+openssl rand -base64 64 | tr -d '\n'
 ```
 
 * use it in `.envrc`:
@@ -76,7 +75,8 @@ with `openssl rand -base64 64 | tr -d '\n'
 export KUBEE_INFRA_K3S_TOKEN='bib7F0biIxpUUuOJJpjs9EgzqViHjAVna3MyxGbTq++gjXf6tm7y5c7' # don't change it
 ```
 
-  * With a password manager such as [pass or gopass](../general/pass.md)
+* With a password manager such as [pass or gopass](../general/pass.md)
+
 ```bash
 # once to store your token
 # pass insert kubee/k3s/token
@@ -158,6 +158,15 @@ server-01.example.com | SUCCESS => {
     "changed": false,
     "ping": "pong"
 }
+```
+
+How it works?
+
+Ultimately, we set the following [ANSIBLE_PRIVATE_KEY_FILE variable](https://docs.ansible.com/projects/ansible/latest/reference_appendices/config.html#default-private-key-file) if not yet set.
+
+```bash
+# /dev/shm for a temporary key
+export ANSIBLE_PRIVATE_KEY_FILE="/dev/shm/ssh-key"
 ```
 
 ### Execute the cluster installation
