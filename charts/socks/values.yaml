@@ -1,0 +1,82 @@
+# @schema
+# title: Enabled
+# type: boolean
+# required: true
+# default: false
+# @schema
+# -- Boolean to indicate that this chart is or will be installed in the cluster
+enabled: false
+
+# @schema
+# title: Namespace
+# description: The installation namespace
+# required: true
+# minLength: 1
+# @schema
+# -- The installation namespace
+namespace: 'socks'
+
+# @schema
+# title: Authentication Required
+# description: Is authentication required?
+# required: true
+# type: boolean
+# default: true
+# @schema
+# -- Is Authentication Required
+require_auth: true
+
+# @schema
+# title: Proxy User
+# description: Set proxy user
+# required: false
+# default: ""
+# @schema
+# -- Set Proxy User
+proxy_user: ""
+
+# @schema
+# title: Proxy Password
+# description: Set proxy password
+# required: false
+# default: ""
+# @schema
+# -- Set Proxy Password
+proxy_password: ""
+
+# @schema
+# title: Proxy Port
+# description: Set proxy port
+# required: false
+# type: numeric
+# default: 1080
+# @schema
+# -- Set the Proxy Port
+proxy_port: 1080
+
+# @schema
+# title: Allowed Destination
+# description: Set the allowed destination (Default allows all)
+# required: false
+# default: ""
+# @schema
+# -- Allowed destination address with regular expression pattern (Default allows all)
+allowed_dest_fqdn: ""
+
+# @schema
+# title: Allowed IP's
+# description: Allowed IP's that can connect to proxy separated with a comma
+# required: false
+# default: ""
+# @schema
+# -- Allowed IP's that can connect to proxy separated with a comma
+allowed_ips: ""
+
+# -- @ignored Internal Kubee constant
+kubee_internal:
+  # @schema
+  # const: false
+  # @schema
+  # Constant used to not output template from kubee cross dependency in Chart.yaml
+  # Don't change, don't touch
+  install_cross_dependency: false

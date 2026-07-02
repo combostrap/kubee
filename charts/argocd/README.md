@@ -67,6 +67,15 @@ CPU and memory spike on Sync needs to be controlled. We [configure them by defau
 
 For the whole set of values, see the [values file](values.yaml)
 
+## How to restart after a configuration change
+
+ArgoCD watches configuration via the argocd-repo-server
+If it does not work, here a snippet to restart a couple of deployment
+```bash
+kubee kubectl rollout restart -n argocd deployment argocd-applicationset-controller
+kubee kubectl rollout restart -n argocd deployment argocd-repo-server
+```
+
 ## Concept
 
 ### App Health

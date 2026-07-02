@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ index .Chart.Annotations "app.kubernetes.io/name" }}-service
+  namespace: {{.Values.namespace}}
+spec:
+  selector:
+{{ include "kubee-pod-labels" . | indent 4}}
+  ports:
+    - port: {{.Values.proxy_port}}
+      targetPort: {{.Values.proxy_port}}

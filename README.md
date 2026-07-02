@@ -100,6 +100,7 @@ By doing so, you can:
 | [Prometheus Adapter ](https://github.com/bytle/kubee/blob/main/charts/prometheus-adapter/README.md) | [alpha](https://kubee.bytle.net/helmet/helmet-chart#status) | app | monitoring  |
 | [Prometheus Crds ](https://github.com/bytle/kubee/blob/main/charts/prometheus-crds/README.md) | [stable](https://kubee.bytle.net/helmet/helmet-chart#status) | crds | monitoring  |
 | [PushGateway ](https://github.com/bytle/kubee/blob/main/charts/pushgateway/README.md) | [stable](https://kubee.bytle.net/helmet/helmet-chart#status) | app | monitoring  |
+| [Socks Proxy](https://github.com/bytle/kubee/blob/main/charts/socks/README.md) | [stable](https://kubee.bytle.net/helmet/helmet-chart#status) | app | network  |
 | [Traefik ](https://github.com/bytle/kubee/blob/main/charts/traefik/README.md) | [stable](https://kubee.bytle.net/helmet/helmet-chart#status) | app | proxy  |
 | [Traefik Crds ](https://github.com/bytle/kubee/blob/main/charts/traefik-crds/README.md) | [deprecated](https://kubee.bytle.net/helmet/helmet-chart#status) | crds | proxy  |
 | [Traefik Forward Auth ](https://github.com/bytle/kubee/blob/main/charts/traefik-forward-auth/README.md) | [deprecated](https://kubee.bytle.net/helmet/helmet-chart#status) | app | auth  |

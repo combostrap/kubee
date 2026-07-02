@@ -1,0 +1,46 @@
+{{ template "kubee-header" .}}
+
+This {{ template "kubee-app-chart-label" "Kubee App Chart"}}
+installs [socks 5 proxy server](https://github.com/serjs/socks5-server) to
+proxy local traffic via your cluster.
+
+## Install
+
+{{ template "kubee-installation-command" . }}
+
+
+{{ template "chart.valuesSection" . }}
+
+## How it works
+
+* Create a tunnel to the socks proxy
+```bash
+nkubee -n socks kubectl port-forward svc/socks-service 1080:1080
+```
+```
+Forwarding from 127.0.0.1:1080 -> 1080
+Forwarding from [::1]:1080 -> 1080
+```
+* Then use the proxy with your tools
+```bash
+curl --socks5 127.0.0.1:1080 https://ipinfo.io
+```
+```json
+{
+  "ip": "cluster Ip",
+  "hostname": "dnsname.com",
+  "city": "xx",
+  "region": "xx",
+  "country": "xx",
+  "loc": "xxx",
+  "org": "ASxxx",
+  "postal": "xxx",
+  "timezone": "Europe/xxx"
+}
+```
+
+## Note
+
+### Docker
+
+The docker page is [go-socks5-proxy](https://hub.docker.com/r/serjs/go-socks5-proxy)

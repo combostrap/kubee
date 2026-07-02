@@ -1,0 +1,49 @@
+{{- if and .Values.require_auth (not .Values.proxy_password) }}
+{{ fail "proxy_password must be set when require_auth is true" }}
+{{- end }}
+{{- if and .Values.require_auth (not .Values.proxy_user) }}
+{{ fail "proxy_user must be set when require_auth is true" }}
+{{- end }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ index .Chart.Annotations "app.kubernetes.io/name" }}-deployment
+  namespace: {{.Values.namespace}}
+  labels:
+{{ include "kubee-manifest-labels" . | indent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+{{ include "kubee-pod-labels" . | nindent 6}}
+  template:
+    metadata:
+      labels:
+{{ include "kubee-manifest-labels" . | indent 8 }}
+    spec:
+      containers:
+        - name: socks5
+          image: "serjs/go-socks5-proxy:v{{.Chart.AppVersion}}"
+          env:
+            - name: REQUIRE_AUTH
+              value: "{{.Values.require_auth}}"
+{{- if .Values.proxy_user }}
+            - name: PROXY_USER
+              value: "{{.Values.proxy_user}}"
+{{- end }}
+{{- if .Values.proxy_password }}
+            - name: PROXY_PASSWORD
+              value: "{{.Values.proxy_password}}"
+{{- end }}
+            - name: PROXY_PORT
+              value: "{{.Values.proxy_port}}"
+{{- if .Values.allowed_dest_fqdn }}
+            - name: ALLOWED_DEST_FQDN
+              value: "{{.Values.allowed_dest_fqdn}}"
+{{- end }}
+{{- if .Values.allowed_ips}}
+            - name: ALLOWED_IPS
+              value: "{{.Values.allowed_ips}}"
+{{- end }}
+          ports:
+            - containerPort: {{.Values.proxy_port}}
