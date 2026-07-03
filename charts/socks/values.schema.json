@@ -1,6 +1,18 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "properties": {
+    "allowed_dest_fqdn": {
+      "default": "",
+      "description": "Allowed destination address with regular expression pattern (Default allows all)",
+      "required": [],
+      "title": "Allowed Destination"
+    },
+    "allowed_ips": {
+      "default": "",
+      "description": "Allowed IP's that can connect to proxy separated with a comma",
+      "required": [],
+      "title": "Allowed IP's"
+    },
     "cluster": {
       "description": "Kubee Cluster Chart",
       "properties": {
@@ -178,11 +190,45 @@
       "minLength": 1,
       "required": [],
       "title": "Namespace"
+    },
+    "proxy_password": {
+      "default": "",
+      "description": "Set Proxy Password",
+      "required": [],
+      "title": "Proxy Password"
+    },
+    "proxy_port": {
+      "default": 1080,
+      "description": "Set the Proxy Port",
+      "required": [],
+      "title": "Proxy Port",
+      "type": "integer"
+    },
+    "proxy_user": {
+      "default": "",
+      "description": "Set Proxy User",
+      "required": [],
+      "title": "Proxy User"
+    },
+    "replicas": {
+      "default": 0,
+      "description": "Number of replicas (Not up by default)",
+      "required": [],
+      "title": "The number of replicas",
+      "type": "integer"
+    },
+    "require_auth": {
+      "default": true,
+      "description": "Is Authentication Required",
+      "required": [],
+      "title": "Authentication Required",
+      "type": "boolean"
     }
   },
   "required": [
     "enabled",
-    "namespace"
+    "namespace",
+    "require_auth"
   ],
   "type": "object"
 }

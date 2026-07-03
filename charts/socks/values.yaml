@@ -48,7 +48,7 @@ proxy_password: ""
 # title: Proxy Port
 # description: Set proxy port
 # required: false
-# type: numeric
+# type: integer
 # default: 1080
 # @schema
 # -- Set the Proxy Port
@@ -71,6 +71,16 @@ allowed_dest_fqdn: ""
 # @schema
 # -- Allowed IP's that can connect to proxy separated with a comma
 allowed_ips: ""
+
+# @schema
+# title: The number of replicas
+# description: The number of pods
+# required: false
+# type: integer
+# default: 0
+# @schema
+# -- Number of replicas (Not up by default)
+replicas: 0
 
 # -- @ignored Internal Kubee constant
 kubee_internal:

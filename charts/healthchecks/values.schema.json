@@ -1,6 +1,150 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "properties": {
+    "cluster": {
+      "description": "Kubee Cluster Chart",
+      "properties": {
+        "auth": {
+          "description": "Cluster Auth",
+          "properties": {
+            "admin_user": {
+              "description": "The admin user  * created as admin user in Kubernetes and other app  * added in basicAuth",
+              "properties": {
+                "cluster_role": {
+                  "default": "cluster-admin",
+                  "description": " required: true enum: [ 'cluster-admin', 'admin' ] @schema Kubernetes clusterRole * `cluster-admin` has full access * `admin` does not have access to node and cluster scope related object such as ClusterRoleBinding",
+                  "enum": [
+                    "cluster-admin",
+                    "admin"
+                  ],
+                  "required": [],
+                  "title": "cluster_role"
+                },
+                "email": {
+                  "default": "",
+                  "description": " format: email minLength: 1 @schema The admin email It's used by default in apps. For instance: * letsencrypt registration email * alert notifications: prometheus, argocd",
+                  "format": "email",
+                  "minLength": 1,
+                  "required": [],
+                  "title": "email"
+                },
+                "password": {
+                  "default": "",
+                  "description": " required: true minLength: 1 @schema The admin password",
+                  "minLength": 1,
+                  "required": [],
+                  "title": "password"
+                },
+                "username": {
+                  "default": "admin",
+                  "description": " required: true minLength: 3 @schema The username",
+                  "minLength": 3,
+                  "required": [],
+                  "title": "username"
+                }
+              },
+              "required": [],
+              "title": "admin_user"
+            },
+            "trusted_proxies": {
+              "description": "Trusted Proxies If trusted, reverse proxies handler will proxy and augment the sensitive X-Forwarded-* request headers.  You should set the CIDR value of: * internal proxy such as traefik * and external proxy such as cloudflare It's used by Traefik and all auth application that needs the real ip and trust the X-forward headers",
+              "items": {
+                "required": []
+              },
+              "required": [],
+              "title": "trusted_proxies"
+            }
+          },
+          "required": [],
+          "title": "auth",
+          "type": "object"
+        },
+        "chart": {
+          "default": "k3s-ansible",
+          "description": "The cluster chart. The cluster chart is responsible for the installation/management of Kubernetes on the nodes",
+          "required": [],
+          "title": "chart"
+        },
+        "distribution": {
+          "default": "k3s",
+          "description": "The kubernetes distribution k3s is the distribution that has a cluster chart implemented.",
+          "required": [],
+          "title": "distribution"
+        },
+        "email": {
+          "description": "Default smtp server parameters",
+          "properties": {
+            "smtp": {
+              "description": "Smtp Configuration",
+              "properties": {
+                "from": {
+                  "default": "",
+                  "description": " format: email required: false @schema the default from",
+                  "format": "email",
+                  "required": [],
+                  "title": "from"
+                },
+                "hello": {
+                  "default": "",
+                  "description": "hello (used to present itself, normally the email apex domain name)",
+                  "required": [],
+                  "title": "hello",
+                  "type": "string"
+                },
+                "host": {
+                  "default": "",
+                  "description": " title: Smtp host description: The smtp hostname required: true format: hostname @schema The smtp host if the host is not empty, smtp configuration are added for example for argocd email notifications",
+                  "format": "hostname",
+                  "required": [],
+                  "title": "Smtp host"
+                },
+                "password": {
+                  "default": "",
+                  "description": "the auth connection password",
+                  "required": [],
+                  "title": "password",
+                  "type": "string"
+                },
+                "port": {
+                  "default": 465,
+                  "description": " title: Smtp Port description: The Smtp port type: integer required: false @schema the smtp port",
+                  "required": [],
+                  "title": "Smtp Port",
+                  "type": "integer"
+                },
+                "username": {
+                  "default": "",
+                  "description": "the auth connection username",
+                  "required": [],
+                  "title": "username",
+                  "type": "string"
+                }
+              },
+              "required": [],
+              "title": "smtp"
+            }
+          },
+          "required": [],
+          "title": "email",
+          "type": "object"
+        },
+        "global": {
+          "description": "Global values are values that can be accessed from any chart or subchart by exactly the same name.",
+          "required": [],
+          "title": "global",
+          "type": "object"
+        },
+        "name": {
+          "default": "kubee",
+          "description": "The cluster name used: * to identify the cluster (for instance, on prometheus remote-write metrics, the name is added as label) * as default first instance name for operator (for instance, prometheus operator allows to install multiple prometheus that needs to be unique. Kube-prometheus asks for a unique name)",
+          "required": [],
+          "title": "name"
+        }
+      },
+      "required": [],
+      "title": "kubee-cluster",
+      "type": "object"
+    },
     "enabled": {
       "default": false,
       "description": "Boolean to indicate that this chart is or will be installed in the cluster",

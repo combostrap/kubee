@@ -31,21 +31,43 @@ All other charts are `app` charts.
 
 ## Annotations
 
-### App Name
+You add the `kubee-cluster` chart as dependency to get the library in `Chart.yaml`
 
-You can set `app.kubernetes.io/name` with the `kubee/name` annotations.
+```yaml
+dependencies:
+  - name: kubee-cluster
+    version: 0.0.1
+    repository: file://../cluster
+    alias: cluster
+```
+
+You set in `Chart.yaml` the app name with the `app.kubernetes.io/name` annotation.
 
 ```yaml
 annotations:
-  app.kubernetes.io/name: mariadb
+  app.kubernetes.io/name: my-app-name
 ```
 
-and
+Then in the manifest:
+
+* on metadata, you can use the `kubee-manifest-labels` function 
 
 ```yaml
 metadata:
   labels:
-    { { - include "kubee-manifest-labels" . | indent 4 } }
+    {{- include "kubee-manifest-labels" . | nindent 4 }}
+```
+
+
+* on select label the `kubee-pod-labels` function
+
+```yaml
+selector:
+  # example on service
+  {{- include "kubee-pod-labels" . | nindent 2 }}
+  # example on template for deployment/statefulset
+  matchLabels:
+    {{- include "kubee-pod-labels" . | nindent 6 }}
 ```
 
 ### Chart Meta (Kind, Status, ...)
@@ -55,7 +77,7 @@ Example:
 ```yaml
 annotations:
   chart.kubee/status: "stable"
-    #  "stable" - can be installed
+  #  "stable" - can be installed
   #  "incubator" - been developed
   #  "deprecated" - no more maintained
   # A lead, the description in Chart.yaml is a short description
@@ -64,7 +86,7 @@ annotations:
   chart.kubee/kind: "crds"
     #  "app"  - apps
     #  "crds" - crds
-    #  "cluster" - cluster driver
+  #  "cluster" - cluster driver
   #  "internal" - internal
   #  "library" - lib and shared values
   chart.kubee/engines: |
@@ -110,6 +132,7 @@ That's why:
 * `kubee-cluster` is a common sub-chart of all umbrella chart
 
 ## Dev
+
 ### Dev: Cross dependency
 
 Cross Dependency are only used to share values.
@@ -154,7 +177,9 @@ task schema
 # Generate the readme from README.md.gotmpl
 task helm-docs
 ```
+
 * Lint
+
 ```bash
 helm lint .
 # check the link

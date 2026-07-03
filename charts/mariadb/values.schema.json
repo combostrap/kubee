@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "properties": {
     "cluster": {
-      "description": "The kubee cluster chart",
+      "description": "Kubee Cluster Chart",
       "properties": {
         "auth": {
           "description": "Cluster Auth",

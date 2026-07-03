@@ -145,6 +145,13 @@
       "title": "kubee-cluster",
       "type": "object"
     },
+    "default_location": {
+      "default": "nbg1",
+      "description": "The hetzner volume [default location](https://github.com/hetznercloud/csi-driver/blob/main/docs/kubernetes/getting-started.md#volume-location)",
+      "minLength": 1,
+      "required": [],
+      "title": "Hetzner Default Location of Volume creation"
+    },
     "enabled": {
       "default": false,
       "description": "Boolean to indicate that this chart is or will be installed in the cluster",
@@ -163,6 +170,104 @@
       "properties": {
         "controller": {
           "properties": {
+            "affinity": {
+              "properties": {
+                "podAntiAffinity": {
+                  "properties": {
+                    "requiredDuringSchedulingIgnoredDuringExecution": {
+                      "items": {
+                        "anyOf": [
+                          {
+                            "properties": {
+                              "labelSelector": {
+                                "properties": {
+                                  "matchExpressions": {
+                                    "items": {
+                                      "anyOf": [
+                                        {
+                                          "properties": {
+                                            "key": {
+                                              "default": "csi-hcloud",
+                                              "required": [],
+                                              "title": "key",
+                                              "type": "string"
+                                            },
+                                            "operator": {
+                                              "default": "In",
+                                              "required": [],
+                                              "title": "operator",
+                                              "type": "string"
+                                            },
+                                            "values": {
+                                              "items": {
+                                                "anyOf": [
+                                                  {
+                                                    "required": [],
+                                                    "type": "string"
+                                                  }
+                                                ],
+                                                "required": []
+                                              },
+                                              "required": [],
+                                              "title": "values",
+                                              "type": "array"
+                                            }
+                                          },
+                                          "required": [
+                                            "key",
+                                            "operator",
+                                            "values"
+                                          ],
+                                          "type": "object"
+                                        }
+                                      ],
+                                      "required": []
+                                    },
+                                    "required": [],
+                                    "title": "matchExpressions",
+                                    "type": "array"
+                                  }
+                                },
+                                "required": [
+                                  "matchExpressions"
+                                ],
+                                "title": "labelSelector",
+                                "type": "object"
+                              },
+                              "topologyKey": {
+                                "default": "kubernetes.io/hostname",
+                                "required": [],
+                                "title": "topologyKey",
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "labelSelector",
+                              "topologyKey"
+                            ],
+                            "type": "object"
+                          }
+                        ],
+                        "required": []
+                      },
+                      "required": [],
+                      "title": "requiredDuringSchedulingIgnoredDuringExecution",
+                      "type": "array"
+                    }
+                  },
+                  "required": [
+                    "requiredDuringSchedulingIgnoredDuringExecution"
+                  ],
+                  "title": "podAntiAffinity",
+                  "type": "object"
+                }
+              },
+              "required": [
+                "podAntiAffinity"
+              ],
+              "title": "affinity",
+              "type": "object"
+            },
             "hcloudToken": {
               "properties": {
                 "existingSecret": {
@@ -193,17 +298,524 @@
               ],
               "title": "hcloudToken",
               "type": "object"
+            },
+            "hcloudVolumeDefaultLocation": {
+              "default": "nbg1",
+              "required": [],
+              "title": "hcloudVolumeDefaultLocation",
+              "type": "string"
+            },
+            "priorityClassName": {
+              "default": "system-cluster-critical",
+              "required": [],
+              "title": "priorityClassName",
+              "type": "string"
+            },
+            "replicaCount": {
+              "default": 1,
+              "required": [],
+              "title": "replicaCount",
+              "type": "integer"
+            },
+            "resources": {
+              "properties": {
+                "csiAttacher": {
+                  "properties": {
+                    "limits": {
+                      "properties": {
+                        "memory": {
+                          "default": "80Mi",
+                          "required": [],
+                          "title": "memory",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "memory"
+                      ],
+                      "title": "limits",
+                      "type": "object"
+                    },
+                    "requests": {
+                      "properties": {
+                        "memory": {
+                          "default": "20Mi",
+                          "required": [],
+                          "title": "memory",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "memory"
+                      ],
+                      "title": "requests",
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "limits",
+                    "requests"
+                  ],
+                  "title": "csiAttacher",
+                  "type": "object"
+                },
+                "csiProvisioner": {
+                  "properties": {
+                    "limits": {
+                      "properties": {
+                        "memory": {
+                          "default": "80Mi",
+                          "required": [],
+                          "title": "memory",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "memory"
+                      ],
+                      "title": "limits",
+                      "type": "object"
+                    },
+                    "requests": {
+                      "properties": {
+                        "memory": {
+                          "default": "20Mi",
+                          "required": [],
+                          "title": "memory",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "memory"
+                      ],
+                      "title": "requests",
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "limits",
+                    "requests"
+                  ],
+                  "title": "csiProvisioner",
+                  "type": "object"
+                },
+                "csiResizer": {
+                  "properties": {
+                    "limits": {
+                      "properties": {
+                        "memory": {
+                          "default": "80Mi",
+                          "required": [],
+                          "title": "memory",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "memory"
+                      ],
+                      "title": "limits",
+                      "type": "object"
+                    },
+                    "requests": {
+                      "properties": {
+                        "memory": {
+                          "default": "20Mi",
+                          "required": [],
+                          "title": "memory",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "memory"
+                      ],
+                      "title": "requests",
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "limits",
+                    "requests"
+                  ],
+                  "title": "csiResizer",
+                  "type": "object"
+                },
+                "hcloudCSIDriver": {
+                  "properties": {
+                    "limits": {
+                      "properties": {
+                        "memory": {
+                          "default": "80Mi",
+                          "required": [],
+                          "title": "memory",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "memory"
+                      ],
+                      "title": "limits",
+                      "type": "object"
+                    },
+                    "requests": {
+                      "properties": {
+                        "memory": {
+                          "default": "40Mi",
+                          "required": [],
+                          "title": "memory",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "memory"
+                      ],
+                      "title": "requests",
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "limits",
+                    "requests"
+                  ],
+                  "title": "hcloudCSIDriver",
+                  "type": "object"
+                },
+                "livenessProbe": {
+                  "properties": {
+                    "limits": {
+                      "properties": {
+                        "memory": {
+                          "default": "80Mi",
+                          "required": [],
+                          "title": "memory",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "memory"
+                      ],
+                      "title": "limits",
+                      "type": "object"
+                    },
+                    "requests": {
+                      "properties": {
+                        "memory": {
+                          "default": "20Mi",
+                          "required": [],
+                          "title": "memory",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "memory"
+                      ],
+                      "title": "requests",
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "limits",
+                    "requests"
+                  ],
+                  "title": "livenessProbe",
+                  "type": "object"
+                }
+              },
+              "required": [
+                "csiAttacher",
+                "csiResizer",
+                "csiProvisioner",
+                "livenessProbe",
+                "hcloudCSIDriver"
+              ],
+              "title": "resources",
+              "type": "object"
             }
           },
           "required": [
-            "hcloudToken"
+            "hcloudToken",
+            "replicaCount",
+            "hcloudVolumeDefaultLocation",
+            "priorityClassName",
+            "resources",
+            "affinity"
           ],
           "title": "controller",
+          "type": "object"
+        },
+        "fullnameOverride": {
+          "default": "hetzner-csi",
+          "description": "mandatory otherwise the name is the alias (ie hcloud_csi) which contains an underscore which is not permitted by k8s in name (and the chart use that as name)",
+          "required": [],
+          "title": "fullnameOverride",
+          "type": "string"
+        },
+        "metrics": {
+          "properties": {
+            "enabled": {
+              "default": true,
+              "required": [],
+              "title": "enabled",
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "enabled"
+          ],
+          "title": "metrics",
+          "type": "object"
+        },
+        "node": {
+          "properties": {
+            "affinity": {
+              "properties": {
+                "nodeAffinity": {
+                  "properties": {
+                    "requiredDuringSchedulingIgnoredDuringExecution": {
+                      "properties": {
+                        "nodeSelectorTerms": {
+                          "items": {
+                            "anyOf": [
+                              {
+                                "properties": {
+                                  "matchExpressions": {
+                                    "items": {
+                                      "anyOf": [
+                                        {
+                                          "properties": {
+                                            "key": {
+                                              "default": "node-role.kubernetes.io/control-plane",
+                                              "required": [],
+                                              "title": "key",
+                                              "type": "string"
+                                            },
+                                            "operator": {
+                                              "default": "NotIn",
+                                              "required": [],
+                                              "title": "operator",
+                                              "type": "string"
+                                            },
+                                            "values": {
+                                              "items": {
+                                                "anyOf": [
+                                                  {
+                                                    "required": [],
+                                                    "type": "string"
+                                                  }
+                                                ],
+                                                "required": []
+                                              },
+                                              "required": [],
+                                              "title": "values",
+                                              "type": "array"
+                                            }
+                                          },
+                                          "required": [
+                                            "key",
+                                            "operator",
+                                            "values"
+                                          ],
+                                          "type": "object"
+                                        }
+                                      ],
+                                      "required": []
+                                    },
+                                    "required": [],
+                                    "title": "matchExpressions",
+                                    "type": "array"
+                                  }
+                                },
+                                "required": [
+                                  "matchExpressions"
+                                ],
+                                "type": "object"
+                              }
+                            ],
+                            "required": []
+                          },
+                          "required": [],
+                          "title": "nodeSelectorTerms",
+                          "type": "array"
+                        }
+                      },
+                      "required": [
+                        "nodeSelectorTerms"
+                      ],
+                      "title": "requiredDuringSchedulingIgnoredDuringExecution",
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "requiredDuringSchedulingIgnoredDuringExecution"
+                  ],
+                  "title": "nodeAffinity",
+                  "type": "object"
+                }
+              },
+              "required": [
+                "nodeAffinity"
+              ],
+              "title": "affinity",
+              "type": "object"
+            },
+            "hostNetwork": {
+              "default": true,
+              "required": [],
+              "title": "hostNetwork",
+              "type": "boolean"
+            },
+            "priorityClassName": {
+              "default": "system-node-critical",
+              "required": [],
+              "title": "priorityClassName",
+              "type": "string"
+            },
+            "resources": {
+              "properties": {
+                "csiNodeDriverRegistrar": {
+                  "properties": {
+                    "limits": {
+                      "properties": {
+                        "memory": {
+                          "default": "40Mi",
+                          "required": [],
+                          "title": "memory",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "memory"
+                      ],
+                      "title": "limits",
+                      "type": "object"
+                    },
+                    "requests": {
+                      "properties": {
+                        "memory": {
+                          "default": "20Mi",
+                          "required": [],
+                          "title": "memory",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "memory"
+                      ],
+                      "title": "requests",
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "limits",
+                    "requests"
+                  ],
+                  "title": "csiNodeDriverRegistrar",
+                  "type": "object"
+                },
+                "hcloudCSIDriver": {
+                  "properties": {
+                    "limits": {
+                      "properties": {
+                        "memory": {
+                          "default": "80Mi",
+                          "required": [],
+                          "title": "memory",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "memory"
+                      ],
+                      "title": "limits",
+                      "type": "object"
+                    },
+                    "requests": {
+                      "properties": {
+                        "memory": {
+                          "default": "40Mi",
+                          "required": [],
+                          "title": "memory",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "memory"
+                      ],
+                      "title": "requests",
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "limits",
+                    "requests"
+                  ],
+                  "title": "hcloudCSIDriver",
+                  "type": "object"
+                },
+                "livenessProbe": {
+                  "properties": {
+                    "limits": {
+                      "properties": {
+                        "memory": {
+                          "default": "40Mi",
+                          "required": [],
+                          "title": "memory",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "memory"
+                      ],
+                      "title": "limits",
+                      "type": "object"
+                    },
+                    "requests": {
+                      "properties": {
+                        "memory": {
+                          "default": "20Mi",
+                          "required": [],
+                          "title": "memory",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "memory"
+                      ],
+                      "title": "requests",
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "limits",
+                    "requests"
+                  ],
+                  "title": "livenessProbe",
+                  "type": "object"
+                }
+              },
+              "required": [
+                "csiNodeDriverRegistrar",
+                "livenessProbe",
+                "hcloudCSIDriver"
+              ],
+              "title": "resources",
+              "type": "object"
+            }
+          },
+          "required": [
+            "priorityClassName",
+            "resources",
+            "hostNetwork",
+            "affinity"
+          ],
+          "title": "node",
           "type": "object"
         }
       },
       "required": [
-        "controller"
+        "fullnameOverride",
+        "controller",
+        "node",
+        "metrics"
       ],
       "title": "hcloud_csi"
     },
@@ -246,7 +858,8 @@
   "required": [
     "enabled",
     "namespace",
-    "hcloud_token"
+    "hcloud_token",
+    "default_location"
   ],
   "type": "object"
 }

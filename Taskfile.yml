@@ -9,7 +9,7 @@ tasks:
   tpl-debug:
     cmds:
       - |
-         {{.TASKFILE_DIR}}/bin/kubee --debug helmet template --out $(basename {{.USER_WORKING_DIR}})
+        {{.TASKFILE_DIR}}/bin/kubee --debug helmet template --out $(basename {{.USER_WORKING_DIR}})
   # Restart
   restart:
     cmds:
@@ -38,6 +38,10 @@ tasks:
   schema:
     cmds:
       - |
+        if [ ! -f "{{.USER_WORKING_DIR}}/values.yaml" ]; then
+          echo "No values file found at {{.USER_WORKING_DIR}}/values.yaml, skipping"
+          exit 0
+        fi
         COMMAND="helm schema --chart-search-root {{.USER_WORKING_DIR}} --helm-docs-compatibility-mode -k additionalProperties"
         # dependency filter is due to this Traefik error
         # FATA[2025-03-11T14:44:41+01:00] Error while parsing comment of key kind: yaml: found character that cannot start any token
@@ -83,10 +87,15 @@ tasks:
   # and the lint
   docs-all:
     cmds:
+      - task helm-docs-ignore
       - task helm-docs-all
       - task readme
       - task docs-lint
-
+  # all docs and schema
+  all:
+    cmds:
+      - task docs-all
+      - task schema-all
   # Generate the root Readme.md
   readme:
     cmds:
@@ -119,7 +128,7 @@ tasks:
       - |
         find "{{.TASK_DIR}}/charts" -mindepth 1 -maxdepth 1 -type d -print0 \
           | sort -z \
-          | xargs -0 -I{} bash -c ' 
+          | xargs -0 -I{} bash -c '
           CHART_NAME=$(basename $1)
           echo Deleting charts for $CHART_NAME
           rm -rf $1/charts

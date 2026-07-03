@@ -8,7 +8,7 @@
       "title": "api_token"
     },
     "cluster": {
-      "description": "The kubee cluster chart",
+      "description": "Kubee Cluster Chart",
       "properties": {
         "auth": {
           "description": "Cluster Auth",
@@ -159,7 +159,7 @@
             "name": {
               "const": "Prometheus",
               "default": "Prometheus",
-              "description": " const: Prometheus @schema By default, the dashboard got the source name from the prompt or from the default kuberhealthy has it hardcoded as Prometheus",
+              "description": " const: Prometheus @schema By default, the dashboards got the source name from the prompt or from the default kuberhealthy has it hardcoded as Prometheus",
               "required": [],
               "title": "name"
             }

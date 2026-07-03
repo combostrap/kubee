@@ -11,7 +11,7 @@
       "description": "Hosts",
       "properties": {
         "agents": {
-          "description": " - fqdn: '' # The full qualified name (Mandatory) ie kubee-loc-server-01.example.com   ip: ''   # The Ip Mandatory for an ssh/vps cluster   name: '' # The name Mandatory for a docker cluster (ie the container name) @ignored. Not yet in the template The Agents. [Optional]",
+          "description": " - fqdn: '' # The full qualified name (Mandatory) ie kubee-loc-server-01.example.com   ip: ''   # The Ip Mandatory for an ssh/vps cluster   name: '' # The name Mandatory for a docker cluster (ie the container name)   inotify_max_user_watches: '' # The inotify max user watches   inotify_max_user_instances: '' # The inotify max user instances @ignored. Not yet in the template The Agents. [Optional]",
           "items": {
             "required": []
           },
@@ -63,6 +63,12 @@
               },
               "required": [],
               "title": "connection"
+            },
+            "upgrade_cron": {
+              "default": "0 2 * * 0",
+              "description": "[Optional] - Upgrade cron. A cron expression to schedule the upgrade of the os",
+              "required": [],
+              "title": "upgrade_cron"
             }
           },
           "required": [],
@@ -70,7 +76,7 @@
           "type": "object"
         },
         "servers": {
-          "description": "The Servers (Mandatory) The number of hosts server must be odd to avoid split brain issues with etcd The minimum number is: - 1 for a single server cluster - 3 for a [high availability cluster](https://docs.k3s.io/datastore/ha-embedded)",
+          "description": "The Servers and their properties (Mandatory) The number of hosts server must be odd to avoid split brain issues with etcd The minimum number is: - 1 for a single server cluster - 3 for a [high availability cluster](https://docs.k3s.io/datastore/ha-embedded)",
           "items": {
             "required": []
           },
@@ -83,6 +89,12 @@
       ],
       "title": "hosts",
       "type": "object"
+    },
+    "restart_cron": {
+      "default": "0 11 * * *",
+      "description": "A cron expression to schedule a k3s restart A restart is mandatory as k3s performs database operation at startup such as compaction. Restarting k3s does not stop the containers, the apps are still working",
+      "required": [],
+      "title": "restart_cron"
     },
     "server_args": {
       "description": "The [k3s Server Args](https://docs.k3s.io/cli/server) Example: `--kube-apiserver-arg=\"admission-control-config-file=/var/lib/rancher/k3s/server/psa.yaml\"`",
@@ -100,7 +112,7 @@
       "title": "token"
     },
     "version": {
-      "default": "v1.32.2+k3s1",
+      "default": "v1.35.3+k3s1",
       "description": "The [K3s version](https://github.com/k3s-io/k3s/releases)",
       "required": [],
       "title": "version"

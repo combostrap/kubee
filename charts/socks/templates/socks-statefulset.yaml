@@ -5,21 +5,22 @@
 {{ fail "proxy_user must be set when require_auth is true" }}
 {{- end }}
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
-  name: {{ index .Chart.Annotations "app.kubernetes.io/name" }}-deployment
+  {{- /* Stateful so that the pod name is known */ }}
+  name: {{ index .Chart.Annotations "app.kubernetes.io/name" }}
   namespace: {{.Values.namespace}}
   labels:
-{{ include "kubee-manifest-labels" . | indent 4 }}
+    {{- include "kubee-manifest-labels" . | nindent 4 }}
 spec:
-  replicas: 1
+  replicas: {{ .Values.replicas }}
   selector:
     matchLabels:
-{{ include "kubee-pod-labels" . | nindent 6}}
+      {{- include "kubee-pod-labels" . | nindent 6 }}
   template:
     metadata:
       labels:
-{{ include "kubee-manifest-labels" . | indent 8 }}
+        {{- include "kubee-manifest-labels" . | nindent 8 }}
     spec:
       containers:
         - name: socks5

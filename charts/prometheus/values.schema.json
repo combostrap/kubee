@@ -400,7 +400,7 @@
     },
     "scrape_interval": {
       "default": "55s",
-      "description": "The default scrape interval for target It does influence memory as Prometheus keeps by default 2 hours of scraping in memory (max_block_duration) Default was 30s. Don't go above or equal to 1 m. Otherwise, dashboards that shows data at the 1m interval may not show any data.",
+      "description": "The default scrape interval for target It does influence memory as Prometheus keeps by default 2 hours of scraping in memory (max_block_duration) This value is used to set the scrape interval of the connection in Grafana Default was 30s. Don't go above or equal to 1 m. Otherwise, dashboards that shows data at the 1m interval may not show any data.",
       "required": [],
       "title": "scrape_interval"
     },

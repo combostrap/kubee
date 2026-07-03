@@ -27,13 +27,19 @@ kubee --cluster cluster-name helmet play socks
 | proxy_password | string | `""` | Set Proxy Password |
 | proxy_port | int | `1080` | Set the Proxy Port |
 | proxy_user | string | `""` | Set Proxy User |
+| replicas | int | `0` | Number of replicas (Not up by default) |
 | require_auth | bool | `true` | Is Authentication Required |
 
 ## How it works
 
+* Scale it to one
+```bash
+kubee -n socks kubectl scale statefulset socks --replicas=1
+```
+
 * Create a tunnel to the socks proxy
 ```bash
-nkubee -n socks kubectl port-forward svc/socks-service 1080:1080
+kubee -n socks kubectl port-forward pod/socks-0 1080:1080
 ```
 ```
 Forwarding from 127.0.0.1:1080 -> 1080
@@ -45,8 +51,8 @@ curl --socks5 127.0.0.1:1080 https://ipinfo.io
 ```
 ```json
 {
-  "ip": "cluster Ip",
-  "hostname": "dnsname.com",
+  "ip": "your cluster Ip",
+  "hostname": "your reverse DNS (may be stale as it's cached)",
   "city": "xx",
   "region": "xx",
   "country": "xx",
@@ -55,6 +61,12 @@ curl --socks5 127.0.0.1:1080 https://ipinfo.io
   "postal": "xxx",
   "timezone": "Europe/xxx"
 }
+```
+
+* Stop it
+
+```bash
+kubee -n socks kubectl scale statefulset socks --replicas=0
 ```
 
 ## Note
