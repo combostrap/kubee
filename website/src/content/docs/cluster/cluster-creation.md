@@ -160,14 +160,7 @@ server-01.example.com | SUCCESS => {
 }
 ```
 
-How it works?
-
-Ultimately, we set the following [ANSIBLE_PRIVATE_KEY_FILE variable](https://docs.ansible.com/projects/ansible/latest/reference_appendices/config.html#default-private-key-file) if not yet set.
-
-```bash
-# /dev/shm for a temporary key
-export ANSIBLE_PRIVATE_KEY_FILE="/dev/shm/ssh-key"
-```
+No luck? Check the [not able to connect](../runbooks/ansible-unable-to-connect.md) runbook
 
 ### Execute the cluster installation
 

@@ -89,3 +89,9 @@ Other tests: https://technotim.live/posts/k3s-etcd-ansible/#testing-your-cluster
 * `kubectl` to talk to the server and install kustomize apps
 * `helm` to install helm package
 * `docker` to create and run image
+
+## Support
+
+### Can't connect ? How to debug a connection
+
+Check the [unable to connect with ansible](../runbooks/ansible-unable-to-connect.md) runbook.

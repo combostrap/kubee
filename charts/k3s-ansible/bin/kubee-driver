@@ -143,7 +143,12 @@ ping() {
     return 1
   fi
   set_private_key_file
-  if ! echo::eval "ansible -i $inventory all -m ping"; then
+  local ANSIBLE_DEBUG_FLAG=""
+  if [ "$BASHLIB_ECHO_LEVEL" == "$BASHLIB_ECHO_DEBUG_LEVEL" ]; then
+    # in the help: connection debugging might require -vvvv.
+    ANSIBLE_DEBUG_FLAG="-vvvv"
+  fi
+  if ! echo::eval "ansible $ANSIBLE_DEBUG_FLAG -i $inventory all -m ping"; then
     echo::err "Hosts unreachable"
     return 1
   fi
@@ -156,10 +161,12 @@ set_private_key_file() {
   export ANSIBLE_PRIVATE_KEY_FILE="${ANSIBLE_PRIVATE_KEY_FILE:-}"
   if [ "$ANSIBLE_PRIVATE_KEY_FILE" == "" ]; then
     if [ "${KUBEE_INFRA_CONNECTION_PRIVATE_KEY_FILE:-""}" != "" ]; then
+      echo::debug "KUBEE_INFRA_CONNECTION_PRIVATE_KEY_FILE env found using it to set ANSIBLE_PRIVATE_KEY_FILE"
       export ANSIBLE_PRIVATE_KEY_FILE="${KUBEE_CLUSTER_SERVER_CONNECTION_PRIVATE_KEY_FILE}"
     else
       if [ "${KUBEE_INFRA_CONNECTION_PRIVATE_KEY:-""}" != "" ]; then
 
+        echo::debug "KUBEE_INFRA_CONNECTION_PRIVATE_KEY env found using it to set ANSIBLE_PRIVATE_KEY_FILE"
         export ANSIBLE_PRIVATE_KEY_FILE="/dev/shm/ssh-key"
         echo "$KUBEE_INFRA_CONNECTION_PRIVATE_KEY" >| "$ANSIBLE_PRIVATE_KEY_FILE"
 
@@ -179,6 +186,8 @@ set_private_key_file() {
 
       fi
     fi
+  else
+    echo::debug "ANSIBLE_PRIVATE_KEY_FILE env found using it instead of KUBEE_INFRA_CONNECTION_PRIVATE_KEY env"
   fi
   if [ "${ANSIBLE_PRIVATE_KEY_FILE:-""}" != "" ]; then
     # to avoid Permissions 0644 for '/tmp/ssh-key' are too open
@@ -210,6 +219,14 @@ main() {
     echo::info "Ansible collections not found, installation"
     install_collections_required
     echo::info "Ansible collections installation done"
+  fi
+
+  if [ "${ANSIBLE_SSH_ARGS:-}" == "" ]; then
+    # add host key to ~/.ssh/known_hosts the first time, fail the next time
+    # to resolve: The authenticity of host 'xxxx (xxx)' can't be established.
+    echo::debug "Ansible collections installation done"
+    export ANSIBLE_SSH_ARGS="-o StrictHostKeyChecking=accept-new"
+    echo::debug "ANSIBLE_SSH_ARGS set to $ANSIBLE_SSH_ARGS"
   fi
 
   while [[ $# -gt 0 ]]; do

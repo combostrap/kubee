@@ -26,5 +26,5 @@ We allow encryption with [pass](kubeconfig-pass.md)
 
 ### Unable to connect
 
-Check [the unable to connect runbook](../runbooks/unable-to-connect.md)
+Check [the unable to connect runbook](../runbooks/kubectl-unable-to-connect.md)
 
