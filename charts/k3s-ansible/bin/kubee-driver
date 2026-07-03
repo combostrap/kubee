@@ -91,7 +91,17 @@ install_play() {
     return 1
   fi
   set_private_key_file
-  ansible-playbook -i "$inventory" ans_e.ans_e_base.kubee_site.yml
+  local ANSIBLE_DEBUG_FLAG=""
+  if [ "$BASHLIB_ECHO_LEVEL" == "$BASHLIB_ECHO_DEBUG_LEVEL" ]; then
+    # you need minimum 3 to see the command executed
+    ANSIBLE_DEBUG_FLAG="-vvvv"
+  fi
+  if ! echo::eval "ansible-playbook $ANSIBLE_DEBUG_FLAG -i $inventory ans_e.ans_e_base.kubee_site.yml"; then
+    echo::err "An error has occurred during play"
+    return 1
+  fi
+  return
+
 }
 
 restart() {

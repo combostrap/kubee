@@ -97,7 +97,7 @@
       "title": "restart_cron"
     },
     "server_args": {
-      "description": "The [k3s Server Args](https://docs.k3s.io/cli/server) Example: `--kube-apiserver-arg=\"admission-control-config-file=/var/lib/rancher/k3s/server/psa.yaml\"`",
+      "description": "The [k3s Server Args](https://docs.k3s.io/cli/server) Example: `--kube-apiserver-arg=admission-control-config-file=/var/lib/rancher/k3s/server/psa.yaml` Don't add any quote inside the args value otherwise it breaks the k3s service unit",
       "items": {
         "required": []
       },

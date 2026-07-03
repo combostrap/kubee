@@ -78,12 +78,13 @@ k3s_cluster:
     # https://docs.k3s.io/cli/server
     # --kube-apiserver-arg="admission-control-config-file=/var/lib/rancher/k3s/server/psa.yaml"
     # --datastore-endpoint=postgres://username:password@hostname:port/database-name
+    # Don't quote the `kube-apiserver` args: not --kube-apiserver-arg=\"oidc-client-id=kubernetes\" but --kube-apiserver-arg=oidc-client-id=kubernetes
     {{- $k3sServerArgs := .Values.server_args }}
     {{- if and (eq .Values.dex.enabled true) }}
-    {{- $k3sServerArgs = append $k3sServerArgs (printf "--kube-apiserver-arg=\"oidc-issuer-url=https://%s\"" .Values.dex.hostname) }}
-    {{- $k3sServerArgs = append $k3sServerArgs "--kube-apiserver-arg=\"oidc-client-id=kubernetes\"" }}
-    {{- $k3sServerArgs = append $k3sServerArgs "--kube-apiserver-arg=\"oidc-username-claim=email\"" }}
-    {{- $k3sServerArgs = append $k3sServerArgs "--kube-apiserver-arg=\"oidc-groups-claim=groups\"" }}
+    {{- $k3sServerArgs = append $k3sServerArgs (printf "--kube-apiserver-arg=oidc-issuer-url=https://%s" .Values.dex.hostname) }}
+    {{- $k3sServerArgs = append $k3sServerArgs "--kube-apiserver-arg=oidc-client-id=kubernetes" }}
+    {{- $k3sServerArgs = append $k3sServerArgs "--kube-apiserver-arg=oidc-username-claim=email" }}
+    {{- $k3sServerArgs = append $k3sServerArgs "--kube-apiserver-arg=oidc-groups-claim=groups" }}
     {{- end }}
     {{- if gt (len $k3sServerArgs) 0 }}
     k3s_extra_server_args:

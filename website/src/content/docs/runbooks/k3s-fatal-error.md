@@ -1,8 +1,10 @@
-# K3s fatal error
+---
+title: K3s fatal error
+---
 
 The steps to follow when the k3s service won't start
 
-## Steps
+## Steps / Information Gathering
 
 ### Check the config
 
@@ -73,6 +75,14 @@ journalctl -u k3s.service -b
 You can generate more detailed logs by using the `--debug` flag when starting K3s
 (or debug: true in the configuration file).
 
+### Get more information on the play with the debug flag
+
+You can add the `--debug` flag to see all variables.
+
+```bash
+kubee --debug --cluster "$KUBEE_CLUSTER_NAME" cluster play
+```
+
 ### Check the known-issues
 
 If no clue: https://docs.k3s.io/known-issues
@@ -85,6 +95,6 @@ If no clue: https://docs.k3s.io/known-issues
 # on server
 k3s kubectl cluster-info
 # on client
-kubee -c kubectl cluster-info
+kubee --cluster "$KUBEE_CLUSTER_NAME" kubectl cluster-info
 ```
 

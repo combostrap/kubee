@@ -26,13 +26,14 @@ k3s_extra_server_args:
   - --kube-apiserver-arg="oidc-groups-claim=groups"
 ```
 
-You can then log in with [kubelogin](https://github.com/int128/kubelogin)
+You can then log in with [kubelogin](../../website/src/content/docs/runbooks/config-kubelogin.md)
 
 ## Command
 
 ### Template
 
-Verify the configuration. The template will output the ansible inventory file
+Verify the configuration. The template will output the ansible inventory file.
+
 ```bash
 kubee --cluster clusterName helmet template k3s-ansible
 ```
@@ -117,6 +118,6 @@ Reboot will execute the [reboot playbook](https://github.com/k3s-io/k3s-ansible/
 | hosts.all.upgrade_cron | string | `"0 2 * * 0"` | [Optional] - Upgrade cron. A cron expression to schedule the upgrade of the os |
 | hosts.servers | list | `[]` | The Servers and their properties (Mandatory) The number of hosts server must be odd to avoid split brain issues with etcd The minimum number is: - 1 for a single server cluster - 3 for a [high availability cluster](https://docs.k3s.io/datastore/ha-embedded) |
 | restart_cron | string | `"0 11 * * *"` | A cron expression to schedule a k3s restart A restart is mandatory as k3s performs database operation at startup such as compaction. Restarting k3s does not stop the containers, the apps are still working |
-| server_args | list | `[]` | The [k3s Server Args](https://docs.k3s.io/cli/server) Example: `--kube-apiserver-arg="admission-control-config-file=/var/lib/rancher/k3s/server/psa.yaml"` |
+| server_args | list | `[]` | The [k3s Server Args](https://docs.k3s.io/cli/server) Example: `--kube-apiserver-arg=admission-control-config-file=/var/lib/rancher/k3s/server/psa.yaml` Don't add any quote inside the args value otherwise it breaks the k3s service unit |
 | token | string | `""` | The [k3s Token](https://docs.k3s.io/cli/token) (Mandatory). A random secret value that should not change ever because it's used to encrypt the data on disk. You can generate one with `openssl rand -base64 64 | tr -d '\n'`) |
 | version | string | `"v1.35.3+k3s1"` | The [K3s version](https://github.com/k3s-io/k3s/releases) |

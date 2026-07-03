@@ -41,6 +41,30 @@ There is no magic. All commands are:
 * printed to the shell (visible)
 * and can be re-executed at wil
 
+## Commands
+
+### Helmet - Play / Template
+
+```bash
+kubee [kubee option] helmet [helmet options] command chart-name
+# example
+nkubee --cluster "$KUBEE_CLUSTER_NAME" helmet --skip-schema-validation play external-secret
+```
+
+where options are:
+
+- `--show-only` - dry run
+- `--force` - with force
+- `--out`, `--out-dir`, `-o` - the output directory for the template
+- `--skip-schema-validation` - skip the schema validation
+
+### Helm - List all installed charts
+
+```bash
+kubee helm list --all-namespaces
+kubee helm list -A
+```
+
 ## FAQ
 
 ### What is a Kubee Helmet hart?

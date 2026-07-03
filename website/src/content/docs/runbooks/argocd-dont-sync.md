@@ -1,4 +1,6 @@
-# ArgoCd don't sync
+---
+title: ArgoCd don't sync
+---
 
 ## Check
 

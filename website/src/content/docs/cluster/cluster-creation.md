@@ -12,6 +12,19 @@ You can see clusters example at [clusters example](https://github.com/bytle/kube
 
 ## Steps
 
+### Helm 3 required
+
+We don't support yet version 4 as they changed the plugin architecture.
+
+Be sure to have version 3 only
+
+```bash
+helm version
+# othewise
+brew install helm@3
+brew link --force helm@3 # because it's keg only meaning that it's in its own directory because it does not follow the main helm
+```
+
 ### Create your clusters directory
 
 A `clusters directory` is a directory that contains one or more cluster directory.
@@ -160,7 +173,7 @@ server-01.example.com | SUCCESS => {
 }
 ```
 
-No luck? Check the [not able to connect](../runbooks/ansible-unable-to-connect.md) runbook
+No luck? Check the [not able to connect](../runbooks/unable-to-connect-to-hosts.md) runbook
 
 ### Execute the cluster installation
 
@@ -179,9 +192,61 @@ If the app is:
 * not installed, it will install and configure it
 * installed, it will configure it
 
+Any error? The k3s service does not start, check the [k3s fatal error](../runbooks/k3s-fatal-error.md) runbook
+
+### Check that the installation on the server
+
+* Check the config
+
+```bash
+k3s check-config
+```
+
+* Check that the service is running
+
+```bash
+systemctl status k3s.service
+```
+
+### Check that you can connect with kubectl
+
+* on server
+
+```bash
+k3s kubectl cluster-info
+```
+
+* on your laptop (on the client), the installation should have copied
+  the [kubeconfig](../general/kubeconfig-connection.md)
+
+```bash
+cat ~/.kube/config
+```
+
+If not present, you
+can [copy it from the server](../runbooks/kubectl-unable-to-connect.md#how-to-take-a-new-master-k3s-config-if-expired)
+
+Then, you can connect:
+
+```bash
+kubee --cluster "$KUBEE_CLUSTER_NAME" kubectl cluster-info
+```
+
+You should get:
+
+```txt
+Kubernetes control plane is running at https://x.x.x.x:6443
+CoreDNS is running at https://x.x.x.x:6443/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
+Metrics-server is running at https://x.x.x.x:6443/api/v1/namespaces/kube-system/services/https:metrics-server:https/proxy
+```
+
+If not and that the k3s service is running, check the [kubectl connect](../runbooks/kubectl-unable-to-connect.md)
+runbook
+
 ### Install applications in the Kubernetes app
 
-With [kubee helmet](../command/kubee-helmet.md), you can install apps with any [kubee charts](../helmet/helmet-chart.md)
+With [kubee helmet](../command/kubee-helmet.md), you can now install apps with
+any [kubee charts](../helmet/helmet-chart.md)
 
 Example:
 

@@ -1,4 +1,6 @@
-# Too Many Open files
+---
+title: Too Many Open files
+---
 
 ## The error
 

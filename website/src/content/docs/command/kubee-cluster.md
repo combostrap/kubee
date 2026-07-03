@@ -94,4 +94,4 @@ Other tests: https://technotim.live/posts/k3s-etcd-ansible/#testing-your-cluster
 
 ### Can't connect ? How to debug a connection
 
-Check the [unable to connect with ansible](../runbooks/ansible-unable-to-connect.md) runbook.
+Check the [unable to connect with ansible](../runbooks/unable-to-connect-to-hosts.md) runbook.

@@ -27,6 +27,8 @@ where:
   * \`upgrade\`             - Upgrade a Kubee Chart
   * \`values\`              - Shows the values content
 
+Options:
+- \`--skip-schema-validation\` - to skip schema validation when running helm
 
 EOF
 

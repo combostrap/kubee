@@ -195,5 +195,5 @@ esac
 
 # Cleaning
 if [ "$BASHLIB_ECHO_LEVEL" -gt "$BASHLIB_ECHO_COMMAND_LEVEL" ] && [ "$KUBEE_GARBAGE_COLLECTOR" == "on" ]; then
-  echo::eval "echo 'Cleaning Shm' > $COMMAND_STDOUT_FD; rm -f $KUBEE_RUNTIME_DIR/*"
+  echo::eval "echo 'Cleaning Shm' >$COMMAND_STDOUT_FD; rm -f $KUBEE_RUNTIME_DIR/*"
 fi
