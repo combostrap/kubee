@@ -20,14 +20,15 @@ k3s_extra_server_args:
   - --kube-apiserver-arg="oidc-groups-claim=groups"
 ```
 
-You can then log in with [kubelogin](https://github.com/int128/kubelogin)
+You can then log in with [kubelogin](../../website/src/content/docs/runbooks/config-kubelogin.md)
 
 
 ## Command
 
 ### Template
 
-Verify the configuration. The template will output the ansible inventory file
+Verify the configuration. The template will output the ansible inventory file.
+
 ```bash
 kubee --cluster clusterName helmet template k3s-ansible
 ```

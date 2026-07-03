@@ -16,9 +16,11 @@ synopsis(){
   echo '```'
   echo "where: command may be:"
   # shellcheck disable=SC2016
+  echo '  * `cluster-tls` : Print the cluster server TLS cert'
+  # shellcheck disable=SC2016
   echo '  * `config-client` : Print the client certificate chain found in the kubeconfig file'
   # shellcheck disable=SC2016
-  echo '  * `config-cluster` : Print the cluster certificate authority in the kubeconfig file'
+  echo '  * `config-certificate-authority` : Print the cluster certificate authority in the kubeconfig file (certificate-authority-data)'
   # shellcheck disable=SC2016
   echo '  * `secret-tls` : Print the tls certificate stored in a secret in plain text'
   # shellcheck disable=SC2016
@@ -137,18 +139,27 @@ function print_cert_secret(){
 
 }
 
+# The client cert for client authentication
 function print_cert_client_kubeconfig(){
   # openssl storeutl permits to read a bundle. Take a file as input
   # <() is a https://en.wikipedia.org/wiki/Process_substitution to give a file (ie URI)
   openssl storeutl -noout -text <(kubectl config view --minify --raw --output 'jsonpath={..user.client-certificate-data}' | base64 -d)
 }
 
+# The CA that signed the TLS cert
 function print_cert_cluster_kubeconfig(){
   # openssl storeutl permits to read a bundle. Take a file as input
   # <() is a https://en.wikipedia.org/wiki/Process_substitution to give a file (ie URI)
   openssl storeutl -noout -text <(kubectl config view --minify --raw --output 'jsonpath={..cluster.certificate-authority-data}' | base64 -d)
 }
 
+function print_cert_cluster_tls(){
+  local SERVER_URL
+  SERVER_URL=$(kubectl config view --minify --raw --output 'jsonpath={..cluster.server}')
+  local SERVER_WITHOUT_HTTPS
+  SERVER_WITHOUT_HTTPS="${SERVER_URL#https://}"
+  openssl s_client -connect "$SERVER_WITHOUT_HTTPS" -showcerts </dev/null 2>/dev/null | openssl x509 -noout -text
+}
 
 
 COMMAND=${1:-}
@@ -166,8 +177,11 @@ case "$COMMAND" in
   "config-client")
     print_cert_client_kubeconfig
     ;;
-  "config-cluster")
+  "config-certificate-authority")
     print_cert_cluster_kubeconfig
+    ;;
+  "cluster-tls")
+    print_cert_cluster_tls
     ;;
   "secret-ca")
     print_cert_secret -t "ca" "$@"
