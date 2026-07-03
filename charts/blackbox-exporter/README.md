@@ -19,7 +19,8 @@ so that you can reach it from the public net.
 
 ### Monitoring Alert and Dashboard
 
-This kubee chart will install the following [Rules and Dashboard Mixin](https://monitoring.mixins.dev/blackbox_exporter/)
+This kubee chart will install the
+following [Rules and Dashboard Mixin](https://monitoring.mixins.dev/blackbox_exporter/)
 
 ### Probe
 
@@ -75,6 +76,26 @@ kubee --cluster cluster-name helmet play blackbox-exporter
 | mixin.dashboard | object | `{}` |  |
 | namespace | string | `"monitoring"` | The installation namespace |
 | version | string | `"0.26.0"` | Blackbox exporter [version](https://github.com/prometheus/blackbox_exporter/releases) |
+
+## How to list/check/execute your probes
+
+To check your probes, go to the defined `hostname` ie `https://blackbox-hostname`
+
+You will get:
+* a list of your recent probes
+* the config at `https://blackbox-hostname/config`
+
+You can execute a probes with:
+
+```bash
+# http
+https://blackbox-hostname/probe?target=prometheus.io&module=http_2xx
+# dns
+https://blackbox-hostname/probe?target=1.1.1.1&module=your-dns_module
+```
+
+> [!TIP] Note that for DNS configuration, we recommend [DnsControl](https://dnscontrol.org/)
+or [OpenTofu (Open Terraform)](https://opentofu.org/)
 
 ## Contrib / Dev
 
