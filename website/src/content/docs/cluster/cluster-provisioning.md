@@ -12,7 +12,8 @@ kubee helmet play traefik # reverse proxy
 kubee helmet play prometheus # monitoring
 kubee helmet play grafana # monitoring
 kubee helmet play cert-manager # cert-manager
-kubee helmet play oauth2-proxy # authentication
+kubee helmet play dex # oidc authentication
+kubee helmet play oauth2-proxy # forward authentication to dex
 kubee helmet play vault # vault for secret
 kubee helmet play external-secrets # secret sync
 kubee helmet play argocd # devops

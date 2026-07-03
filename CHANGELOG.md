@@ -18,3 +18,4 @@ Fix:
 * Jsonnet command of `kubee-helm-post-render` used `sh` instead of `bash`
 * When the host was not in the `~/.ssh/known_hosts`, an ansible connection would fail.
   * With `ANSIBLE_SSH_ARGS="-o StrictHostKeyChecking=accept-new"`, the host key is added automatically.
+* Bug in [trust manager](charts/cert-manager/README.md) where the name of the bundle was not consistent between authorizedSecrets and bundle_name

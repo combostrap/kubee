@@ -127,7 +127,7 @@ trust-manager:
     enabled: true
     # We can't use a tpl with .Values.issuers.kubee.bundle_name because it will
     # not be good executing from another context when creating our values file
-    authorizedSecrets: [ 'kubee-cert-bundle' ]
+    authorizedSecrets: [ 'kubee-ca-bundle' ]
 
 # @ignored
 # Don't touch, used to block template output of cross dependency
