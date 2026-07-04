@@ -282,9 +282,24 @@ kubee::print_connection_env() {
 }
 
 # @description
+#     Take a kubeconfig from a context
+kubee::print_kubeconfig_from_pass() {
+
+  local path="$KUBEE_PASS_HOME/kubeconfig/$KUBEE_CONTEXT_NAME"
+  if ! KUBECONFIG_VALUE="$(pass "$path" )"; then
+    echo::warning "No kubeconfig file found in pass at $path"
+    return 1
+  fi
+  echo::debug "Kubeconfig found in pass at $path"
+  echo "$KUBECONFIG_VALUE"
+
+}
+
+# @description
 #     Generate a KUBECONFIG file from the pass manager
 #     No args, only global env
-kubee::print_kubeconfig_from_pass() {
+# deprecated for kubee::print_kubeconfig_from_pass
+kubee::print_kubeconfig_from_old() {
 
   # Paths
   PASS_CLIENT_TOKEN_PATH="$KUBEE_PASS_HOME/users/$KUBEE_USER_NAME/client-token"
@@ -391,9 +406,15 @@ kubee::set_kubeconfig_env() {
   local context
   context=$(kubectl config current-context)
   if [ "$context" != "$KUBEE_CONTEXT_NAME" ]; then
-    echo::err "Current Kubeconfig context ($context) is not the same as the current context ($KUBEE_CONTEXT_NAME)"
-    # we exit because the code does not check anything for now
-    exit 1
+    echo::debug "Current Context $context is not equal to the kubee context $KUBEE_CONTEXT_NAME"
+    echo::debug "Trying to switch"
+    if ! kubectl config use-context "$KUBEE_CONTEXT_NAME"; then
+        echo::err "Current Kubeconfig context ($context) is not the same as the current context ($KUBEE_CONTEXT_NAME)"
+        echo::err "And we were unable to switch to the context $KUBEE_CONTEXT_NAME"
+        echo::err "exiting"
+        # we exit because the code does not check anything for now
+        exit 1
+    fi
   fi
   echo::info "Connection Context (user@cluster) : $KUBEE_CONTEXT_NAME"
 
@@ -404,12 +425,16 @@ kubee::discover_kubeconfig(){
     if [ "${KUBECONFIG:-}" != "" ]; then
       echo::debug "KUBECONFIG env already set to: $KUBECONFIG"
       return
+    else
+      echo::debug "KUBECONFIG env not set"
     fi
 
     export KUBECONFIG="$HOME/.kube/config"
     if [ -f "$KUBECONFIG" ]; then
       echo::debug "KUBECONFIG set to the existing default config file: $KUBECONFIG"
       return
+    else
+      echo::debug "KUBECONFIG file ($KUBECONFIG) not found "
     fi
 
     if ! command::exists "pass"; then
@@ -428,9 +453,14 @@ kubee::discover_kubeconfig(){
     # Note: On kubectl, we could also just pass the data but we should
     # do that for all kubernetes clients (promtool, ...) and this is pretty hard
     KUBECONFIG="$KUBEE_RUNTIME_DIR/kubee-config" # we create a shared memory file because we test the presence of the file
+    # >| to force overwrite
     if ! kubee::print_kubeconfig_from_pass >| "$KUBECONFIG"; then
       echo::err "Error while generating the config file with pass"
       return 1
+    fi
+    if [ ! -f "$KUBECONFIG" ]; then
+      echo::err "Internal Error: KUBECONFIG path does not exist. Value:\n$KUBECONFIG"
+      exit 1
     fi
     chmod 0600 "$KUBECONFIG" # same permission as ssh key
 
@@ -487,6 +517,8 @@ kubee::set_env() {
     if [ ! -f "$KUBEE_CLUSTER_VALUES_FILE" ]; then
       echo::err "Cluster values file does not exist $KUBEE_CLUSTER_VALUES_FILE"
       return 1
+    else
+      echo::debug "Cluster values file found at $KUBEE_CLUSTER_VALUES_FILE"
     fi
 
   fi
@@ -497,7 +529,7 @@ kubee::set_env() {
   #############################
 
   ## Connection namespace
-  # The namespace for the connection (in the kubectx kubeconfig context)
+  # The namespace for the connection (in the kubectl kubeconfig context)
   KUBEE_CHART_NAMESPACE=${KUBEE_CHART_NAMESPACE:-"default"}
 
   # The username for the connection (in the kubeconfig context)"

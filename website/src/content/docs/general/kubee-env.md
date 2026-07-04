@@ -21,6 +21,27 @@ The cluster name is used:
 * in connection
 * in the detection of a cluster project
 
+### KUBEE_CONTEXT_NAME
+
+The context is string that concatenates the username and the cluster name
+
+```bash
+$KUBEE_USER_NAME@$KUBEE_CLUSTER_NAME
+```
+
+ie the expected value in the context file of the [kubeconfig file](kubeconfig-connection.md)
+
+```yaml
+apiVersion: v1
+kind: Config
+clusters: [ ]
+contexts: [ ]
+users: [ ]
+current-context: "$KUBEE_CONTEXT_NAME"
+```
+
+If they don't match, kubee stops the cluster connection.
+
 ### KUBEE_CLUSTERS_PATH
 
 `KUBEE_CLUSTERS_PATH` defines a list of directory path where you could find cluster definitions (environment, values and

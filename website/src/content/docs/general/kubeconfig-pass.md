@@ -2,12 +2,14 @@
 title:  KUBECONFIG with pass
 ---
 
+If `kubee` does not find a `KUBECONFIG` env or a default `~/.kube/config` file,
+it will try to retrieve from [pass](pass.md) with the following command
 
-`kubee` will generate a kube config file dynamically if
-* the `KUBECONFIG` env is not set
-* no default config file is found at `~/.kube/config`
-* the command [pass](pass.md) is found
-
+```bash
+pass "$KUBEE_PASS_HOME/kubeconfig/$KUBEE_CONTEXT_NAME"
+# by default
+pass "kubee/kubeconfig/default@$KUBEE_CLUSTER_NAME"
+```
 
 ## How
 
