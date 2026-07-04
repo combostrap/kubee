@@ -1,7 +1,6 @@
 ---
-title:  Kubee Kustomize Project Support
+title: Kubee Kustomize Project Support
 ---
-
 
 
 A [Kubee Helmet chart](helmet-chart.md) supports kustomization project.
@@ -9,10 +8,11 @@ A [Kubee Helmet chart](helmet-chart.md) supports kustomization project.
 ## Project Structure
 
 Your kustomization file:
+
 * can reference Helm templates directly. They will be rendered before passing them to `kustomize`
 * should be in the Chart project directory
-* can include the `${KUBEE_NAMESPACE}` environment variable. Why? To support [this case](https://argo-cd.readthedocs.io/en/stable/operator-manual/installation/#installing-argo-cd-in-a-custom-namespace)
-
+* can include the `${KUBEE_NAMESPACE}` environment variable. Why? To
+  support [this case](https://argo-cd.readthedocs.io/en/stable/operator-manual/installation/#installing-argo-cd-in-a-custom-namespace)
 
 ## Example of Kustomization File
 
@@ -42,3 +42,9 @@ resources:
 ## Example of Kustomization Project
 
 Check the [kubee-argocd](https://github.com/bytle/kubee/tree/main/charts/argocd) chart for a kustomization example.
+
+## How can I see the final output
+
+When using the [helmet template command](../command/kubee-helmet.md#helmet---play--template),
+the final file is located in the output directory at `out/chart-name/kustomized.yaml`.
+

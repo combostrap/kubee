@@ -1,0 +1,15 @@
+{{- /*
+  Rbac config: https://argo-cd.readthedocs.io/en/stable/operator-manual/rbac/
+  See example: https://argo-cd.readthedocs.io/en/stable/operator-manual/argocd-rbac-cm-yaml/
+  Actual definition is empty
+*/}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-rbac-cm
+  labels:
+    app.kubernetes.io/name: argocd-rbac-cm
+    app.kubernetes.io/part-of: argocd
+data:
+  # Every user logged in is an admin
+  policy.default: 'role:admin'

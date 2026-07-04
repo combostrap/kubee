@@ -66,4 +66,9 @@ dependencies:
     repository: file://../traefik
     alias: traefik
     condition: kubee_internal.install_cross_dependency
+  - name: kubee-dex
+    version: 0.0.1
+    repository: file://../dex
+    alias: dex
+    condition: kubee_internal.install_cross_dependency
 

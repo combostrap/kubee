@@ -39,13 +39,25 @@ This chart comes prepackaged with the [ArgoCd Monitoring mixin](https://monitori
 Rules and Dashboards)
 
 ### CPU and memory control
+
 CPU and memory spike on Sync needs to be controlled. We [configure them by default](contrib/argocd-cpu-memory-spikes.md)
+
+### How to enable SSO Dex Authentication
+
+If the argocd client secret in the argocd chart is not empty, the authentication via [dex](https://github.com/bytle/kubee/blob/main/charts/dex/README.md) will be enabled
+when installing this chart.
+
+2 things:
+
+* the TLS verification is disabled (bug, the server don't have the letsencrypt certificate)
+* every user defined in Dex becomes a ArgoCd admin because Dex does not support any group.
 
 ### Kubee Charts Features
 
   These [kubee charts](https://kubee.bytle.net/helmet/helmet-chart) add their features when `enabled`.
 
 * [cert-manager](https://github.com/bytle/kubee/blob/main/charts/cert-manager/README.md) adds [server certificates](https://cert-manager.io/docs/usage/certificate/) to the servers
+* [dex](https://github.com/bytle/kubee/blob/main/charts/dex/README.md)  adds Oidc Auth integration
 * [external-secrets](https://github.com/bytle/kubee/blob/main/charts/external-secrets/README.md) defines secret as [external secrets](https://external-secrets.io/latest/introduction/getting-started/#create-your-first-externalsecret) for GitOps integration (if chosen)
 * [grafana](https://github.com/bytle/kubee/blob/main/charts/grafana/README.md) creates [dashboards](https://grafana.com/grafana/dashboards/)
 * [prometheus](https://github.com/bytle/kubee/blob/main/charts/prometheus/README.md) creates [metrics scraping jobs](https://prometheus.io/docs/concepts/jobs_instances/) and [alert rules](https://prometheus.io/docs/prometheus/latest/configuration/alerting_rules/)
@@ -69,11 +81,13 @@ For the whole set of values, see the [values file](values.yaml)
 
 ## How to restart after a configuration change
 
-ArgoCD watches configuration via the argocd-repo-server
+ArgoCD watches configuration via the `argocd-repo-server`
 If it does not work, here a snippet to restart a couple of deployment
+
 ```bash
 kubee kubectl rollout restart -n argocd deployment argocd-applicationset-controller
 kubee kubectl rollout restart -n argocd deployment argocd-repo-server
+kubee kubectl rollout restart -n argocd deployment argocd-server
 ```
 
 ## Concept

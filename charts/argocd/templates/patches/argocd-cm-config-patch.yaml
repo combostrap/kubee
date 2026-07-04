@@ -1,0 +1,36 @@
+{{- /*
+  https://argo-cd.readthedocs.io/en/stable/operator-manual/argocd-cm-yaml/
+  See actual definition here:
+  https://github.com/argoproj/argo-cd/blob/b8508f29162b91a547ec94b25df8e1011c6576fb/docs/operator-manual/argocd-cm.yaml
+*/}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-cm
+  labels:
+    app.kubernetes.io/name: argocd-cm
+    app.kubernetes.io/part-of: argocd
+data:
+  {{- if and (eq .Values.dex.enabled true) (ne .Values.dex.clients.argocd.secret "")}}
+  {{- /*
+    https://argo-cd.readthedocs.io/en/stable/operator-manual/user-management/#existing-oidc-provider
+    https://github.com/argoproj/argo-cd/blob/b8508f29162b91a547ec94b25df8e1011c6576fb/docs/operator-manual/argocd-cm.yaml#L79
+  */}}
+  url: "https://{{.Values.hostname}}"
+  {{- /* https://argo-cd.readthedocs.io/en/stable/operator-manual/user-management/#disable-admin-user */}}
+  admin.enabled: "false"
+  oidc.config: |
+    name: Dex
+    issuer: https://{{ required "dex.hostname" .Values.dex.hostname}}
+    clientID: {{ required "dex.clients.argocd.client_id is required" .Values.dex.clients.argocd.client_id}}
+    cliClientID: {{ .Values.dex.clients.argocd_cli.client_id }}
+    # secret is in in argocd-secret
+    clientSecret: $oidc.dex.clientSecret
+  {{- end}}
+  {{- /*
+    https://github.com/argoproj/argo-cd/blob/b8508f29162b91a547ec94b25df8e1011c6576fb/docs/operator-manual/argocd-cm.yaml#L364
+    The argocd server cannot verify the letsecnrypt server certificate
+    Get \"https://dex-/.well-known/openid-configuration\": tls:
+    failed to verify certificate: x509: certificate signed by unknown authority
+  */}}
+  oidc.tls.insecure.skip.verify: "false"

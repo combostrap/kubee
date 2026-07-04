@@ -1,3 +1,4 @@
+As of today, the dex deployment does not depend on its configuration.
 Don't forget to restart the deployment if the configs have changed
 
 ```bash

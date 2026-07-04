@@ -21,7 +21,7 @@ version: 0.0.1
 # incremented each time you make changes to the application. Versions are not expected to
 # follow Semantic Versioning. They should reflect the version the application is using.
 # It is recommended to use it with quotes.
-appVersion: "0.22.1" # The version of the app packaged
+appVersion: "2.45.1" # change it also in values.yml as dex.image.tag
 
 annotations:
   app.kubernetes.io/name: 'dex'
@@ -43,7 +43,7 @@ dependencies:
     # helm repo add dex https://charts.dexidp.io/
     # or helm search repo dex/dex -l
     repository: https://charts.dexidp.io/
-    version: 0.22.1
+    version: 0.24.1
     alias: dex
   - name: kubee-traefik
     version: 0.0.1
@@ -55,3 +55,8 @@ dependencies:
     alias: cert_manager
     condition: kubee_internal.install_cross_dependency
     repository: file://../cert-manager
+  - name: kubee-argocd
+    version: 0.0.1
+    alias: argocd
+    condition: kubee_internal.install_cross_dependency
+    repository: file://../argocd

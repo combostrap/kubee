@@ -55,6 +55,28 @@ clients:
     # The oidc client secret (It is used to exchange the code between oauth2-proxy and dex).
     # Example: `openssl rand -base64 32`
     secret: ''
+  # -- ArgoCd Web client
+  argocd:
+    # @schema
+    # const: 'argocd'
+    # @schema
+    # The argocd web client id.
+    # If changed, argocd needs to be redeployed
+    client_id: 'argocd'
+    # @schema
+    # title: 'The argocd client id secret'
+    # @schema
+    # The argocd client secret (It is used to exchange the code between argocd and dex).
+    # Example: `openssl rand -base64 32`
+    secret: ''
+  # -- ArgoCd terminal client (ie argocd login)
+  argocd_cli:
+    # @schema
+    # const: 'argocd-cli'
+    # @schema
+    # The argocd terminal client id.
+    # If changed, argocd needs to be redeployed
+    client_id: 'argocd-cli'
   # -- Kubectl (ie kubectl oidc-login)
   # Added if the secret is not empty
   kubectl:
@@ -119,7 +141,7 @@ dex:
     name: "dex-kubee-config"
   image:
     # https://github.com/dexidp/dex/releases
-    tag: 'v2.41.1'
+    tag: 'v2.45.1'
   https:
     # False because it enable it with only one flag via command line and it conflicts with the configuration
     enabled: true

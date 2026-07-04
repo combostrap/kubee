@@ -11,6 +11,8 @@ patches:
   # Patch needed to apply the server transport via annotation to disable tls validation from Traefik
   - path: templates/patches/argocd-application-controller.yaml
   - path: templates/patches/argocd-cmd-params-cm.yaml
+  - path: templates/patches/argocd-cm-config-patch.yaml
+  - path: templates/patches/argocd-rbac-cm-config-patch.yaml
   - path: templates/patches/argocd-notifications-cm.yaml
   - path: templates/patches/argocd-notifications-secret-patch.yaml
   - path: templates/patches/argocd-secret-patch.yaml

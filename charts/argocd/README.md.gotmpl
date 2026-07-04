@@ -31,14 +31,22 @@ get [mailing and a on-deployed notifications](https://argo-cd.readthedocs.io/en/
 This chart comes prepackaged with the [ArgoCd Monitoring mixin](https://monitoring.mixins.dev/argo-cd-2/) (Prometheus
 Rules and Dashboards)
 
-
 ### CPU and memory control
+
 CPU and memory spike on Sync needs to be controlled. We [configure them by default](contrib/argocd-cpu-memory-spikes.md)
+
+### Dex Authentication
+
+If the argocd client secret in the {{ template "kubee-chart-page-label" "dex" }} chart is not empty, the authentication via {{ template "kubee-chart-page-label" "dex" }} will be enabled
+when installing this chart.
+
+2 things:
+
+* the TLS verification from argocd is disabled (bug, the argocd server don't have the letsencrypt CA certificate)
+* every user defined in Dex becomes a ArgoCd admin because Dex does not support any group.
 
 
 {{ template "kubee-chart-features-section" . }}
-
-
 
 
 {{ template "chart.valuesSection" . }}
@@ -47,11 +55,13 @@ For the whole set of values, see the [values file](values.yaml)
 
 ## How to restart after a configuration change
 
-ArgoCD watches configuration via the argocd-repo-server
+ArgoCD watches configuration via the `argocd-repo-server`
 If it does not work, here a snippet to restart a couple of deployment
+
 ```bash
 kubee kubectl rollout restart -n argocd deployment argocd-applicationset-controller
 kubee kubectl rollout restart -n argocd deployment argocd-repo-server
+kubee kubectl rollout restart -n argocd deployment argocd-server
 ```
 
 ## Concept

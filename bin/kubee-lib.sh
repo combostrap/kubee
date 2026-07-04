@@ -383,37 +383,56 @@ kubee::set_kubeconfig_env_and_check() {
 #     as it will also trigger a gpg pinentry
 kubee::set_kubeconfig_env() {
 
-  if [ "${KUBECONFIG:-}" != "" ]; then
-    echo::debug "KUBECONFIG env already set to: $KUBECONFIG"
-    return
-  fi
-
-  export KUBECONFIG="$HOME/.kube/config"
-  if [ -f "$KUBECONFIG" ]; then
-    echo::debug "KUBECONFIG set to the existing default config file: $KUBECONFIG"
-    return
-  fi
-
-  if ! command::exists "pass"; then
-    echo::err "KUBECONFIG was not found"
-    echo::err "The pass command was not found, we cannot generate a KUBECONFIG file"
+  if ! kubee::discover_kubeconfig; then
     return 1
   fi
-  # Config does not work with process substitution (ie /dev/
-  # It seems that it starts another process deleting/closing the file descriptor
 
-  # Trap work exit  also on source
-  # https://stackoverflow.com/questions/69614179/bash-trap-not-working-when-script-is-sourced
-  # As what we want is to delete it after the main script
-  # We just output the trap statement
-  # Note: On kubectl, we could also just pass the data but we should
-  # do that for all kubernetes clients (promtool, ...) and this is pretty hard
-  KUBECONFIG="$KUBEE_RUNTIME_DIR/kubee-config" # we create a shared memory file because we test the presence of the file
-  if ! kubee::print_kubeconfig_from_pass >| "$KUBECONFIG"; then
-    echo::err "Error while generating the config file with pass"
-    return 1
+  # check the config
+  local context
+  context=$(kubectl config current-context)
+  if [ "$context" != "$KUBEE_CONTEXT_NAME" ]; then
+    echo::err "Current Kubeconfig context ($context) is not the same as the current context ($KUBEE_CONTEXT_NAME)"
+    # we exit because the code does not check anything for now
+    exit 1
   fi
-  chmod 0600 "$KUBECONFIG" # same permission as ssh key
+  echo::info "Connection Context (user@cluster) : $KUBEE_CONTEXT_NAME"
+
+}
+
+kubee::discover_kubeconfig(){
+
+    if [ "${KUBECONFIG:-}" != "" ]; then
+      echo::debug "KUBECONFIG env already set to: $KUBECONFIG"
+      return
+    fi
+
+    export KUBECONFIG="$HOME/.kube/config"
+    if [ -f "$KUBECONFIG" ]; then
+      echo::debug "KUBECONFIG set to the existing default config file: $KUBECONFIG"
+      return
+    fi
+
+    if ! command::exists "pass"; then
+      echo::err "KUBECONFIG was not found"
+      echo::err "The pass command was not found, we cannot generate a KUBECONFIG file"
+      return 1
+    fi
+
+    # Config does not work with process substitution (ie /dev/
+    # It seems that it starts another process deleting/closing the file descriptor
+
+    # Trap work exit  also on source
+    # https://stackoverflow.com/questions/69614179/bash-trap-not-working-when-script-is-sourced
+    # As what we want is to delete it after the main script
+    # We just output the trap statement
+    # Note: On kubectl, we could also just pass the data but we should
+    # do that for all kubernetes clients (promtool, ...) and this is pretty hard
+    KUBECONFIG="$KUBEE_RUNTIME_DIR/kubee-config" # we create a shared memory file because we test the presence of the file
+    if ! kubee::print_kubeconfig_from_pass >| "$KUBECONFIG"; then
+      echo::err "Error while generating the config file with pass"
+      return 1
+    fi
+    chmod 0600 "$KUBECONFIG" # same permission as ssh key
 
 }
 
@@ -488,7 +507,7 @@ kubee::set_env() {
   KUBEE_CONNECTION_NAMESPACE=${KUBEE_CONNECTION_NAMESPACE:-"default"}
 
   # The name of the context (in kubectx kubeconfig)"
-  KUBEE_CONTEXT_NAME=${KUBEE_CONTEXT_NAME:-"$KUBEE_USER_NAME@$KUBEE_CLUSTER_NAME/$KUBEE_CONNECTION_NAMESPACE"}
+  KUBEE_CONTEXT_NAME=${KUBEE_CONTEXT_NAME:-"$KUBEE_USER_NAME@$KUBEE_CLUSTER_NAME"}
 
   # The directory for the kubeconfig data in the pass store manager"
   KUBEE_PASS_HOME=${KUBEE_PASS_HOME:-"kubee"}

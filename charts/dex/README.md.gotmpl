@@ -1,4 +1,3 @@
-
 {{ template "kubee-header" .}}
 
 This {{ template "kubee-app-chart-label" "Kubee App Chart"}} installs the [dex identity provider](https://dexidp.io/).
@@ -11,6 +10,7 @@ This {{ template "kubee-app-chart-label" "Kubee App Chart"}} installs the [dex i
 ## Features
 
 ### Automatic Users
+
 The {{ template "kubee-admin-user-label" "admin user" }} is created with its email as login.
 
 ### Auth Form Protection
@@ -21,9 +21,10 @@ This chart will protect the authentication form with HTTP authentication headers
 
 If their secret value is not empty, the following clients are added:
 
-* {{ template "kubee-chart-page-label" "oauth2-proxy" }} (if {{ template "kubee-enabled-label" "enabled" }})
-* {{ template "kubee-chart-page-label" "postal" }} (if {{ template "kubee-enabled-label" "enabled" }})
-* {{ template "kubee-kubectl-label" "kubectl" }} 
+* {{ template "kubee-chart-page-label" "oauth2-proxy" }} (if {{ template "kubee-enabled-label" "enabled" }} and secret is not empty)
+* {{ template "kubee-chart-page-label" "postal" }} (if {{ template "kubee-enabled-label" "enabled" }} and secret is not empty)
+* {{ template "kubee-chart-page-label" "argocd" }} (if {{ template "kubee-enabled-label" "enabled" }} and secret is not empty)
+* {{ template "kubee-kubectl-label" "kubectl" }}
 
 {{ template "kubee-chart-features-section" . }}
 
