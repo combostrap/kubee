@@ -106,7 +106,7 @@ distributions:
       # noinspection YAMLSchemaValidation
       dependencies:
         # https://formulae.brew.sh/formula/ansible
-        ansible: 'null'
+        "ansible@14": 'null'
         "helm@3": 'null'
       extraProperties:
         # Don't add java as dependency

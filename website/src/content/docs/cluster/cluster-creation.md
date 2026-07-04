@@ -12,17 +12,27 @@ You can see clusters example at [clusters example](https://github.com/bytle/kube
 
 ## Steps
 
-### Helm 3 required
+### Versions (Helm 3 required)
 
-We don't support yet version 4 as they changed the plugin architecture.
+When installing with brew, the version are already set for you.
 
-Be sure to have version 3 only
+For Helm, we don't support yet version 4 as they changed
+the [post renderer as plugin](https://helm.sh/docs/overview/#post-renderers-implemented-as-plugins).
+
+Be sure to have version 3 only.
 
 ```bash
 helm version
 # othewise
 brew install helm@3
 brew link --force helm@3 # because it's keg only meaning that it's in its own directory because it does not follow the main helm
+```
+
+We develop also with the ansible version 14
+
+```bash
+brew install ansible@14
+brew link --force ansible@14 # because it's keg only meaning that it's in its own directory because it does not follow the main helm
 ```
 
 ### Create your clusters directory
