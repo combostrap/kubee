@@ -27,10 +27,10 @@ cert_manager:
   enabled: true
 ```
 
-### Deploy
+## Installation
 
 ```bash
-kubee --cluster clusterName helmet play cert-manager
+kubee --cluster cluster-name helmet play cert-manager
 ```
 
 ### Change the default issuer

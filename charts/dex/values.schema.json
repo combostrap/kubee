@@ -4,6 +4,40 @@
     "clients": {
       "description": " https://dexidp.io/docs/guides/using-dex/#configuring-your-app",
       "properties": {
+        "argocd": {
+          "description": "ArgoCd Web client",
+          "properties": {
+            "client_id": {
+              "const": "argocd",
+              "default": "argocd",
+              "description": " const: 'argocd' @schema The argocd web client id. If changed, argocd needs to be redeployed",
+              "required": [],
+              "title": "client_id"
+            },
+            "secret": {
+              "default": "",
+              "description": " title: 'The argocd client id secret' @schema The argocd client secret (It is used to exchange the code between argocd and dex). Example: `openssl rand -base64 32`",
+              "required": [],
+              "title": "The argocd client id secret"
+            }
+          },
+          "required": [],
+          "title": "argocd"
+        },
+        "argocd_cli": {
+          "description": "ArgoCd terminal client (ie argocd login)",
+          "properties": {
+            "client_id": {
+              "const": "argocd-cli",
+              "default": "argocd-cli",
+              "description": " const: 'argocd-cli' @schema The argocd terminal client id. If changed, argocd needs to be redeployed",
+              "required": [],
+              "title": "client_id"
+            }
+          },
+          "required": [],
+          "title": "argocd_cli"
+        },
         "kubectl": {
           "description": "Kubectl (ie kubectl oidc-login) Added if the secret is not empty",
           "properties": {
@@ -298,7 +332,7 @@
         "image": {
           "properties": {
             "tag": {
-              "default": "v2.41.1",
+              "default": "v2.45.1",
               "description": "https://github.com/dexidp/dex/releases",
               "required": [],
               "title": "tag",

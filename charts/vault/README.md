@@ -6,7 +6,8 @@
 
 # Kubee Vault Chart
 
-A [Kubee App Chart](https://kubee.bytle.net/helmet/app-chart) that [installs Vault](https://developer.hashicorp.com/vault/docs/platform/k8s)
+A [Kubee App Chart](https://kubee.bytle.net/helmet/app-chart)
+that [installs Vault](https://developer.hashicorp.com/vault/docs/platform/k8s)
 in a standalone mode.
 
 ## Installation
@@ -31,4 +32,34 @@ kubee --cluster cluster-name helmet play vault
 | hostname | string | `""` | The public hostname |
 | namespace | string | `"vault"` | The installation namespace |
 | vault | object | | The [vault values](https://github.com/hashicorp/vault-helm/blob/v0.28.0/values.yaml) |
+
+## Init after installation
+
+To [init](https://developer.hashicorp.com/vault/docs/commands/operator/init) and unsealed the vault, you can do it:
+* with the [vault-init-unseal script](../../website/src/content/docs/command/kubee-vault-init-unseal.md) on the
+* manually by going to the hostname with your browser
+
+Manually, on the home page,
+* choose your key-shares and key-threshold. The default are:
+    * `5` for key-shares (ie the number of key created)
+    * `3` for key-threshold (the number of keys to give to unseal the vault when it was restarted)
+* download the key file. Example of key file for `3` key-shares
+```json
+{
+  "keys": [
+    "3668cxxxx",
+    "38cd6xxx",
+    "f0774xx"
+  ],
+  "keys_base64": [
+    "NmjCy/xx",
+    "OM1qMdxx",
+    "8HdJLFxx"
+  ],
+  "root_token": "hvs.xxx"
+}
+```
+where:
+* the `keys` are asked every time the vault restart to unsealed
+* the `root_token` is a root login token
 

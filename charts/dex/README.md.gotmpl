@@ -1,30 +1,8 @@
-{{ template "kubee-header" .}}
-
-This {{ template "kubee-app-chart-label" "Kubee App Chart"}} installs the [dex identity provider](https://dexidp.io/).
-
-`Dex` supports:
-* a local password store
-* and connectors to other open identity provider
-
-
-## Features
-
-### Automatic Users
-
-The {{ template "kubee-admin-user-label" "admin user" }} is created with its email as login.
-
-### Auth Form Protection
-
-This chart will protect the authentication form with HTTP authentication headers.
-
-### Automatic Clients
-
-If their secret value is not empty, the following clients are added:
-
-* {{ template "kubee-chart-page-label" "oauth2-proxy" }} (if {{ template "kubee-enabled-label" "enabled" }} and secret is not empty)
-* {{ template "kubee-chart-page-label" "postal" }} (if {{ template "kubee-enabled-label" "enabled" }} and secret is not empty)
+ (if {{ template "kubee-enabled-label" "enabled" }} and secret
+  is not empty)
 * {{ template "kubee-chart-page-label" "argocd" }} (if {{ template "kubee-enabled-label" "enabled" }} and secret is not empty)
 * {{ template "kubee-kubectl-label" "kubectl" }}
+* {{ template "kubee-chart-page-label" "postal" }} (if {{ template "kubee-enabled-label" "enabled" }} and secret is not empty)
 
 {{ template "kubee-chart-features-section" . }}
 
@@ -54,6 +32,12 @@ DEX_FORWARD_AUTH_CLI_SECRET=$(pass "cluster_name/dex/forward-auth-cli-secret")
 ```
 
 {{ template "kubee-installation-instruction" . }}
+
+Check the installation (hostname, cert) by hitting the discovery endpoint:
+
+```bash
+curl https://hostname/.well-known/openid-configuration
+```
 
 {{ template "chart.valuesSection" . }}
 | dex | object | | [Chart Dex values](https://github.com/dexidp/helm-charts/blob/dex-{{ template "chart.appVersion" . }}/charts/dex/values.yaml) |

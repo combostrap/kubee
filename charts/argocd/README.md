@@ -42,14 +42,14 @@ Rules and Dashboards)
 
 CPU and memory spike on Sync needs to be controlled. We [configure them by default](contrib/argocd-cpu-memory-spikes.md)
 
-### How to enable SSO Dex Authentication
+### Dex Authentication
 
-If the argocd client secret in the argocd chart is not empty, the authentication via [dex](https://github.com/bytle/kubee/blob/main/charts/dex/README.md) will be enabled
+If the argocd client secret in the [dex](https://github.com/bytle/kubee/blob/main/charts/dex/README.md) chart is not empty, the authentication via [dex](https://github.com/bytle/kubee/blob/main/charts/dex/README.md) will be enabled
 when installing this chart.
 
 2 things:
 
-* the TLS verification is disabled (bug, the server don't have the letsencrypt certificate)
+* the TLS verification from argocd is disabled (bug, the argocd server don't have the letsencrypt CA certificate)
 * every user defined in Dex becomes a ArgoCd admin because Dex does not support any group.
 
 ### Kubee Charts Features

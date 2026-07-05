@@ -1,5 +1,7 @@
 # Ignore charts dependencies directories
 # Should be at the root of repo see issue: https://github.com/norwoodj/helm-docs/issues/206
+charts/trust-manager-crds/charts
+charts/grafana-crds/charts
 charts/oauth2-proxy/charts
 charts/prometheus/charts
 charts/pushgateway/charts
@@ -7,6 +9,7 @@ charts/kuberhealthy/charts
 charts/mailpit/charts
 charts/keycloak/charts
 charts/vault/charts
+charts/external-secrets-crds/charts
 charts/node-exporter/charts
 charts/argocd/charts
 charts/k3s-ansible/charts
@@ -21,6 +24,7 @@ charts/kuberhealthy-crds/charts
 charts/alertmanager/charts
 charts/healthchecks/charts
 charts/traefik/charts
+charts/cert-manager-crds/charts
 charts/whoami/charts
 charts/external-dns/charts
 charts/cluster/charts
