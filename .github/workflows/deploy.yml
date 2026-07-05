@@ -28,6 +28,11 @@ concurrency:
 env:
   WEBSITE_DIR: ./website
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 jobs:
   build:
     name: Build
@@ -36,22 +41,26 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Enable Corepack
+        run: corepack enable
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
-          cache: npm
+          node-version: 22
+          cache: yarn
+          cache-dependency-path: ${{ env.WEBSITE_DIR }}/package-lock.json
 
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
 
       - name: Install dependencies
-        run: npm ci
+        run: yarn install --frozen-lockfile
         working-directory: ${{ env.WEBSITE_DIR }}
 
       - name: Build Astro site
-        run: npm run build
+        run: yarn build
         working-directory: ${{ env.WEBSITE_DIR }}
 #        env:
 #          SITE: ${{ steps.pages.outputs.origin }}

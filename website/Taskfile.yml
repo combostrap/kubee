@@ -1,0 +1,7 @@
+version: '3'
+
+tasks:
+  deploy:
+    cmds:
+      - |
+        git tag -f early-access && git push -f origin early-access
