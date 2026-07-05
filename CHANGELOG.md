@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## 0.1.2
+
 New:
 
 * Added `cluster-tls` in the [cert command](website/src/content/docs/command/kubee-cert.md) to read a TLS cert of the

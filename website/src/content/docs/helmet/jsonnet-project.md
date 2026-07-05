@@ -78,7 +78,7 @@ local values =  {
 ## Data Validation
 
 To validate, you can take example in
-our [validation library](https://github.com/bytle/kubee/blob/785a4ca9877eb5d9facf4c4472e0b630d123a3b9/charts/alertmanager/jsonnet/kubee/validation.libsonnet).
+our [validation library](https://github.com/combostrap/kubee/blob/785a4ca9877eb5d9facf4c4472e0b630d123a3b9/charts/alertmanager/jsonnet/kubee/validation.libsonnet).
 
 Minimal Example:
 

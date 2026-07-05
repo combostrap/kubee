@@ -6,7 +6,7 @@
 
 # Kubee K3s-ansible Cluster Chart
 
-This [Kubee chart](https://kubee.bytle.net/helmet/helmet-chart) is a [cluster chart](https://kubee.bytle.net/helmet/cluster-chart)
+This [Kubee chart](https://kubee.combostrap.com/helmet/helmet-chart) is a [cluster chart](https://kubee.combostrap.com/helmet/cluster-chart)
 that will install [k3s Kubernetes distribution](https://docs.k3s.io/) on your hosts
 with the [official k3s-ansible playbooks](https://github.com/k3s-io/k3s-ansible).
 

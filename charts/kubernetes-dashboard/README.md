@@ -6,7 +6,7 @@
 
 # Kubee Kubernetes Dashboard Chart
 
-The `Kubee Kubernetes Dashboard Chart` is a [Kubee App Chart](https://kubee.bytle.net/helmet/app-chart) that installs the [kubernetes-dashboard](https://github.com/kubernetes/dashboard).
+The `Kubee Kubernetes Dashboard Chart` is a [Kubee App Chart](https://kubee.combostrap.com/helmet/app-chart) that installs the [kubernetes-dashboard](https://github.com/kubernetes/dashboard).
 
 ## Features
 
@@ -18,10 +18,10 @@ can log in via your identity provider.
 
 ### Kubee Charts Features
 
-  These [kubee charts](https://kubee.bytle.net/helmet/helmet-chart) add their features when `enabled`.
+  These [kubee charts](https://kubee.combostrap.com/helmet/helmet-chart) add their features when `enabled`.
 
-* [cert-manager](https://github.com/bytle/kubee/blob/main/charts/cert-manager/README.md) adds [server certificates](https://cert-manager.io/docs/usage/certificate/) to the servers
-* [traefik](https://github.com/bytle/kubee/blob/main/charts/traefik/README.md) creates an [ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/) if hostnames are defined
+* [cert-manager](https://github.com/combostrap/kubee/blob/main/charts/cert-manager/README.md) adds [server certificates](https://cert-manager.io/docs/usage/certificate/) to the servers
+* [traefik](https://github.com/combostrap/kubee/blob/main/charts/traefik/README.md) creates an [ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/) if hostnames are defined
 
 ## Installation Steps
 

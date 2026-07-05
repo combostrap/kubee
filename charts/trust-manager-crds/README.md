@@ -6,7 +6,7 @@
 
 # Kubee Trust manager crds chart
 
-This [kubee crds chart](https://kubee.bytle.net/helmet/crds-chart) installs the CRDs of [trust manager](https://cert-manager.io/docs/trust/trust-manager/)
+This [kubee crds chart](https://kubee.combostrap.com/helmet/crds-chart) installs the CRDs of [trust manager](https://cert-manager.io/docs/trust/trust-manager/)
 
 It's a dependency of the [Kubee Cert Manager Chart](../cert-manager/README.md)
 

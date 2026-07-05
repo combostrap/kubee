@@ -29,11 +29,19 @@ tasks:
     cmds:
       - |
         {{.TASKFILE_DIR}}/bin/kubee helmet update-dependencies $(basename {{.USER_WORKING_DIR}})
-  # recreate the /charts directory
+  # recreate the /charts dependency directory
   dep-force:
     cmds:
       - |
         {{.TASKFILE_DIR}}/bin/kubee helmet update-dependencies -f $(basename {{.USER_WORKING_DIR}})
+  # recreate all /charts dependency directory everywhere
+  # used before releasing when a lot of charts are just broken, due to code change
+  # we filter out crds, k3s-ansible and retired charts
+  # To filter the list of processed charts, change the dir >= "xxx" in the awk filter
+  dep-force-all:
+    cmds:
+      - |
+        find "{{.TASK_DIR}}/charts" -maxdepth 2 -mindepth 1 -type f  -name "Chart.yaml"  | sort | awk -F/ '{dir=$(NF-1)} dir >= "kubernetes-dashboard"' | xargs -I {} bash -c 'chartPath="$(dirname {})"; cd "$chartPath"; [[ "$chartPath" == *-crds  ]] && exit 0; [[ "$chartPath" == *k3s-ansible  ]] && exit 0; [[ "$chartPath" == *values  ]] && exit 0; statusline="$(grep chart.kubee/status Chart.yaml)" && [[ "$statusline" == *retired* ]] && exit 0; task dep-force || exit 255'
   # Generate the values.schema.json
   schema:
     cmds:
@@ -43,10 +51,11 @@ tasks:
           exit 0
         fi
         COMMAND="helm schema --chart-search-root {{.USER_WORKING_DIR}} --helm-docs-compatibility-mode -k additionalProperties"
-        # dependency filter is due to this Traefik error
+        # dependency filter filter out the dependencies
+        # This is due to this Traefik error
         # FATA[2025-03-11T14:44:41+01:00] Error while parsing comment of key kind: yaml: found character that cannot start any token
         # Error: plugin "schema" exited with error
-        DEPENDENCIES_FILTER=$(yq '[.dependencies[].name] | filter(match("kubee-.*")) | join (" ")' {{.USER_WORKING_DIR}}/Chart.yaml)
+        DEPENDENCIES_FILTER=$(yq '[.dependencies[].name] | filter(match("kubee-.*")) | map(sub("kubee-"; "")) | join (" ")' {{.USER_WORKING_DIR}}/Chart.yaml)
         if [ "$DEPENDENCIES_FILTER" != "" ]; then
           COMMAND="$COMMAND --dependencies-filter $DEPENDENCIES_FILTER"
         fi;

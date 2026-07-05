@@ -88,10 +88,10 @@ cat > /tmp/dns-definition-test.yaml << EOF
 apiVersion: externaldns.k8s.io/v1alpha1
 kind: DNSEndpoint
 metadata:
-  name: bytletest
+  name: combostraptest
 spec:
   endpoints:
-  - dnsName: test.bytle.net
+  - dnsName: test.combostrap.com
     recordTTL: 60
     recordType: A
     targets:

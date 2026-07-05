@@ -6,7 +6,7 @@
 
 # Kubee Hetzner CSI Chart
 
-This [Kubee App Chart](https://kubee.bytle.net/helmet/app-chart) installs
+This [Kubee App Chart](https://kubee.combostrap.com/helmet/app-chart) installs
 * the [Hetzner Csi-driver Helm Chart](https://github.com/hetznercloud/csi-driver/tree/main/chart)
 so that you can create external volumes.
 * the [monitoring service monitor](https://github.com/hetznercloud/csi-driver/blob/main/docs/kubernetes/guides/monitoring.md)

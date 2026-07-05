@@ -86,7 +86,7 @@ fi
 # JReleaser goody release.github.token must not be blank.
 # even with `prepare`, we need to set the github token ???
 export JRELEASER_GITHUB_TOKEN
-JRELEASER_GITHUB_TOKEN=$(pass bytle/github/release-token)
+JRELEASER_GITHUB_TOKEN=$(pass combostrap/github/release-token)
 
 # Prepare
 if [ "$GOAL" == "$PREPARE_GOAL" ]; then

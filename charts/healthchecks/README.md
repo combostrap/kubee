@@ -6,15 +6,15 @@
 
 # Kubee Healthchecks Chart
 
-This [Kubee Chart](https://kubee.bytle.net/helmet/helmet-chart) permits to monitor a `healthchecks` installation (by default, [healthchecks.io](https://healthchecks.io))
+This [Kubee Chart](https://kubee.combostrap.com/helmet/helmet-chart) permits to monitor a `healthchecks` installation (by default, [healthchecks.io](https://healthchecks.io))
 
 It doesn't support yet the installation of a [Healthchecks instance](https://github.com/healthchecks/healthchecks) on the cluster.
 
 ## Usage
 
 You can use `healthcheck.io` as:
-* [Watchdog](https://runbooks.prometheus-operator.dev/runbooks/general/watchdog/) if you have installed [alertManager](https://github.com/bytle/kubee/blob/main/charts/alertManager/README.md) 
-* cron job monitor if you don't want to use [pushgateway](https://github.com/bytle/kubee/blob/main/charts/pushgateway/README.md)
+* [Watchdog](https://runbooks.prometheus-operator.dev/runbooks/general/watchdog/) if you have installed [alertManager](https://github.com/combostrap/kubee/blob/main/charts/alertManager/README.md) 
+* cron job monitor if you don't want to use [pushgateway](https://github.com/combostrap/kubee/blob/main/charts/pushgateway/README.md)
 
 ## Features
 
@@ -30,9 +30,9 @@ This chart aims to monitor `healthcheck.io` itself thanks to [TargetDownAlert](h
 
 ### Kubee Charts Features
 
-  These [kubee charts](https://kubee.bytle.net/helmet/helmet-chart) add their features when `enabled`.
+  These [kubee charts](https://kubee.combostrap.com/helmet/helmet-chart) add their features when `enabled`.
 
-* [prometheus](https://github.com/bytle/kubee/blob/main/charts/prometheus/README.md) creates [metrics scraping jobs](https://prometheus.io/docs/concepts/jobs_instances/) and [alert rules](https://prometheus.io/docs/prometheus/latest/configuration/alerting_rules/)
+* [prometheus](https://github.com/combostrap/kubee/blob/main/charts/prometheus/README.md) creates [metrics scraping jobs](https://prometheus.io/docs/concepts/jobs_instances/) and [alert rules](https://prometheus.io/docs/prometheus/latest/configuration/alerting_rules/)
 
 ## Installation
 

@@ -18,7 +18,7 @@ When you run kubectl,
 
 ### Dex should be enabled
 
-The [Dex charts](https://github.com/bytle/kubee/tree/main/charts/dex) should be installed and configured
+The [Dex charts](https://github.com/combostrap/kubee/tree/main/charts/dex) should be installed and configured
 
 ### Install kubelogin
 

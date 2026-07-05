@@ -8,7 +8,7 @@ This page shows you how to create a [cluster](cluster.md)
 
 ## Example
 
-You can see clusters example at [clusters example](https://github.com/bytle/kubee/tree/main/examples/clusters)
+You can see clusters example at [clusters example](https://github.com/combostrap/kubee/tree/main/examples/clusters)
 
 ## Steps
 
@@ -272,4 +272,4 @@ kubee --cluster "$KUBEE_CLUSTER_NAME" helmet play traefik
 kubee --cluster "$KUBEE_CLUSTER_NAME" helmet play cert-manager
 ```
 
-or install any [other Kubee Charts ](https://github.com/bytle/kubee/tree/main#list-of-kubee-charts)
+or install any [other Kubee Charts ](https://github.com/combostrap/kubee/tree/main#list-of-kubee-charts)

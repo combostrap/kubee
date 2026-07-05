@@ -6,7 +6,7 @@
 
 # Kubee External Dns Chart
 
-This [Kubee App Chart](https://kubee.bytle.net/helmet/app-chart) will install [external-dns](https://github.com/kubernetes-sigs/external-dns)
+This [Kubee App Chart](https://kubee.combostrap.com/helmet/app-chart) will install [external-dns](https://github.com/kubernetes-sigs/external-dns)
 
 `External DNS` can update your domain/public DNS based on:
 * [metadata annotations](https://kubernetes-sigs.github.io/external-dns/latest/docs/annotations/annotations/) on Ingress, Service, ...
@@ -19,7 +19,7 @@ This [Kubee App Chart](https://kubee.bytle.net/helmet/app-chart) will install [e
 These sources are automatically enabled.
 * [Ingress](https://kubernetes-sigs.github.io/external-dns/latest/docs/sources/ingress/) - `hostname` is retrieved from `spec.rules.host` metadata
 * [Service](https://kubernetes-sigs.github.io/external-dns/latest/docs/sources/service/) - for service without Ingress (ie LoadBalancer)
-* [TraefikIngress](https://kubernetes-sigs.github.io/external-dns/latest/docs/sources/traefik-proxy/) if [Traefik](https://github.com/bytle/kubee/blob/main/charts/Traefik/README.md) is enabled
+* [TraefikIngress](https://kubernetes-sigs.github.io/external-dns/latest/docs/sources/traefik-proxy/) if [Traefik](https://github.com/combostrap/kubee/blob/main/charts/Traefik/README.md) is enabled
 * [DNS CRD](https://kubernetes-sigs.github.io/external-dns/latest/docs/contributing/crd-source/). Example:
   * [Txt Record](https://kubernetes-sigs.github.io/external-dns/latest/docs/sources/txt-record/)
   * [Mx Record](https://kubernetes-sigs.github.io/external-dns/latest/docs/sources/mx-record/)
@@ -40,20 +40,20 @@ This chart supports all provider type:
 
 ### Kubee Charts Features
 
-  These [kubee charts](https://kubee.bytle.net/helmet/helmet-chart) add their features when `enabled`.
+  These [kubee charts](https://kubee.combostrap.com/helmet/helmet-chart) add their features when `enabled`.
 
-* [cert-manager](https://github.com/bytle/kubee/blob/main/charts/cert-manager/README.md) adds [server certificates](https://cert-manager.io/docs/usage/certificate/) to the servers
-* [prometheus](https://github.com/bytle/kubee/blob/main/charts/prometheus/README.md) creates [metrics scraping jobs](https://prometheus.io/docs/concepts/jobs_instances/) and [alert rules](https://prometheus.io/docs/prometheus/latest/configuration/alerting_rules/)
-* [traefik](https://github.com/bytle/kubee/blob/main/charts/traefik/README.md) creates an [ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/) if hostnames are defined
+* [cert-manager](https://github.com/combostrap/kubee/blob/main/charts/cert-manager/README.md) adds [server certificates](https://cert-manager.io/docs/usage/certificate/) to the servers
+* [prometheus](https://github.com/combostrap/kubee/blob/main/charts/prometheus/README.md) creates [metrics scraping jobs](https://prometheus.io/docs/concepts/jobs_instances/) and [alert rules](https://prometheus.io/docs/prometheus/latest/configuration/alerting_rules/)
+* [traefik](https://github.com/combostrap/kubee/blob/main/charts/traefik/README.md) creates an [ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/) if hostnames are defined
 
 ## Installation
 
 ### Configuration
 
 Example of in-tree provider following the [cloudflare tutorial configuration](https://kubernetes-sigs.github.io/external-dns/latest/docs/tutorials/cloudflare/) :
-* Get your [api token](https://kubee.bytle.net/cloudflare)
+* Get your [api token](https://kubee.combostrap.com/cloudflare)
  (`Api Key` is deprecated)
-* Set your configuration in the [cluster value files](https://kubee.bytle.net/cluster/cluster-values)
+* Set your configuration in the [cluster value files](https://kubee.combostrap.com/cluster/cluster-values)
 
 ```yaml
 external_dns:
@@ -76,7 +76,7 @@ external_dns:
 ```
 
 Example of webhook provider configuration following the [Hetzner Webhook documentation](https://github.com/mconfalonieri/external-dns-hetzner-webhook):
-Set this configuration in the [cluster value files](https://kubee.bytle.net/cluster/cluster-values)
+Set this configuration in the [cluster value files](https://kubee.combostrap.com/cluster/cluster-values)
 
 ```yaml
 external_dns:

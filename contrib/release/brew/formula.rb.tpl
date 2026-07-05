@@ -10,7 +10,7 @@ class {{brewFormulaName}} < Formula
   sha256 "{{distributionChecksumSha256}}"
   license "{{projectLicense}}"
   # https://rubydoc.brew.sh/Formula#head-class_method
-  head "https://github.com/bytle/kubee.git", branch: "main"
+  head "https://github.com/combostrap/kubee.git", branch: "main"
 
   {{#brewHasLivecheck}}
   livecheck do

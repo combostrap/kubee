@@ -6,20 +6,20 @@
 
 # Kubee External Secrets Charts
 
-This [Kubee App Chart](https://kubee.bytle.net/helmet/app-chart) installs [external secrets](https://external-secrets.io/latest/) `0.14.3`
+This [Kubee App Chart](https://kubee.combostrap.com/helmet/app-chart) installs [external secrets](https://external-secrets.io/latest/) `0.14.3`
 
 ## Features
 
 ### Vault
-It will optionally configure [vault](https://github.com/bytle/kubee/blob/main/charts/vault/README.md) as secret store if
-* [vault](https://github.com/bytle/kubee/blob/main/charts/vault/README.md) is [enabled](https://kubee.bytle.net/helmet/chart-enabled)
+It will optionally configure [vault](https://github.com/combostrap/kubee/blob/main/charts/vault/README.md) as secret store if
+* [vault](https://github.com/combostrap/kubee/blob/main/charts/vault/README.md) is [enabled](https://kubee.combostrap.com/helmet/chart-enabled)
 * and an `api token` is provided
 
 ### Kubee Charts Features
 
-  These [kubee charts](https://kubee.bytle.net/helmet/helmet-chart) add their features when `enabled`.
+  These [kubee charts](https://kubee.combostrap.com/helmet/helmet-chart) add their features when `enabled`.
 
-* [vault](https://github.com/bytle/kubee/blob/main/charts/vault/README.md)
+* [vault](https://github.com/combostrap/kubee/blob/main/charts/vault/README.md)
 
 ## Installation
 

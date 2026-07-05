@@ -7,23 +7,23 @@
 # Kubee Oauth2-Proxy Chart
 
 ## About
-This [Kubee App Chart](https://kubee.bytle.net/helmet/app-chart) installs [Oauth2-proxy](https://oauth2-proxy.github.io/oauth2-proxy/) as:
+This [Kubee App Chart](https://kubee.combostrap.com/helmet/app-chart) installs [Oauth2-proxy](https://oauth2-proxy.github.io/oauth2-proxy/) as:
 * an authentication middleware (reverse proxy)
 * to allow authentication via the [Traefik forward auth rule](https://doc.traefik.io/traefik/middlewares/http/forwardauth/)
-* with [dex](https://github.com/bytle/kubee/blob/main/charts/dex/README.md) as identity provider
+* with [dex](https://github.com/combostrap/kubee/blob/main/charts/dex/README.md) as identity provider
 
 ## Installation Steps
 
 Note:
-* [cert-manager](https://github.com/bytle/kubee/blob/main/charts/cert-manager/README.md) should be available as certificate should be created to enable `https`
-* [dex](https://github.com/bytle/kubee/blob/main/charts/dex/README.md) should be configured first as `oauth2-proxy`:
+* [cert-manager](https://github.com/combostrap/kubee/blob/main/charts/cert-manager/README.md) should be available as certificate should be created to enable `https`
+* [dex](https://github.com/combostrap/kubee/blob/main/charts/dex/README.md) should be configured first as `oauth2-proxy`:
     * needs to reach the Dex discovery endpoint to start
     * should be added as Dex client
     * depends on Dex for authentication
 
 ### Deploy
 
-* In your [cluster values file](https://kubee.bytle.net/cluster/cluster-values)
+* In your [cluster values file](https://kubee.combostrap.com/cluster/cluster-values)
 
     * Enable `oauth2-proxy` and `dex`
     * And set the minimal `oauth2-proxy` cluster Values files
@@ -43,7 +43,7 @@ cert_manager:
   enabled: true
   ...: ...
 ```
-* Deploy [dex](https://github.com/bytle/kubee/blob/main/charts/dex/README.md)
+* Deploy [dex](https://github.com/combostrap/kubee/blob/main/charts/dex/README.md)
 ```bash
 kubee --cluster clusterName helmet play dex
 ```
@@ -62,7 +62,7 @@ You can test the Dex Integration by:
 
 ### Register/Create the Traefik forward-auth middleware
 
-Once tested, you can then change the `auth.middleware` name value of [traefik](https://github.com/bytle/kubee/blob/main/charts/traefik/README.md) to `forward-auth`
+Once tested, you can then change the `auth.middleware` name value of [traefik](https://github.com/combostrap/kubee/blob/main/charts/traefik/README.md) to `forward-auth`
   to forward the authentication to `dex`
 ```yaml
 traefik:
@@ -74,17 +74,17 @@ traefik:
 
 Forward Auth Configuration:
 
-* Apply on the [whoami](https://github.com/bytle/kubee/blob/main/charts/whoami/README.md) chart the `forward-auth` middleware name.
+* Apply on the [whoami](https://github.com/combostrap/kubee/blob/main/charts/whoami/README.md) chart the `forward-auth` middleware name.
 * Try to reach the whoami hostname
 
 ### Redeploy the dependent charts to apply the change
 
 Redeploy the dependent charts to apply the change. ie
 
-* [traefik](https://github.com/bytle/kubee/blob/main/charts/traefik/README.md) for the internal dashboard
-* [prometheus](https://github.com/bytle/kubee/blob/main/charts/prometheus/README.md) for the web app
-* [alertmanager](https://github.com/bytle/kubee/blob/main/charts/alertmanager/README.md) for the web app
-* [kubernetes-dashboard](https://github.com/bytle/kubee/blob/main/charts/kubernetes-dashboard/README.md) for the web app
+* [traefik](https://github.com/combostrap/kubee/blob/main/charts/traefik/README.md) for the internal dashboard
+* [prometheus](https://github.com/combostrap/kubee/blob/main/charts/prometheus/README.md) for the web app
+* [alertmanager](https://github.com/combostrap/kubee/blob/main/charts/alertmanager/README.md) for the web app
+* [kubernetes-dashboard](https://github.com/combostrap/kubee/blob/main/charts/kubernetes-dashboard/README.md) for the web app
 * ...
 
 ## Values

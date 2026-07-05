@@ -9,7 +9,7 @@ installed in the [cluster](../cluster/cluster.md)
 
 ## Definition
 
-It's defined as values of the [cluster kubee chart](https://github.com/bytle/kubee/tree/main/charts/cluster)
+It's defined as values of the [cluster kubee chart](https://github.com/combostrap/kubee/tree/main/charts/cluster)
 
 Example in your [cluster values file](../cluster/cluster-values.md)
 ```yaml

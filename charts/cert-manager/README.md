@@ -7,7 +7,7 @@
 # Kubee Cert-Manager Chart
 
 ## About
-This [Kubee App Chart](https://kubee.bytle.net/helmet/app-chart) will install [cert-manager](https://cert-manager.io/) to manage certificates.
+This [Kubee App Chart](https://kubee.combostrap.com/helmet/app-chart) will install [cert-manager](https://cert-manager.io/) to manage certificates.
 
 ## Installation
 
@@ -68,7 +68,7 @@ It will create:
 
 The issuers solve the challenge:
 * `http01` (default, ie an A or CNAME record should be present in the DNS Zone).
-You can use the [external-dns](https://github.com/bytle/kubee/blob/main/charts/external-dns/README.md) chart
+You can use the [external-dns](https://github.com/combostrap/kubee/blob/main/charts/external-dns/README.md) chart
 to automate the creation.
 * `dns01` with [DNS01 from cloudflare](#automatic-dns01-cloudflare-challenge-configuration)
 
@@ -106,7 +106,7 @@ When configured, you can:
 * issue wildcard certificate
 * use a dns name without creating A records.
 
-Example after getting a [cloudflare api token](https://kubee.bytle.net/cloudflare)
+Example after getting a [cloudflare api token](https://kubee.combostrap.com/cloudflare)
 
 ```yaml
 cert_manager:
@@ -159,10 +159,10 @@ The certificates are:
 The [DNS01 configuration](https://cert-manager.io/docs/configuration/acme/dns01/) is not
 really standardized.
 
-The direction of `cert-manager` is to use [external-dns](https://github.com/bytle/kubee/blob/main/charts/external-dns/README.md)
+The direction of `cert-manager` is to use [external-dns](https://github.com/combostrap/kubee/blob/main/charts/external-dns/README.md)
 to support `DNS01` challenge. See [Integration with ExternalDNS](https://github.com/cert-manager/cert-manager/issues/3521)
 
-If you need help or another one, opens an [issue](https://github.com/bytle/kubee/issues)
+If you need help or another one, opens an [issue](https://github.com/combostrap/kubee/issues)
 .
 
 ## Contrib / Dev

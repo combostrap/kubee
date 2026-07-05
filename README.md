@@ -23,11 +23,11 @@ Because we are starting from the `simplest Kubernetes cluster` as stated in the 
 Works out of the box
 
 * Single node Kubernetes with a goal on low memory consumption. A single node can host 110 containers, that's a lot of applications.
-* Zero configuration. The [kubee charts](https://kubee.bytle.net/helmet/helmet-chart) being aware of each other, they are preconfigured and needs a minimal set of parameters.
-* Cluster configuration. Every chart configuration is saved in a [single cluster values file](https://kubee.bytle.net/cluster/cluster-values)
+* Zero configuration. The [kubee charts](https://kubee.combostrap.com/helmet/helmet-chart) being aware of each other, they are preconfigured and needs a minimal set of parameters.
+* Cluster configuration. Every chart configuration is saved in a [single cluster values file](https://kubee.combostrap.com/cluster/cluster-values)
  making it quick and easy to see the state of the cluster.
 * One-shot Chart Installation. CRDs dependencies are automatically managed.
-* Authentication Ready. All infra apps are automatically secured by authentication (`basicAuth` by default, oidc if [Dex](https://github.com/bytle/kubee/blob/main/charts/dex/README.md))
+* Authentication Ready. All infra apps are automatically secured by authentication (`basicAuth` by default, oidc if [Dex](https://github.com/combostrap/kubee/blob/main/charts/dex/README.md))
 * Secure Ready. With the internal `kubee` ca, all communication are encrypted (ssl/https) and the servers get certificates that are automatically rotated.
 * Ingress Ready. Access any service by setting just the hostname.
 
@@ -68,52 +68,52 @@ By doing so, you can:
 
 | Kubee Chart | Status  | Kind | Category |
 |-----------|---------|------|----------|
-| [AlertManager ](https://github.com/bytle/kubee/blob/main/charts/alertmanager/README.md) | [stable](https://kubee.bytle.net/helmet/helmet-chart#status) | app | monitoring  |
-| [ArgoCd ](https://github.com/bytle/kubee/blob/main/charts/argocd/README.md) | [stable](https://kubee.bytle.net/helmet/helmet-chart#status) | app | ci-cd  |
-| [BlackBox Exporter ](https://github.com/bytle/kubee/blob/main/charts/blackbox-exporter/README.md) | [stable](https://kubee.bytle.net/helmet/helmet-chart#status) | app | monitoring  |
-| [Cert-Manager ](https://github.com/bytle/kubee/blob/main/charts/cert-manager/README.md) | [stable](https://kubee.bytle.net/helmet/helmet-chart#status) | app | certificate  |
-| [Cert-Manager Crds ](https://github.com/bytle/kubee/blob/main/charts/cert-manager-crds/README.md) | [stable](https://kubee.bytle.net/helmet/helmet-chart#status) | crds | certificate  |
-| [Cluster ](https://github.com/bytle/kubee/blob/main/charts/cluster/README.md) | [stable](https://kubee.bytle.net/helmet/helmet-chart#status) | library | cluster  |
-| [Dex ](https://github.com/bytle/kubee/blob/main/charts/dex/README.md) | [stable](https://kubee.bytle.net/helmet/helmet-chart#status) | app | auth  |
-| [External Dns ](https://github.com/bytle/kubee/blob/main/charts/external-dns/README.md) | [stable](https://kubee.bytle.net/helmet/helmet-chart#status) | app | dns  |
-| [External Dns Crds ](https://github.com/bytle/kubee/blob/main/charts/external-dns-crds/README.md) | [stable](https://kubee.bytle.net/helmet/helmet-chart#status) | crds | dns  |
-| [External Secrets Charts](https://github.com/bytle/kubee/blob/main/charts/external-secrets/README.md) | [stable](https://kubee.bytle.net/helmet/helmet-chart#status) | app | secret  |
-| [External Secret Crds ](https://github.com/bytle/kubee/blob/main/charts/external-secrets-crds/README.md) | [stable](https://kubee.bytle.net/helmet/helmet-chart#status) | crds | secret  |
-| [Gogs ](https://github.com/bytle/kubee/blob/main/charts/gogs/README.md) | [alpha](https://kubee.bytle.net/helmet/helmet-chart#status) | app | git  |
-| [Grafana ](https://github.com/bytle/kubee/blob/main/charts/grafana/README.md) | [stable](https://kubee.bytle.net/helmet/helmet-chart#status) | app | monitoring  |
-| [Grafana Crds ](https://github.com/bytle/kubee/blob/main/charts/grafana-crds/README.md) | [stable](https://kubee.bytle.net/helmet/helmet-chart#status) | crds | monitoring  |
-| [Healthchecks ](https://github.com/bytle/kubee/blob/main/charts/healthchecks/README.md) | [stable](https://kubee.bytle.net/helmet/helmet-chart#status) | app | monitoring  |
-| [Hetzner CSI ](https://github.com/bytle/kubee/blob/main/charts/hetzner-csi/README.md) | [stable](https://kubee.bytle.net/helmet/helmet-chart#status) | cluster | system  |
-| [K3s-ansible Cluster ](https://github.com/bytle/kubee/blob/main/charts/k3s-ansible/README.md) | [beta](https://kubee.bytle.net/helmet/helmet-chart#status) | cluster | k3s  |
-| [Keycloak ](https://github.com/bytle/kubee/blob/main/charts/keycloak/README.md) | [alpha](https://kubee.bytle.net/helmet/helmet-chart#status) | app | auth  |
-| [Kuberhealthy ](https://github.com/bytle/kubee/blob/main/charts/kuberhealthy/README.md) | [stable](https://kubee.bytle.net/helmet/helmet-chart#status) | app | test  |
-| [kuberhealthy Crds ](https://github.com/bytle/kubee/blob/main/charts/kuberhealthy-crds/README.md) | [stable](https://kubee.bytle.net/helmet/helmet-chart#status) | crds | monitoring  |
-| [Kubernetes Dashboard ](https://github.com/bytle/kubee/blob/main/charts/kubernetes-dashboard/README.md) | [stable](https://kubee.bytle.net/helmet/helmet-chart#status) | app | kubernetes  |
-| [Kubernetes Monitoring ](https://github.com/bytle/kubee/blob/main/charts/kubernetes-monitoring/README.md) | [stable](https://kubee.bytle.net/helmet/helmet-chart#status) | app | kubernetes  |
-| [Mailpit ](https://github.com/bytle/kubee/blob/main/charts/mailpit/README.md) | [stable](https://kubee.bytle.net/helmet/helmet-chart#status) | app | mail  |
-| [Mail ](https://github.com/bytle/kubee/blob/main/charts/mailu/README.md) | [alpha](https://kubee.bytle.net/helmet/helmet-chart#status) | app | mail  |
-| [Mariadb ](https://github.com/bytle/kubee/blob/main/charts/mariadb/README.md) | [stable](https://kubee.bytle.net/helmet/helmet-chart#status) | app | database  |
-| [Node Exporter ](https://github.com/bytle/kubee/blob/main/charts/node-exporter/README.md) | [deprecated](https://kubee.bytle.net/helmet/helmet-chart#status) | app | monitoring  |
-| [Oauth2-Proxy ](https://github.com/bytle/kubee/blob/main/charts/oauth2-proxy/README.md) | [stable](https://kubee.bytle.net/helmet/helmet-chart#status) | app | auth  |
-| [Postal ](https://github.com/bytle/kubee/blob/main/charts/postal/README.md) | [stable](https://kubee.bytle.net/helmet/helmet-chart#status) | app | mail  |
-| [Prometheus ](https://github.com/bytle/kubee/blob/main/charts/prometheus/README.md) | [stable](https://kubee.bytle.net/helmet/helmet-chart#status) | app | monitoring  |
-| [Prometheus Adapter ](https://github.com/bytle/kubee/blob/main/charts/prometheus-adapter/README.md) | [alpha](https://kubee.bytle.net/helmet/helmet-chart#status) | app | monitoring  |
-| [Prometheus Crds ](https://github.com/bytle/kubee/blob/main/charts/prometheus-crds/README.md) | [stable](https://kubee.bytle.net/helmet/helmet-chart#status) | crds | monitoring  |
-| [PushGateway ](https://github.com/bytle/kubee/blob/main/charts/pushgateway/README.md) | [stable](https://kubee.bytle.net/helmet/helmet-chart#status) | app | monitoring  |
-| [Socks Proxy](https://github.com/bytle/kubee/blob/main/charts/socks/README.md) | [stable](https://kubee.bytle.net/helmet/helmet-chart#status) | app | network  |
-| [Traefik ](https://github.com/bytle/kubee/blob/main/charts/traefik/README.md) | [stable](https://kubee.bytle.net/helmet/helmet-chart#status) | app | proxy  |
-| [Traefik Crds ](https://github.com/bytle/kubee/blob/main/charts/traefik-crds/README.md) | [deprecated](https://kubee.bytle.net/helmet/helmet-chart#status) | crds | proxy  |
-| [Traefik Forward Auth ](https://github.com/bytle/kubee/blob/main/charts/traefik-forward-auth/README.md) | [deprecated](https://kubee.bytle.net/helmet/helmet-chart#status) | app | auth  |
-| [Trust manager crds chart](https://github.com/bytle/kubee/blob/main/charts/trust-manager-crds/README.md) | [stable](https://kubee.bytle.net/helmet/helmet-chart#status) | crds | certificate  |
-| [Vault ](https://github.com/bytle/kubee/blob/main/charts/vault/README.md) | [stable](https://kubee.bytle.net/helmet/helmet-chart#status) | app | secret  |
-| [Whoami ](https://github.com/bytle/kubee/blob/main/charts/whoami/README.md) | [stable](https://kubee.bytle.net/helmet/helmet-chart#status) | app | http  |
+| [AlertManager ](https://github.com/combostrap/kubee/blob/main/charts/alertmanager/README.md) | [stable](https://kubee.combostrap.com/helmet/helmet-chart#status) | app | monitoring  |
+| [ArgoCd ](https://github.com/combostrap/kubee/blob/main/charts/argocd/README.md) | [stable](https://kubee.combostrap.com/helmet/helmet-chart#status) | app | ci-cd  |
+| [BlackBox Exporter ](https://github.com/combostrap/kubee/blob/main/charts/blackbox-exporter/README.md) | [stable](https://kubee.combostrap.com/helmet/helmet-chart#status) | app | monitoring  |
+| [Cert-Manager ](https://github.com/combostrap/kubee/blob/main/charts/cert-manager/README.md) | [stable](https://kubee.combostrap.com/helmet/helmet-chart#status) | app | certificate  |
+| [Cert-Manager Crds ](https://github.com/combostrap/kubee/blob/main/charts/cert-manager-crds/README.md) | [stable](https://kubee.combostrap.com/helmet/helmet-chart#status) | crds | certificate  |
+| [Cluster ](https://github.com/combostrap/kubee/blob/main/charts/cluster/README.md) | [stable](https://kubee.combostrap.com/helmet/helmet-chart#status) | library | cluster  |
+| [Dex ](https://github.com/combostrap/kubee/blob/main/charts/dex/README.md) | [stable](https://kubee.combostrap.com/helmet/helmet-chart#status) | app | auth  |
+| [External Dns ](https://github.com/combostrap/kubee/blob/main/charts/external-dns/README.md) | [stable](https://kubee.combostrap.com/helmet/helmet-chart#status) | app | dns  |
+| [External Dns Crds ](https://github.com/combostrap/kubee/blob/main/charts/external-dns-crds/README.md) | [stable](https://kubee.combostrap.com/helmet/helmet-chart#status) | crds | dns  |
+| [External Secrets Charts](https://github.com/combostrap/kubee/blob/main/charts/external-secrets/README.md) | [stable](https://kubee.combostrap.com/helmet/helmet-chart#status) | app | secret  |
+| [External Secret Crds ](https://github.com/combostrap/kubee/blob/main/charts/external-secrets-crds/README.md) | [stable](https://kubee.combostrap.com/helmet/helmet-chart#status) | crds | secret  |
+| [Gogs ](https://github.com/combostrap/kubee/blob/main/charts/gogs/README.md) | [alpha](https://kubee.combostrap.com/helmet/helmet-chart#status) | app | git  |
+| [Grafana ](https://github.com/combostrap/kubee/blob/main/charts/grafana/README.md) | [stable](https://kubee.combostrap.com/helmet/helmet-chart#status) | app | monitoring  |
+| [Grafana Crds ](https://github.com/combostrap/kubee/blob/main/charts/grafana-crds/README.md) | [stable](https://kubee.combostrap.com/helmet/helmet-chart#status) | crds | monitoring  |
+| [Healthchecks ](https://github.com/combostrap/kubee/blob/main/charts/healthchecks/README.md) | [stable](https://kubee.combostrap.com/helmet/helmet-chart#status) | app | monitoring  |
+| [Hetzner CSI ](https://github.com/combostrap/kubee/blob/main/charts/hetzner-csi/README.md) | [stable](https://kubee.combostrap.com/helmet/helmet-chart#status) | cluster | system  |
+| [K3s-ansible Cluster ](https://github.com/combostrap/kubee/blob/main/charts/k3s-ansible/README.md) | [beta](https://kubee.combostrap.com/helmet/helmet-chart#status) | cluster | k3s  |
+| [Keycloak ](https://github.com/combostrap/kubee/blob/main/charts/keycloak/README.md) | [alpha](https://kubee.combostrap.com/helmet/helmet-chart#status) | app | auth  |
+| [Kuberhealthy ](https://github.com/combostrap/kubee/blob/main/charts/kuberhealthy/README.md) | [stable](https://kubee.combostrap.com/helmet/helmet-chart#status) | app | test  |
+| [kuberhealthy Crds ](https://github.com/combostrap/kubee/blob/main/charts/kuberhealthy-crds/README.md) | [stable](https://kubee.combostrap.com/helmet/helmet-chart#status) | crds | monitoring  |
+| [Kubernetes Dashboard ](https://github.com/combostrap/kubee/blob/main/charts/kubernetes-dashboard/README.md) | [stable](https://kubee.combostrap.com/helmet/helmet-chart#status) | app | kubernetes  |
+| [Kubernetes Monitoring ](https://github.com/combostrap/kubee/blob/main/charts/kubernetes-monitoring/README.md) | [stable](https://kubee.combostrap.com/helmet/helmet-chart#status) | app | kubernetes  |
+| [Mailpit ](https://github.com/combostrap/kubee/blob/main/charts/mailpit/README.md) | [stable](https://kubee.combostrap.com/helmet/helmet-chart#status) | app | mail  |
+| [Mail ](https://github.com/combostrap/kubee/blob/main/charts/mailu/README.md) | [alpha](https://kubee.combostrap.com/helmet/helmet-chart#status) | app | mail  |
+| [Mariadb ](https://github.com/combostrap/kubee/blob/main/charts/mariadb/README.md) | [stable](https://kubee.combostrap.com/helmet/helmet-chart#status) | app | database  |
+| [Node Exporter ](https://github.com/combostrap/kubee/blob/main/charts/node-exporter/README.md) | [deprecated](https://kubee.combostrap.com/helmet/helmet-chart#status) | app | monitoring  |
+| [Oauth2-Proxy ](https://github.com/combostrap/kubee/blob/main/charts/oauth2-proxy/README.md) | [stable](https://kubee.combostrap.com/helmet/helmet-chart#status) | app | auth  |
+| [Postal ](https://github.com/combostrap/kubee/blob/main/charts/postal/README.md) | [stable](https://kubee.combostrap.com/helmet/helmet-chart#status) | app | mail  |
+| [Prometheus ](https://github.com/combostrap/kubee/blob/main/charts/prometheus/README.md) | [stable](https://kubee.combostrap.com/helmet/helmet-chart#status) | app | monitoring  |
+| [Prometheus Adapter ](https://github.com/combostrap/kubee/blob/main/charts/prometheus-adapter/README.md) | [alpha](https://kubee.combostrap.com/helmet/helmet-chart#status) | app | monitoring  |
+| [Prometheus Crds ](https://github.com/combostrap/kubee/blob/main/charts/prometheus-crds/README.md) | [stable](https://kubee.combostrap.com/helmet/helmet-chart#status) | crds | monitoring  |
+| [PushGateway ](https://github.com/combostrap/kubee/blob/main/charts/pushgateway/README.md) | [stable](https://kubee.combostrap.com/helmet/helmet-chart#status) | app | monitoring  |
+| [Socks Proxy](https://github.com/combostrap/kubee/blob/main/charts/socks/README.md) | [stable](https://kubee.combostrap.com/helmet/helmet-chart#status) | app | network  |
+| [Traefik ](https://github.com/combostrap/kubee/blob/main/charts/traefik/README.md) | [stable](https://kubee.combostrap.com/helmet/helmet-chart#status) | app | proxy  |
+| [Traefik Crds ](https://github.com/combostrap/kubee/blob/main/charts/traefik-crds/README.md) | [deprecated](https://kubee.combostrap.com/helmet/helmet-chart#status) | crds | proxy  |
+| [Traefik Forward Auth ](https://github.com/combostrap/kubee/blob/main/charts/traefik-forward-auth/README.md) | [deprecated](https://kubee.combostrap.com/helmet/helmet-chart#status) | app | auth  |
+| [Trust manager crds chart](https://github.com/combostrap/kubee/blob/main/charts/trust-manager-crds/README.md) | [stable](https://kubee.combostrap.com/helmet/helmet-chart#status) | crds | certificate  |
+| [Vault ](https://github.com/combostrap/kubee/blob/main/charts/vault/README.md) | [stable](https://kubee.combostrap.com/helmet/helmet-chart#status) | app | secret  |
+| [Whoami ](https://github.com/combostrap/kubee/blob/main/charts/whoami/README.md) | [stable](https://kubee.combostrap.com/helmet/helmet-chart#status) | app | http  |
 
 Note that you are not limited to Kubee Charts.
 You can install any Helm chart or Kubernetes Manifest, but you would need to discover the configuration yourself.
 
 To make your charts, `kubee`  compatible and reuse the configuration of dependent charts,
-you can read the [kubee chart documentation](https://kubee.bytle.net/helmet/helmet-chart).
+you can read the [kubee chart documentation](https://kubee.combostrap.com/helmet/helmet-chart).
 
 ## Getting Started
 
-See [How to create a cluster and install applications](https://kubee.bytle.net/getting-started)
+See [How to create a cluster and install applications](https://kubee.combostrap.com/getting-started)

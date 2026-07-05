@@ -6,7 +6,7 @@
 
 # Kubee ArgoCd Chart
 
-This [kubee app chart](https://kubee.bytle.net/helmet/app-chart) installs [Argo CD](https://argo-cd.readthedocs.io/), Declarative GitOps CD
+This [kubee app chart](https://kubee.combostrap.com/helmet/app-chart) installs [Argo CD](https://argo-cd.readthedocs.io/), Declarative GitOps CD
 for Kubernetes
 
 ## Installation/Update
@@ -29,7 +29,7 @@ Configuration of:
 
 ### Email and On sync/deployment notifications
 
-The [admin user](https://kubee.bytle.net//general/admin-user)
+The [admin user](https://kubee.combostrap.com//general/admin-user)
  will
 get [mailing and a on-deployed notifications](https://argo-cd.readthedocs.io/en/stable/operator-manual/notifications)
 
@@ -44,7 +44,7 @@ CPU and memory spike on Sync needs to be controlled. We [configure them by defau
 
 ### Dex Authentication
 
-If the argocd client secret in the [dex](https://github.com/bytle/kubee/blob/main/charts/dex/README.md) chart is not empty, the authentication via [dex](https://github.com/bytle/kubee/blob/main/charts/dex/README.md) will be enabled
+If the argocd client secret in the [dex](https://github.com/combostrap/kubee/blob/main/charts/dex/README.md) chart is not empty, the authentication via [dex](https://github.com/combostrap/kubee/blob/main/charts/dex/README.md) will be enabled
 when installing this chart.
 
 2 things:
@@ -54,14 +54,14 @@ when installing this chart.
 
 ### Kubee Charts Features
 
-  These [kubee charts](https://kubee.bytle.net/helmet/helmet-chart) add their features when `enabled`.
+  These [kubee charts](https://kubee.combostrap.com/helmet/helmet-chart) add their features when `enabled`.
 
-* [cert-manager](https://github.com/bytle/kubee/blob/main/charts/cert-manager/README.md) adds [server certificates](https://cert-manager.io/docs/usage/certificate/) to the servers
-* [dex](https://github.com/bytle/kubee/blob/main/charts/dex/README.md)  adds Oidc Auth integration
-* [external-secrets](https://github.com/bytle/kubee/blob/main/charts/external-secrets/README.md) defines secret as [external secrets](https://external-secrets.io/latest/introduction/getting-started/#create-your-first-externalsecret) for GitOps integration (if chosen)
-* [grafana](https://github.com/bytle/kubee/blob/main/charts/grafana/README.md) creates [dashboards](https://grafana.com/grafana/dashboards/)
-* [prometheus](https://github.com/bytle/kubee/blob/main/charts/prometheus/README.md) creates [metrics scraping jobs](https://prometheus.io/docs/concepts/jobs_instances/) and [alert rules](https://prometheus.io/docs/prometheus/latest/configuration/alerting_rules/)
-* [traefik](https://github.com/bytle/kubee/blob/main/charts/traefik/README.md) creates an [ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/) if hostnames are defined
+* [cert-manager](https://github.com/combostrap/kubee/blob/main/charts/cert-manager/README.md) adds [server certificates](https://cert-manager.io/docs/usage/certificate/) to the servers
+* [dex](https://github.com/combostrap/kubee/blob/main/charts/dex/README.md)  adds Oidc Auth integration
+* [external-secrets](https://github.com/combostrap/kubee/blob/main/charts/external-secrets/README.md) defines secret as [external secrets](https://external-secrets.io/latest/introduction/getting-started/#create-your-first-externalsecret) for GitOps integration (if chosen)
+* [grafana](https://github.com/combostrap/kubee/blob/main/charts/grafana/README.md) creates [dashboards](https://grafana.com/grafana/dashboards/)
+* [prometheus](https://github.com/combostrap/kubee/blob/main/charts/prometheus/README.md) creates [metrics scraping jobs](https://prometheus.io/docs/concepts/jobs_instances/) and [alert rules](https://prometheus.io/docs/prometheus/latest/configuration/alerting_rules/)
+* [traefik](https://github.com/combostrap/kubee/blob/main/charts/traefik/README.md) creates an [ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/) if hostnames are defined
 
 ## Values
 

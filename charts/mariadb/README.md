@@ -6,7 +6,7 @@
 
 # Kubee Mariadb Chart
 
-This [Kubee App Chart](https://kubee.bytle.net/helmet/app-chart) installs the [MariaDb Operator](https://github.com/mariadb-operator/mariadb-operator)
+This [Kubee App Chart](https://kubee.combostrap.com/helmet/app-chart) installs the [MariaDb Operator](https://github.com/mariadb-operator/mariadb-operator)
 to help you maintain and create [MariaDb database](https://mariadb.com/)
 
 ## Installation
@@ -32,10 +32,10 @@ When `cert-manager` is enabled, MariaDb is configured to create certificate:
 
 ### Kubee Charts Features
 
-  These [kubee charts](https://kubee.bytle.net/helmet/helmet-chart) add their features when `enabled`.
+  These [kubee charts](https://kubee.combostrap.com/helmet/helmet-chart) add their features when `enabled`.
 
-* [cert-manager](https://github.com/bytle/kubee/blob/main/charts/cert-manager/README.md) adds [server certificates](https://cert-manager.io/docs/usage/certificate/) to the servers
-* [prometheus](https://github.com/bytle/kubee/blob/main/charts/prometheus/README.md) creates [metrics scraping jobs](https://prometheus.io/docs/concepts/jobs_instances/) and [alert rules](https://prometheus.io/docs/prometheus/latest/configuration/alerting_rules/)
+* [cert-manager](https://github.com/combostrap/kubee/blob/main/charts/cert-manager/README.md) adds [server certificates](https://cert-manager.io/docs/usage/certificate/) to the servers
+* [prometheus](https://github.com/combostrap/kubee/blob/main/charts/prometheus/README.md) creates [metrics scraping jobs](https://prometheus.io/docs/concepts/jobs_instances/) and [alert rules](https://prometheus.io/docs/prometheus/latest/configuration/alerting_rules/)
 
 ## Values
 

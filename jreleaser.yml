@@ -6,10 +6,10 @@ project:
   description: Kubernetes, the Easy way. Single VPS hosting and beyond.
   authors:
     - Nicolas GERARD
-  copyright: '2024 bytle.net'
+  copyright: '2024 combostrap.com'
   license: Apache-2.0
   inceptionYear: '2024'
-  vendor: bytle.net
+  vendor: combostrap.com
   tags:
     - k3s
     - kubernetes
@@ -18,16 +18,16 @@ project:
     - kustomize
   stereotype: NONE
   links:
-    homepage: https://kubee.bytle.net
-    documentation: https://kubee.bytle.net
-    bugTracker: https://github.com/bytle/kubee
-    help: https://github.com/bytle/kubee
+    homepage: https://kubee.combostrap.com
+    documentation: https://kubee.combostrap.com
+    bugTracker: https://github.com/combostrap/kubee
+    help: https://github.com/combostrap/kubee
   languages:
     # It's not a java project but
     # as JReleaser does not support an archive with a bunch of script
     # we took JAVA_ARCHIVE that requires Java coordinates
     java:
-      groupId: net.bytle
+      groupId: net.combostrap
       artifactId: kubee
       version: "11"
 
@@ -60,7 +60,7 @@ assemble:
 #          output: man1 # path in the archive
 #          includes:
 #            - '*.1' # glob (not regexp)
-        - input: ../../bash-lib/lib
+        - input: ../../gerardnico/bash-lib/lib
           output: lib # path in the archive
         - input: charts
           output: charts # path in the archive
@@ -71,7 +71,7 @@ assemble:
 # https://jreleaser.org/guide/latest/reference/release/github.html
 release:
   github:
-    owner: bytle
+    owner: combostrap
     releaseName: "Release {{projectEffectiveVersion}}"
     # https://jreleaser.org/guide/latest/reference/release/changelog.html
     changelog:

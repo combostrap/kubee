@@ -7,9 +7,9 @@
 # Kubee Mail Chart
 
 > [!WARNING]
-> This chart is in the [alpha status](https://kubee.bytle.net/helmet/helmet-chart#status) and is not fit to be installed or upgraded
+> This chart is in the [alpha status](https://kubee.combostrap.com/helmet/helmet-chart#status) and is not fit to be installed or upgraded
 
-A [Kubee App Chart](https://kubee.bytle.net/helmet/app-chart) to install the [mailu server](https://mailu.io)
+A [Kubee App Chart](https://kubee.combostrap.com/helmet/app-chart) to install the [mailu server](https://mailu.io)
 
 ## Values
 

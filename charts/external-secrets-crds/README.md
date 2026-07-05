@@ -6,7 +6,7 @@
 
 # Kubee External Secret Crds Chart
 
-This [kubee crds chart](https://kubee.bytle.net/helmet/crds-chart) installs the External Secrets CRDs.
+This [kubee crds chart](https://kubee.combostrap.com/helmet/crds-chart) installs the External Secrets CRDs.
 
 ## Dev/Contrib
 

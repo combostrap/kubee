@@ -7,9 +7,9 @@
 # Kubee Gogs Chart
 
 > [!WARNING]
-> This chart is in the [alpha status](https://kubee.bytle.net/helmet/helmet-chart#status) and is not fit to be installed or upgraded
+> This chart is in the [alpha status](https://kubee.combostrap.com/helmet/helmet-chart#status) and is not fit to be installed or upgraded
 
-This [Kubee App Chart](https://kubee.bytle.net/helmet/app-chart) installs the `Git service` [Gogs](https://gogs.io/)
+This [Kubee App Chart](https://kubee.combostrap.com/helmet/app-chart) installs the `Git service` [Gogs](https://gogs.io/)
 
 `WIP: Not finished`
 
@@ -17,7 +17,7 @@ This [Kubee App Chart](https://kubee.bytle.net/helmet/app-chart) installs the `G
 
 ### Kubee Charts Features
 
-  These [kubee charts](https://kubee.bytle.net/helmet/helmet-chart) add their features when `enabled`.
+  These [kubee charts](https://kubee.combostrap.com/helmet/helmet-chart) add their features when `enabled`.
 
 ## Installation
 

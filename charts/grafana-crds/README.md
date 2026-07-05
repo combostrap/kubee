@@ -6,7 +6,7 @@
 
 # Kubee Grafana Crds Chart
 
-This [kubee crds chart](https://kubee.bytle.net/helmet/crds-chart) installs the [grafana](https://github.com/bytle/kubee/blob/main/charts/grafana/README.md) CRDs.
+This [kubee crds chart](https://kubee.combostrap.com/helmet/crds-chart) installs the [grafana](https://github.com/combostrap/kubee/blob/main/charts/grafana/README.md) CRDs.
 
 ## Dev/Contrib
 

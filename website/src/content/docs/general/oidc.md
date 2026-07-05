@@ -2,7 +2,7 @@
 title: Oidc
 ---
 
-OIDC login is supported when the [dex chart](https://github.com/bytle/kubee/tree/main/charts/dex) is installed/enabled.
+OIDC login is supported when the [dex chart](https://github.com/combostrap/kubee/tree/main/charts/dex) is installed/enabled.
 
 ## Clients
 

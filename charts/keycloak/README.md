@@ -7,9 +7,9 @@
 # Kubee Keycloak Chart
 
 > [!WARNING]
-> This chart is in the [alpha status](https://kubee.bytle.net/helmet/helmet-chart#status) and is not fit to be installed or upgraded
+> This chart is in the [alpha status](https://kubee.combostrap.com/helmet/helmet-chart#status) and is not fit to be installed or upgraded
 
-> [!INFO] We recommend [dex](https://github.com/bytle/kubee/blob/main/charts/dex/README.md).
+> [!INFO] We recommend [dex](https://github.com/combostrap/kubee/blob/main/charts/dex/README.md).
 > As it's less heavy.
 
 The manifests in this directory is the first attempt
@@ -34,7 +34,7 @@ https://github.com/lukaszbudnik/keycloak-kubernetes/blob/main/keycloak.yaml
 
 ### Kubee Charts Features
 
-  These [kubee charts](https://kubee.bytle.net/helmet/helmet-chart) add their features when `enabled`.
+  These [kubee charts](https://kubee.combostrap.com/helmet/helmet-chart) add their features when `enabled`.
 
 ## Installation
 

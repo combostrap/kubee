@@ -7,7 +7,7 @@
 # Kubee Traefik Forward Auth Chart
 
 > [!WARNING]
-> This chart is in the [deprecated status](https://kubee.bytle.net/helmet/helmet-chart#status) and is not fit to be installed or upgraded
+> This chart is in the [deprecated status](https://kubee.combostrap.com/helmet/helmet-chart#status) and is not fit to be installed or upgraded
 
 > [!WARNING]
 > Deprecated for [oauth2-proxy](../oauth2-proxy/README.md)
@@ -21,7 +21,7 @@
 >
 > We let it here so that others that still want to use it have a reference of a working configuration.
 
-This [Kubee App Chart](https://kubee.bytle.net/helmet/app-chart) will:
+This [Kubee App Chart](https://kubee.combostrap.com/helmet/app-chart) will:
 * install [traefik-forward-auth](https://github.com/thomseddon/traefik-forward-auth).
 * to forward ingress authentication to [dex](../dex/README.md)
 
@@ -96,7 +96,7 @@ staticClients:
 
 ### Cluster Values file
 
-* You should set at minimal the following values in your [Cluster Values file](https://kubee.bytle.net/cluster/cluster-values)
+* You should set at minimal the following values in your [Cluster Values file](https://kubee.combostrap.com/cluster/cluster-values)
 
 ```yaml
 traefik_forward_auth:

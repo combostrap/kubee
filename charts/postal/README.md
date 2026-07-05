@@ -6,7 +6,7 @@
 
 # Kubee Postal Chart
 
-This [Kubee App Chart](https://kubee.bytle.net/helmet/app-chart) installs [Postal](https://docs.postalserver.io/).
+This [Kubee App Chart](https://kubee.combostrap.com/helmet/app-chart) installs [Postal](https://docs.postalserver.io/).
 
 `Postal` is a `programmatic email server` known also as `Mail delivery platform`.
 
@@ -14,17 +14,17 @@ This [Kubee App Chart](https://kubee.bytle.net/helmet/app-chart) installs [Posta
 
 ### Automatic Auth Oidc configuration
 
-If [dex](https://github.com/bytle/kubee/blob/main/charts/dex/README.md) is enabled and the dex postal secret (`.Values.dex.clients.postal.secret`) is not empty ,
-`postal` is configured to log in via [dex](https://github.com/bytle/kubee/blob/main/charts/dex/README.md).
+If [dex](https://github.com/combostrap/kubee/blob/main/charts/dex/README.md) is enabled and the dex postal secret (`.Values.dex.clients.postal.secret`) is not empty ,
+`postal` is configured to log in via [dex](https://github.com/combostrap/kubee/blob/main/charts/dex/README.md).
 
 ### Kubee Charts Features
 
-  These [kubee charts](https://kubee.bytle.net/helmet/helmet-chart) add their features when `enabled`.
+  These [kubee charts](https://kubee.combostrap.com/helmet/helmet-chart) add their features when `enabled`.
 
-* [cert-manager](https://github.com/bytle/kubee/blob/main/charts/cert-manager/README.md) adds [server certificates](https://cert-manager.io/docs/usage/certificate/) to the servers
-* [dex](https://github.com/bytle/kubee/blob/main/charts/dex/README.md)  adds Oidc Auth integration
-* [prometheus](https://github.com/bytle/kubee/blob/main/charts/prometheus/README.md) creates [metrics scraping jobs](https://prometheus.io/docs/concepts/jobs_instances/) and [alert rules](https://prometheus.io/docs/prometheus/latest/configuration/alerting_rules/)
-* [traefik](https://github.com/bytle/kubee/blob/main/charts/traefik/README.md) creates an [ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/) if hostnames are defined
+* [cert-manager](https://github.com/combostrap/kubee/blob/main/charts/cert-manager/README.md) adds [server certificates](https://cert-manager.io/docs/usage/certificate/) to the servers
+* [dex](https://github.com/combostrap/kubee/blob/main/charts/dex/README.md)  adds Oidc Auth integration
+* [prometheus](https://github.com/combostrap/kubee/blob/main/charts/prometheus/README.md) creates [metrics scraping jobs](https://prometheus.io/docs/concepts/jobs_instances/) and [alert rules](https://prometheus.io/docs/prometheus/latest/configuration/alerting_rules/)
+* [traefik](https://github.com/combostrap/kubee/blob/main/charts/traefik/README.md) creates an [ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/) if hostnames are defined
 
 ## Installation Steps
 
@@ -55,7 +55,7 @@ dex:
 > * have carriage returns replaced by the characters `\n`
 > otherwise Yaml processing will replace the carriage returns by a space
 >
-> Example if you store your private key in [pass](https://kubee.bytle.net/general/pass)
+> Example if you store your private key in [pass](https://kubee.combostrap.com/general/pass)
 > ```bash
 > export KUBEE_POSTAL_SIGNING_KEY
 > KUBEE_POSTAL_SIGNING_KEY="$(pass 'kube/postal/signing-key' | awk 'BEGIN{RS="\n";ORS="\\n"}1')"

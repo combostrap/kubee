@@ -6,7 +6,7 @@
 
 # Kubee Socks Proxy
 
-This [Kubee App Chart](https://kubee.bytle.net/helmet/app-chart)
+This [Kubee App Chart](https://kubee.combostrap.com/helmet/app-chart)
 installs [socks 5 proxy server](https://github.com/serjs/socks5-server) to
 proxy local traffic via your cluster.
 

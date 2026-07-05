@@ -4,7 +4,7 @@ title: Check Forward Auth Bearer
 
 
 This page shows you how to verify the `forward-auth` middleware
-installed when the [oauth chart](https://github.com/bytle/kubee/tree/main/charts/oauth2-proxy) is installed.
+installed when the [oauth chart](https://github.com/combostrap/kubee/tree/main/charts/oauth2-proxy) is installed.
 
 ## Steps
 

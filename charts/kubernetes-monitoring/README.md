@@ -6,7 +6,7 @@
 
 # Kubee Kubernetes Monitoring Chart
 
-This [jsonnet kubee chart](https://kubee.bytle.net/helmet/jsonnet-project) installs monitoring
+This [jsonnet kubee chart](https://kubee.combostrap.com/helmet/jsonnet-project) installs monitoring
 for:
 * the core Kubernetes components
 * and for the hosts/node (cpu/memory/storage)
@@ -44,10 +44,10 @@ The Kubernetes components metrics reference list is available [here](https://kub
 
 ### Kubee Charts Features
 
-  These [kubee charts](https://kubee.bytle.net/helmet/helmet-chart) add their features when `enabled`.
+  These [kubee charts](https://kubee.combostrap.com/helmet/helmet-chart) add their features when `enabled`.
 
-* [grafana](https://github.com/bytle/kubee/blob/main/charts/grafana/README.md) creates [dashboards](https://grafana.com/grafana/dashboards/)
-* [prometheus](https://github.com/bytle/kubee/blob/main/charts/prometheus/README.md) creates [metrics scraping jobs](https://prometheus.io/docs/concepts/jobs_instances/) and [alert rules](https://prometheus.io/docs/prometheus/latest/configuration/alerting_rules/)
+* [grafana](https://github.com/combostrap/kubee/blob/main/charts/grafana/README.md) creates [dashboards](https://grafana.com/grafana/dashboards/)
+* [prometheus](https://github.com/combostrap/kubee/blob/main/charts/prometheus/README.md) creates [metrics scraping jobs](https://prometheus.io/docs/concepts/jobs_instances/) and [alert rules](https://prometheus.io/docs/prometheus/latest/configuration/alerting_rules/)
 
 ## Installation
 

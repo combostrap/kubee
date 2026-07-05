@@ -7,9 +7,9 @@ title: Getting Started
 On Mac / Linux / Windows WSL with HomeBrew
 
 ```bash
-brew install bytle/tap/kubee
+brew install combostrap/tap/kubee
 # for the actual last/dev version
-brew install --HEAD bytle/tap/kubee
+brew install --HEAD combostrap/tap/kubee
 ```
 
 ## Create your first cluster

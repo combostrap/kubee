@@ -13,17 +13,17 @@
 {{ define "kubee-site-page-label" }}
   {{- $page := (index . 0) }}
   {{- $label := (index . 1) }}
-  {{- printf "[%s](https://kubee.bytle.net/%s)" $label  $page }}
+  {{- printf "[%s](https://kubee.combostrap.com/%s)" $label  $page }}
 {{ end }}
 
 {{ define "kubee-issue-url" }}
   {{- $label := . }}
-  {{- printf "[%s](https://github.com/bytle/kubee/issues)" $label }}
+  {{- printf "[%s](https://github.com/combostrap/kubee/issues)" $label }}
 {{ end }}
 
 {{/* deprecated*/}}
-{{ define "kubee-site-url" }}https://kubee.bytle.net{{ end }}
-{{ define "kubee-chart-url" }}https://github.com/bytle/kubee/blob/main/charts{{ end }}
+{{ define "kubee-site-url" }}https://kubee.combostrap.com{{ end }}
+{{ define "kubee-chart-url" }}https://github.com/combostrap/kubee/blob/main/charts{{ end }}
 
 {{ define "kubee-admin-user-label" }}{{ template "kubee-site-page-label" (list "/general/admin-user" .)}}{{ end }}
 {{ define "kubee-cluster-values-file-label" }}{{ template "kubee-site-page-label" (list "cluster/cluster-values" .)}}{{ end }}

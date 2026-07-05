@@ -6,7 +6,7 @@
 
 # Kubee Traefik Chart
 
-This [Kubee App Chart](https://kubee.bytle.net/helmet/app-chart) installs the [traefik proxy](https://traefik.io)
+This [Kubee App Chart](https://kubee.combostrap.com/helmet/app-chart) installs the [traefik proxy](https://traefik.io)
 
 <img src="contrib/traefik-entrypoints-illustration.jpg" alt="Alt text" width="1000">
 
@@ -26,12 +26,12 @@ The [traefik-crds chart](../traefik-crds/README.md) is installed automatically i
 
 ### Kubee Charts Features
 
-  These [kubee charts](https://kubee.bytle.net/helmet/helmet-chart) add their features when `enabled`.
+  These [kubee charts](https://kubee.combostrap.com/helmet/helmet-chart) add their features when `enabled`.
 
-* [cert-manager](https://github.com/bytle/kubee/blob/main/charts/cert-manager/README.md) adds [server certificates](https://cert-manager.io/docs/usage/certificate/) to the servers
-* [grafana](https://github.com/bytle/kubee/blob/main/charts/grafana/README.md) creates [dashboards](https://grafana.com/grafana/dashboards/)
-* [oauth2-proxy](https://github.com/bytle/kubee/blob/main/charts/oauth2-proxy/README.md)
-* [prometheus](https://github.com/bytle/kubee/blob/main/charts/prometheus/README.md) creates [metrics scraping jobs](https://prometheus.io/docs/concepts/jobs_instances/) and [alert rules](https://prometheus.io/docs/prometheus/latest/configuration/alerting_rules/)
+* [cert-manager](https://github.com/combostrap/kubee/blob/main/charts/cert-manager/README.md) adds [server certificates](https://cert-manager.io/docs/usage/certificate/) to the servers
+* [grafana](https://github.com/combostrap/kubee/blob/main/charts/grafana/README.md) creates [dashboards](https://grafana.com/grafana/dashboards/)
+* [oauth2-proxy](https://github.com/combostrap/kubee/blob/main/charts/oauth2-proxy/README.md)
+* [prometheus](https://github.com/combostrap/kubee/blob/main/charts/prometheus/README.md) creates [metrics scraping jobs](https://prometheus.io/docs/concepts/jobs_instances/) and [alert rules](https://prometheus.io/docs/prometheus/latest/configuration/alerting_rules/)
 
 ## Values
 

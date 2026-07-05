@@ -6,7 +6,7 @@
 
 # Kubee BlackBox Exporter Chart
 
-This is a [jsonnet chart](https://kubee.bytle.net/helmet/jsonnet-project) that installs
+This is a [jsonnet chart](https://kubee.combostrap.com/helmet/jsonnet-project) that installs
 [Prometheus Blackbox Exporter](https://github.com/prometheus/blackbox_exporter)
 to be able to perform monitoring probe/check on multiple protocol (https, dns, tcp, ...).
 
@@ -46,17 +46,17 @@ spec:
       - https://kubee.eraldy.com
 ```
 
-The kubee [prometheus](https://github.com/bytle/kubee/blob/main/charts/prometheus/README.md) installation select
+The kubee [prometheus](https://github.com/combostrap/kubee/blob/main/charts/prometheus/README.md) installation select
 all probes in all namespaces.
 
 ### Kubee Charts Features
 
-  These [kubee charts](https://kubee.bytle.net/helmet/helmet-chart) add their features when `enabled`.
+  These [kubee charts](https://kubee.combostrap.com/helmet/helmet-chart) add their features when `enabled`.
 
-* [cert-manager](https://github.com/bytle/kubee/blob/main/charts/cert-manager/README.md) adds [server certificates](https://cert-manager.io/docs/usage/certificate/) to the servers
-* [grafana](https://github.com/bytle/kubee/blob/main/charts/grafana/README.md) creates [dashboards](https://grafana.com/grafana/dashboards/)
-* [prometheus](https://github.com/bytle/kubee/blob/main/charts/prometheus/README.md) creates [metrics scraping jobs](https://prometheus.io/docs/concepts/jobs_instances/) and [alert rules](https://prometheus.io/docs/prometheus/latest/configuration/alerting_rules/)
-* [traefik](https://github.com/bytle/kubee/blob/main/charts/traefik/README.md) creates an [ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/) if hostnames are defined
+* [cert-manager](https://github.com/combostrap/kubee/blob/main/charts/cert-manager/README.md) adds [server certificates](https://cert-manager.io/docs/usage/certificate/) to the servers
+* [grafana](https://github.com/combostrap/kubee/blob/main/charts/grafana/README.md) creates [dashboards](https://grafana.com/grafana/dashboards/)
+* [prometheus](https://github.com/combostrap/kubee/blob/main/charts/prometheus/README.md) creates [metrics scraping jobs](https://prometheus.io/docs/concepts/jobs_instances/) and [alert rules](https://prometheus.io/docs/prometheus/latest/configuration/alerting_rules/)
+* [traefik](https://github.com/combostrap/kubee/blob/main/charts/traefik/README.md) creates an [ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/) if hostnames are defined
 
 ## Installation
 

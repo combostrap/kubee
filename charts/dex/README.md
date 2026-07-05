@@ -1,22 +1,22 @@
 
 
- (if [enabled](https://kubee.bytle.net/helmet/chart-enabled) and secret
+ (if [enabled](https://kubee.combostrap.com/helmet/chart-enabled) and secret
   is not empty)
-* [argocd](https://github.com/bytle/kubee/blob/main/charts/argocd/README.md) (if [enabled](https://kubee.bytle.net/helmet/chart-enabled) and secret is not empty)
-* [kubectl](https://kubee.bytle.net/general/kubectl)
-* [postal](https://github.com/bytle/kubee/blob/main/charts/postal/README.md) (if [enabled](https://kubee.bytle.net/helmet/chart-enabled) and secret is not empty)
+* [argocd](https://github.com/combostrap/kubee/blob/main/charts/argocd/README.md) (if [enabled](https://kubee.combostrap.com/helmet/chart-enabled) and secret is not empty)
+* [kubectl](https://kubee.combostrap.com/general/kubectl)
+* [postal](https://github.com/combostrap/kubee/blob/main/charts/postal/README.md) (if [enabled](https://kubee.combostrap.com/helmet/chart-enabled) and secret is not empty)
 
 ### Kubee Charts Features
 
-  These [kubee charts](https://kubee.bytle.net/helmet/helmet-chart) add their features when `enabled`.
+  These [kubee charts](https://kubee.combostrap.com/helmet/helmet-chart) add their features when `enabled`.
 
-* [argocd](https://github.com/bytle/kubee/blob/main/charts/argocd/README.md)
-* [cert-manager](https://github.com/bytle/kubee/blob/main/charts/cert-manager/README.md) adds [server certificates](https://cert-manager.io/docs/usage/certificate/) to the servers
-* [traefik](https://github.com/bytle/kubee/blob/main/charts/traefik/README.md) creates an [ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/) if hostnames are defined
+* [argocd](https://github.com/combostrap/kubee/blob/main/charts/argocd/README.md)
+* [cert-manager](https://github.com/combostrap/kubee/blob/main/charts/cert-manager/README.md) adds [server certificates](https://cert-manager.io/docs/usage/certificate/) to the servers
+* [traefik](https://github.com/combostrap/kubee/blob/main/charts/traefik/README.md) creates an [ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/) if hostnames are defined
 
 ## Cluster Values Example
 
-In your [cluster values file](https://kubee.bytle.net/cluster/cluster-values)
+In your [cluster values file](https://kubee.combostrap.com/cluster/cluster-values)
 , you need to fill at minimum this values:
 ```yaml
 dex:
@@ -33,7 +33,7 @@ dex:
 
 In the cluster `.envrc` file, set the env `DEX_OAUTH_CLI_SECRET` and `DEX_KUBECTL_CLI_SECRET` with your favorite secret store.
 
-Example with [pass](https://kubee.bytle.net/general/pass):
+Example with [pass](https://kubee.combostrap.com/general/pass):
 ```bash
 export DEX_FORWARD_AUTH_CLI_SECRET
 DEX_FORWARD_AUTH_CLI_SECRET=$(pass "cluster_name/dex/forward-auth-cli-secret")

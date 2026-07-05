@@ -9,7 +9,7 @@ export default defineConfig({
     integrations: [
         starlight({
             title: 'Kubee',
-            social: [{icon: 'github', label: 'GitHub', href: 'https://github.com/bytle/kubee'}],
+            social: [{icon: 'github', label: 'GitHub', href: 'https://github.com/combostrap/kubee'}],
             // sidebar: [
             // 	{
             // 		label: 'Guides',

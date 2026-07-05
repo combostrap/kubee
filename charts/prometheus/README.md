@@ -6,7 +6,7 @@
 
 # Kubee Prometheus Chart
 
-This [jsonnet kubee chart](https://kubee.bytle.net/helmet/jsonnet-project) installs and configures:
+This [jsonnet kubee chart](https://kubee.combostrap.com/helmet/jsonnet-project) installs and configures:
 * the [prometheus operator](https://prometheus-operator.dev/)
 * and a [prometheus server](https://prometheus.io/)
 
@@ -20,13 +20,13 @@ This [jsonnet kubee chart](https://kubee.bytle.net/helmet/jsonnet-project) insta
 
 ### Kubee Charts Features
 
-  These [kubee charts](https://kubee.bytle.net/helmet/helmet-chart) add their features when `enabled`.
+  These [kubee charts](https://kubee.combostrap.com/helmet/helmet-chart) add their features when `enabled`.
 
-* [alertmanager](https://github.com/bytle/kubee/blob/main/charts/alertmanager/README.md) creates a connection to alertmanager
-* [cert-manager](https://github.com/bytle/kubee/blob/main/charts/cert-manager/README.md) adds [server certificates](https://cert-manager.io/docs/usage/certificate/) to the servers
-* [external-secrets](https://github.com/bytle/kubee/blob/main/charts/external-secrets/README.md) defines secret as [external secrets](https://external-secrets.io/latest/introduction/getting-started/#create-your-first-externalsecret) for GitOps integration (if chosen)
-* [grafana](https://github.com/bytle/kubee/blob/main/charts/grafana/README.md) creates [dashboards](https://grafana.com/grafana/dashboards/)
-* [traefik](https://github.com/bytle/kubee/blob/main/charts/traefik/README.md) creates an [ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/) if hostnames are defined
+* [alertmanager](https://github.com/combostrap/kubee/blob/main/charts/alertmanager/README.md) creates a connection to alertmanager
+* [cert-manager](https://github.com/combostrap/kubee/blob/main/charts/cert-manager/README.md) adds [server certificates](https://cert-manager.io/docs/usage/certificate/) to the servers
+* [external-secrets](https://github.com/combostrap/kubee/blob/main/charts/external-secrets/README.md) defines secret as [external secrets](https://external-secrets.io/latest/introduction/getting-started/#create-your-first-externalsecret) for GitOps integration (if chosen)
+* [grafana](https://github.com/combostrap/kubee/blob/main/charts/grafana/README.md) creates [dashboards](https://grafana.com/grafana/dashboards/)
+* [traefik](https://github.com/combostrap/kubee/blob/main/charts/traefik/README.md) creates an [ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/) if hostnames are defined
 
 ## Install
 

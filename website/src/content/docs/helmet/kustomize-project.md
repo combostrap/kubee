@@ -41,7 +41,7 @@ resources:
 
 ## Example of Kustomization Project
 
-Check the [kubee-argocd](https://github.com/bytle/kubee/tree/main/charts/argocd) chart for a kustomization example.
+Check the [kubee-argocd](https://github.com/combostrap/kubee/tree/main/charts/argocd) chart for a kustomization example.
 
 ## How can I see the final output
 
