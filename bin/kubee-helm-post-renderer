@@ -220,7 +220,7 @@ jsonnet_processing(){
           if command::exists "$GO_JSON_TO_YAML"; then
             POST_PROCESSING="$POST_PROCESSING.yaml"
           fi
-          POST_PROCESSING="$POST_PROCESSING > $COMMAND_STDOUT_FD)"
+          POST_PROCESSING="$POST_PROCESSING >$COMMAND_STDOUT_FD)"
           # Closing
           POST_PROCESSING="$POST_PROCESSING'"
 

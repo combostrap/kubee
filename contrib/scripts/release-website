@@ -9,6 +9,8 @@ RED='\033[0;31m' # Red
 function synopsis() {
   cat << EOF
 
+  Deprecated see Task file in website directory
+
   Release $PROJECT_NAME:
 
       $(basename "$0") command [options]
@@ -130,10 +132,12 @@ while [[ $# -gt 0 ]]; do
 done
 
 if [ "$COMMAND" == "" ]; then
-  echo -e "${RED}A command is mandatory"
+  echo -e "${RED}A command is mandatory${NC}"
   synopsis
   exit 1
 fi
+
+echo -e "${RED}Deprecated, see Taskfile in website directory ${NC}"
 
 # We release by hash
 export RELEASE_VERSION="early-access"

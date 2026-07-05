@@ -64,6 +64,10 @@ assemble:
           output: lib # path in the archive
         - input: charts
           output: charts # path in the archive
+          excludes:
+            # Jreleaser when copying do not preserve the symlink in vendors
+            # We don't copy so that we run `jb install`
+            - "**/vendor/**"
         - input: examples
           output: examples # path in the archive
 

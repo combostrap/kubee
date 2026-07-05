@@ -2,21 +2,29 @@
 
 ## [Unreleased]
 
+Fix:
+
+* Errors on jsonnet postprocessing due:
+  * to a space (L223 of kubee-helm-post-renderer)
+  * jsonnet vendor symlink, not copied
+
 ## 0.1.2
 
 New:
 
 * Added `cluster-tls` in the [cert command](website/src/content/docs/command/kubee-cert.md) to read a TLS cert of the
   server
-*
+
 Runbook: [Unable to connect to the hosts with ansible](website/src/content/docs/runbooks/unable-to-connect-to-hosts.md)
+
 * Checking that the current kubeconfig context matches `$KUBEE_USER_NAME@$KUBEE_CLUSTER_NAME`
 * Added Dex as IDC on ArgoCd if the argocd client is not empty
 * [Context checking on discovered kubeconfig](website/src/content/docs/general/kubeconfig-connection.md#context-check-for-cluster-connection)
 
 Breaking:
 
-* [pass stores now a complete kubeconfig](website/src/content/docs/general/kubeconfig-pass.md) and does not built it from user and cluster info (easier)
+* [pass stores now a complete kubeconfig](website/src/content/docs/general/kubeconfig-pass.md) and does not built it
+  from user and cluster info (easier)
 
 Upgrade:
 
