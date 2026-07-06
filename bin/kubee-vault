@@ -10,11 +10,12 @@ kubee vault command options
 
 where:
 * \`command\` can be:
-  * \`up\`     - Scale to zero the vault deployment
-  * \`down\`   - Scale up to 1
-  * \`backup\` - Perform a backup of the data directory
-  * \`unseal\` - Unseal a vault with keys stored in pass
-  * \`init\`   - Init a vault with 5 keys, 3 threshold
+  * \`init\`    - Init a vault with 5 keys, 3 threshold
+  * \`backup\`  - Perform a backup of the data directory into the "$KUBEE_BACKUP_DIR"
+  * \`down\`    - Scale up to 1
+  * \`restore\` - Perform a restoration of a backup from the "$KUBEE_BACKUP_DIR"
+  * \`unseal\`  - Unseal a vault with keys stored in pass
+  * \`up\`      - Scale to zero the vault deployment
 
 EOF
 
@@ -22,7 +23,10 @@ EOF
 
 function down(){
   # Stop vault
-  echo::eval "kubectl scale statefulset vault --replicas=0 -n $VAULT_NAMESPACE"
+  if ! echo::eval "kubectl scale statefulset vault --replicas=0 -n $VAULT_NAMESPACE"; then
+    echo:err "Error when scaling down vault"
+    exit 1
+  fi
 }
 
 function up(){
@@ -41,6 +45,11 @@ function up(){
 
 # Start a volume only pod for backup
 function create_volume_pod(){
+
+    if kubectl get pod "$VOLUME_POD" -n "$VAULT_NAMESPACE" >/dev/null 2>&1; then
+      echo::warning "$VOLUME_POD pod exists, returning"
+      return;
+    fi
 
     BUSYBOX_IMAGE=ghcr.io/gerardnico/busybox:latest
     if ! kubectl run "$VOLUME_POD" \
@@ -66,7 +75,7 @@ function create_volume_pod(){
         }
       }" \
       -n "$VAULT_NAMESPACE"; then
-      echo:err "Error while starting the pod $VOLUME_POD"
+      echo::err "Error while starting the pod $VOLUME_POD"
       exit 1
     fi
 
@@ -93,7 +102,6 @@ function backup(){
 
   create_volume_pod
 
-  FILE_VOLUME_NAME="vault-backup-$(date +%Y%m%d).tar.gz"
   # $HOME is mandatory, no tilde as there is no substitution
   # Why? tilde is seen as a character, not a path and
   # it will result in a file created locally with a name starting with tilde
@@ -101,18 +109,22 @@ function backup(){
   mkdir -p "$LOCAL_VOLUME_DIR"
   # c change the current directory
   # the point is what you archive
-  POD_VOLUME_FILE_PATH="/tmp/$FILE_VOLUME_NAME"
+  POD_VOLUME_FILE_PATH="/tmp/$BACKUP_NAME"
   if ! echo::eval "kubectl exec pod/$VOLUME_POD -n $VAULT_NAMESPACE -- sh -c 'rm -f $POD_VOLUME_FILE_PATH && tar czf $POD_VOLUME_FILE_PATH -C $VAULT_DATA_DIR .'"; then
     echo::err "Error while creating the backup archive"
     exit 1
   fi
-  LOCAL_TAR="$LOCAL_VOLUME_DIR/$FILE_VOLUME_NAME"
+  LOCAL_BACKUP_PATH="$KUBEE_BACKUP_DIR/$BACKUP_NAME"
   # in cp command, the first part is the namespace!, not the type
-  if ! echo::eval "kubectl cp vault/$VOLUME_POD:$POD_VOLUME_FILE_PATH $LOCAL_TAR"; then
+  if ! echo::eval "kubectl cp vault/$VOLUME_POD:$POD_VOLUME_FILE_PATH $LOCAL_BACKUP_PATH"; then
     echo::err "Error while downloading the backup archive"
     exit 1
   fi
-  echo::info "Backup downloaded at $LOCAL_TAR"
+  if ! FILE_COUNT=$(tar -tzvf "$LOCAL_BACKUP_PATH" | wc -l); then
+    echo::err "Could not untar the backup file $LOCAL_BACKUP_PATH to read the files in the archive"
+    exit 1
+  fi
+  echo::info "Vault backup of $FILE_COUNT files downloaded at $LOCAL_BACKUP_PATH"
 
   # Up
   delete_volume_pod
@@ -120,7 +132,54 @@ function backup(){
   unseal
 
   # Final
-  echo::success "Backup is successful. The file is available at $LOCAL_TAR"
+  echo::success "Vault backup of $FILE_COUNT files available at $LOCAL_BACKUP_PATH"
+  FILE_LISTING=10
+  # last (ie tail) because tar does not stop at all
+  # With a head, we would get the following error: `tar: stdout: write error`
+  echo::info "The 2nd level directories in the backup are:\n"
+  echo::eval "tar -tzf $LOCAL_BACKUP_PATH | awk -F/ 'NF<=3'"
+
+}
+
+function restore(){
+
+  LOCAL_BACKUP_PATH="${1:-$KUBEE_BACKUP_DIR/$BACKUP_NAME}"
+  if [ ! -f "$LOCAL_BACKUP_PATH" ]; then
+    echo::err "The backup file $LOCAL_BACKUP_PATH does not exist"
+    exit 1
+  fi
+  echo::info "Restoring the vault backup file $LOCAL_BACKUP_PATH"
+
+  down
+  create_volume_pod
+
+  # in cp command, the first part is the namespace!, not the type
+  POD_VOLUME_FILE_PATH="/tmp/$BACKUP_NAME"
+  if ! echo::eval "kubectl cp $LOCAL_BACKUP_PATH vault/$VOLUME_POD:$POD_VOLUME_FILE_PATH"; then
+    echo::err "Error while uploading the backup archive"
+    exit 1
+  fi
+
+  # $HOME is mandatory, no tilde as there is no substitution
+  # Why? tilde is seen as a character, not a path and
+  # it will result in a file created locally with a name starting with tilde
+  LOCAL_VOLUME_DIR="$HOME/tmp/vault"
+  mkdir -p "$LOCAL_VOLUME_DIR"
+  # c change the current directory
+  # the point is what you archive
+  if ! echo::eval "kubectl exec pod/$VOLUME_POD -n $VAULT_NAMESPACE -- sh -c 'rm -rf $VAULT_DATA_DIR/{*,.[!.]*,..?*} && tar -xzvf $POD_VOLUME_FILE_PATH -C $VAULT_DATA_DIR'"; then
+    echo::err "Error while restoring the backup archive into the data dir"
+    exit 1
+  fi
+  echo::info "Vault backup restored"
+
+  # Up
+  delete_volume_pod
+  up
+  unseal
+
+  # Final
+  echo::success "Vault restore done"
 
 }
 
@@ -220,6 +279,8 @@ VOLUME_POD="vault-volume"
 PASS_KEYS_PATH="kube/vault/keys"
 # the pass where to store the root token
 PASS_ROOT_TOKEN="kube/vault/token"
+# Name of the backup file
+BACKUP_NAME="vault-backup-$(date +%Y%m%d).tar.gz"
 
 # Get the command
 COMMAND=${1:-}
@@ -253,6 +314,10 @@ case "$COMMAND" in
   "init")
     kubee::set_kubeconfig_env
     init "$@"
+    ;;
+  "restore")
+    kubee::set_kubeconfig_env
+    restore "$@"
     ;;
   *)
     doc::help synopsis

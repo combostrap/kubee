@@ -62,3 +62,8 @@ kubee cert secret-ca
 ```
 
 It executes a `kubectl get secret` with a selection at `.data.ca.crt`
+
+### Backup
+
+The backup command downloads the `issuer`,`clusterissuer` and `cert` in
+the [backup directory](../general/kubee-env.md#kubee_backup_dir)

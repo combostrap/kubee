@@ -27,10 +27,44 @@ title: kubee-vault | Vault Operation
 * stop vault
 * start a temporary backup pod with the vault volume
 * create a tar file of the data directory
-* download the tar file locally
+* download the tar file in the [KUBEE_BACKUP_DIR](../general/kubee-env.md#kubee_backup_dir)
+* verify the downloaded tar file by listing it
 * delete the temporary backup pod
 * start vault
-* unseal it
+* [unseal it](#unseal)
+
+Example:
+
+```bash
+kubee --cluster SOURCE vault backup
+kubee --cluster TARGET vault restore [fileName]
+```
+
+## RESTORE
+
+> [!WARNING] restore delete the data directory
+> Do a [backup](#backup) first
+
+
+`kubee vault restore` will:
+
+* stop vault
+* start a temporary backup pod with the vault volume
+* upload the tar file of the [KUBEE_BACKUP_DIR](../general/kubee-env.md#kubee_backup_dir)
+  * The default name is: `vault-backup-YYYMMDD.tar.gz`
+  * You can pass a file name as first argument
+* delete the data directory
+* extract the archive
+* delete the temporary backup pod
+* start vault
+* [unseal it](#unseal)
+
+Example:
+
+```bash
+kubee --cluster SOURCE vault backup
+kubee --cluster TARGET vault restore [fileName]
+```
 
 ## UNSEAL
 

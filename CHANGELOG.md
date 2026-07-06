@@ -4,13 +4,15 @@
 
 New:
 
-* [kubee vault command](website/src/content/docs/command/kubee-vault.md) (backup, unseal, init, up, down) to automate all vault operations.
+* [kubee vault command](website/src/content/docs/command/kubee-vault.md) (backup, restore, unseal, init, up, down) to
+  automate all vault operations.
+* [kubee cert backup command](website/src/content/docs/command/kubee-cert.md#backup) - added the cert backup command
 
 Fix:
 
 * Errors on jsonnet postprocessing due:
   * to a space (L223 of kubee-helm-post-renderer)
-  * jsonnet vendor symlink, not copied
+  * jsonnet vendor symlink, not copied/created in the release file by jreleaser
 
 ## 0.1.2
 

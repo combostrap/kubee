@@ -16,6 +16,8 @@ synopsis(){
   echo '```'
   echo "where: command may be:"
   # shellcheck disable=SC2016
+  echo '  * `backup`     : Backup the cert manager resources (issuers and certificates)'
+  # shellcheck disable=SC2016
   echo '  * `cluster-tls` : Print the cluster server TLS cert'
   # shellcheck disable=SC2016
   echo '  * `config-client` : Print the client certificate chain found in the kubeconfig file'
@@ -48,6 +50,16 @@ secret_synopsis(){
   # shellcheck disable=SC2016
   echo '  * `-p|--public-key` : Print only the public key in pem format'
 
+}
+
+backup(){
+  mkdir -p "$KUBEE_BACKUP_DIR"
+  BACKUP_TARGET="$KUBEE_BACKUP_DIR/cert-manager-backup-$(date +%Y%m%d).json"
+  if ! echo::eval "kubectl get --all-namespaces -ojson issuer,clusterissuer,cert >| $BACKUP_TARGET"; then
+    echo::err "Error during the cert backup"
+    exit 1
+  fi
+  echo::success "Cert Backup created at $BACKUP_TARGET"
 }
 
 HELP=${1:-}
@@ -193,6 +205,9 @@ case "$COMMAND" in
     # see also
     # kubectl describe certificate xxxx
     ;;
+  "backup")
+      backup "$@"
+      ;;
   *)
     doc::help synopsis
     echo::err "command $COMMAND not found"

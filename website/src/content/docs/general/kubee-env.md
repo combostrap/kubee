@@ -67,6 +67,18 @@ Example:
 export KUBEE_CHARTS_PATH=$HOME/my-kubee-charts:$HOME/my-other-kubee-charts
 ```
 
+### KUBEE_BACKUP_DIR
+
+The local backup directory used to download zip/tar backup archives.
+
+```bash
+KUBEE_BACKUP_DIR=${KUBEE_BACKUP_DIR:-"$HOME/.kubee/backup"}
+```
+
+It's used by the command:
+* [vault backup](../command/kubee-vault.md#backup)
+* [cert backup](../command/kubee-cert.md#backup)
+
 ### KUBEE_BUSYBOX_IMAGE
 
 The image used by [kubee-shell](../command/kubee-app-shell.md) when asking for a shell in a busybox.

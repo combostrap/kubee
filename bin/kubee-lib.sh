@@ -532,6 +532,8 @@ kubee::set_env() {
   # The namespace for the connection (in the kubectl kubeconfig context)
   KUBEE_CHART_NAMESPACE=${KUBEE_CHART_NAMESPACE:-"default"}
 
+  KUBEE_BACKUP_DIR=${KUBEE_BACKUP_DIR:-"$HOME/.kubee/backup"}
+
   # The username for the connection (in the kubeconfig context)"
   KUBEE_USER_NAME=${KUBEE_USER_NAME:-"default"}
 
