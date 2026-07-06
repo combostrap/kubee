@@ -12,21 +12,23 @@ synopsis(){
   echo ''
   echo '```bash'
   # shellcheck disable=SC2005
-  echo "$(basename "$0") command"
+  echo "kubee [kubee options] cert command [args]"
   echo '```'
   echo "where: command may be:"
   # shellcheck disable=SC2016
-  echo '  * `backup`     : Backup the cert manager resources (issuers and certificates)'
+  echo '  * `backup`     : Backup the cert resources (cert manager resources and issued tls cert)'
   # shellcheck disable=SC2016
-  echo '  * `cluster-tls` : Print the cluster server TLS cert'
+  echo '  * `cluster-tls` : Print the TLS cert of the API Server'
   # shellcheck disable=SC2016
   echo '  * `config-client` : Print the client certificate chain found in the kubeconfig file'
   # shellcheck disable=SC2016
   echo '  * `config-certificate-authority` : Print the cluster certificate authority in the kubeconfig file (certificate-authority-data)'
   # shellcheck disable=SC2016
-  echo '  * `secret-tls` : Print the tls certificate stored in a secret in plain text'
+  echo '  * `restore`     : Restore a backup'
   # shellcheck disable=SC2016
-  echo '  * `secret-ca`  : Print the ca certificate stored in a secret in plain text'
+  echo '  * `secret-tls` : Print a tls certificate stored in a secret in plain text'
+  # shellcheck disable=SC2016
+  echo '  * `secret-ca`  : Print a ca certificate stored in a secret in plain text'
 
 }
 
@@ -52,14 +54,70 @@ secret_synopsis(){
 
 }
 
-backup(){
-  mkdir -p "$KUBEE_BACKUP_DIR"
-  BACKUP_TARGET="$KUBEE_BACKUP_DIR/cert-manager-backup-$(date +%Y%m%d).json"
-  if ! echo::eval "kubectl get --all-namespaces -ojson issuer,clusterissuer,cert >| $BACKUP_TARGET"; then
-    echo::err "Error during the cert backup"
+restore(){
+
+  BACKUP_FILE=${1:-$DEFAULT_BACKUP_FILE}
+  BACKUP_TARGET="$KUBEE_BACKUP_DIR/$BACKUP_FILE"
+  RESTORE_TARGET="$KUBEE_BACKUP_DIR/$(date +%Y%m%d)-cert-all-restore.json"
+
+  # Note: `.metadata.annotations["kubectl.kubernetes.io/last-applied-configuration"] = (. | tostring)`
+  # is to delete this warning:
+  # Warning: resource namespaces/vault is missing the kubectl.kubernetes.io/last-applied-configuration annotation which is required by kubectl apply.
+  # kubectl apply should only be used on resources created declaratively by either kubectl create --save-config or kubectl apply.
+  #The missing annotation will be patched automatically.
+
+  # import without the uid
+  jq 'walk(if type == "object" and has("metadata") then .metadata |= (del(.uid) | del(.resourceVersion) | .annotations["kubectl.kubernetes.io/last-applied-configuration"] = (. | tostring) ) else . end)' "$BACKUP_TARGET" | \
+  # no kube-system
+  jq '.items |= map(select((.metadata.namespace // "") != "kube-system"))' | \
+  jq '.items |= map(select((.spec.dnsNames // []) | any(test("sslip\\.io|nip\\.io")) | not))' | \
+  # We don't backup cert that are related to the IP (ie sslip.io and nip.io)
+  # sslip/nip.io cert
+  # for the cert def
+  jq '.items |= map(select((.spec.dnsNames // []) | any(test("sslip\\.io|nip\\.io")) | not))' | \
+  # for the cert tls
+  jq '.items |= map(select((.metadata.annotations."cert-manager.io/common-name" // "") | test("sslip\\.io|nip\\.io") | not) )' >| "$RESTORE_TARGET"
+  if ! kubectl apply -f "$RESTORE_TARGET"; then
+    echo::err "Error while trying to restore $RESTORE_TARGET"
     exit 1
   fi
-  echo::success "Cert Backup created at $BACKUP_TARGET"
+  echo::success "The restore was successful"
+  echo::success "  * The restored file can be seen at $RESTORE_TARGET"
+
+}
+
+backup(){
+  BACKUP_TARGET="$KUBEE_BACKUP_DIR/$DEFAULT_BACKUP_FILE"
+
+  # Backup the definitions
+  CERT_MANAGER_BACKUP_TARGET="$KUBEE_BACKUP_DIR/$(date +%Y%m%d)-cert-manager.json"
+  if ! kubectl get --all-namespaces -ojson issuer,clusterissuer,cert >| "$CERT_MANAGER_BACKUP_TARGET"; then
+    echo::err "Error during cert manager backup"
+    exit 1
+  fi
+
+  # Backup the issued certs
+  TLS_CERT_BACKUP_TARGET="$KUBEE_BACKUP_DIR/$(date +%Y%m%d)-cert-tls-secret.json"
+  if ! kubectl get secrets -A -o json \
+    | jq '.items |= map(select( .type=="kubernetes.io/tls") )' \
+    >| "$TLS_CERT_BACKUP_TARGET"; then
+      echo::err "Error during tls cert secret backup"
+      exit 1
+  fi
+
+  if ! jq -s '{
+            apiVersion: "v1",
+            kind: "List",
+            items: (.[0].items + .[1].items)
+          }' "$CERT_MANAGER_BACKUP_TARGET" "$TLS_CERT_BACKUP_TARGET" >| "$BACKUP_TARGET"; then
+      echo::err "Error during creation of the combined backup"
+      exit 1
+  fi
+
+  echo::success "Cert Backup created at ($BACKUP_TARGET). Concatenation of:"
+  echo::success "  * Cert Manager Resources - issuers and cert ($CERT_MANAGER_BACKUP_TARGET)"
+  echo::success "  * Issued Tls Cert        - tls secret       ($TLS_CERT_BACKUP_TARGET)"
+
 }
 
 HELP=${1:-}
@@ -127,8 +185,6 @@ function print_cert_secret(){
   fi
   GET_TLS_SECRET_COMMAND+=("$SECRET_NAME")
 
-
-
   local CERT
   CERT=$(echo::eval "${GET_TLS_SECRET_COMMAND[*]} | base64 -d" )
   case "$PRINT_OBJECT" in
@@ -185,6 +241,9 @@ shift
 # This is a kubectl wrapper command - set kubeconfig
 kubee::set_kubeconfig_env
 
+DEFAULT_BACKUP_FILE="$(date +%Y%m%d)-cert-all.json"
+
+
 case "$COMMAND" in
   "config-client")
     print_cert_client_kubeconfig
@@ -206,8 +265,12 @@ case "$COMMAND" in
     # kubectl describe certificate xxxx
     ;;
   "backup")
-      backup "$@"
-      ;;
+    mkdir -p "$KUBEE_BACKUP_DIR"
+    backup "$@"
+    ;;
+  "restore")
+    restore "$@"
+    ;;
   *)
     doc::help synopsis
     echo::err "command $COMMAND not found"

@@ -280,7 +280,7 @@ PASS_KEYS_PATH="kube/vault/keys"
 # the pass where to store the root token
 PASS_ROOT_TOKEN="kube/vault/token"
 # Name of the backup file
-BACKUP_NAME="vault-backup-$(date +%Y%m%d).tar.gz"
+BACKUP_NAME="$(date +%Y%m%d)-vault.tar.gz"
 
 # Get the command
 COMMAND=${1:-}

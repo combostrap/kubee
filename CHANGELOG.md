@@ -7,6 +7,7 @@ New:
 * [kubee vault command](website/src/content/docs/command/kubee-vault.md) (backup, restore, unseal, init, up, down) to
   automate all vault operations.
 * [kubee cert backup command](website/src/content/docs/command/kubee-cert.md#backup) - added the cert backup command
+* [kubee cert restore command](website/src/content/docs/command/kubee-cert.md#restore) - added the cert restore command
 
 Fix:
 

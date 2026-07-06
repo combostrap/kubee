@@ -37,11 +37,12 @@ where:
 
 * \`command\` is one of:
   * \`app\`                      : App Commands (based on the app label)
-  * \`cert\`                     : Cert commands
+  * \`cert\`                     : Cert commands (see, list, restore, backup)
   * \`cluster\`                  : Cluster commands
   * \`kubectl\`                  : Kubectl cluster aware command
   * \`helmet\`                   : Kubee Package Manager
   * \`helm\`                     : Helm Package Manager
+  * \`ns\`                       : Namespace Management (set, get, restore, backup)
   * \`vault\`                    : Vault Management
 
 * \`kubee options\` are:
@@ -55,7 +56,7 @@ where:
 Example:
 * Execute the kubectl \`cluster-info\` command against the cluster
 \`\`\`bash
-$(basename "$0") -c my-kubee kubectl cluster-info
+kubee -c my-kubee kubectl cluster-info
 \`\`\`
 
 EOF
@@ -182,6 +183,9 @@ case "$KUBEE_COMMAND" in
     ;;
   "cmctl")
     source "kubee-cmctl" "$@" || error::exit $?
+    ;;
+  "ns")
+    source "kubee-ns" "$@" || error::exit $?
     ;;
   "jwt")
     # Deprecated

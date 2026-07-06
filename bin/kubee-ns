@@ -1,32 +1,33 @@
-#!/bin/bash
-# @name kube-ns-current
-# @brief Get or set the current namespace in kubeconfig
-# @description
-#     Get or set the current namespace in kubeconfig
-#
-
+#!/usr/bin/env bash
 set -Eeuo pipefail
-source bashlib-echo.sh
-source bashlib-error.sh
-error::set_trap
 
-######################
-# Main
-######################
 
 synopsis(){
-  echo "Usage:"
-  echo ""
-  echo "Get or set the current namespace in kubeconfig"
-  echo ""
-  echo '```bash'
-  # shellcheck disable=SC2005
-  echo "$(basename "$0") [namespace name]"
-  echo '```'
-  # shellcheck disable=SC2016
-  echo 'If `namespace name` is '
-  echo '* not empty, set the current namespace to this value'
-  echo '* otherwise, get the current namespace'
+    cat << EOF
+
+  Get, set, backup or restore namespaces
+
+  \`\`\`bash
+  kubee [kubee options] ns command [args]
+  \`\`\`
+
+  where:
+  * \`command\` can be:
+    * \`backup\`  - Backup all namespaces into the KUBEE_BACKUP_DIR
+    * \`get\`     - Show the current connection namespace in KUBECONFIG
+    * \`restore\` - Restore all namespaces from the KUBEE_BACKUP_DIR
+    * \`set\`     - Set the current namespace in KUBECONFIG
+EOF
+
+}
+
+set_ns(){
+  local NS_CURRENT=${1}
+  # Set or Get
+  echo::info "Setting the current namespace to $NS_CURRENT"
+  echo::eval "kubectl config set-context --current --namespace=$NS_CURRENT"
+  echo::success "Done"
+  exit
 }
 
 # Synopsis
@@ -35,27 +36,57 @@ if [[ "${1:-}" == "synopsis" ]]; then
   exit
 fi
 
-# Help ?
-NS_CURRENT=${1:-}
-if [[ $NS_CURRENT =~ -h|help ]]; then
-  synopsis
-  exit
+# Get the command
+COMMAND=${1:-}
+if [ "$COMMAND" = "" ]; then
+  doc::help
+  echo::err "A command is mandatory"
+  exit 1
 fi
 
-# Set or Get
-if [ "$NS_CURRENT" != "" ]; then
-  echo::info "Setting the current namespace to $NS_CURRENT"
-  COMMAND="kubectl config set-context --current --namespace=$NS_CURRENT"
-  echo::info "Executing: $COMMAND"
-  eval "$COMMAND"
-  echo::success "Done"
-  exit
-fi
-# --minify: Displays only the current context's information
-COMMAND="kubectl config view --minify --output 'jsonpath={..namespace}'"
-echo::info "Executing: $COMMAND"
-eval "$COMMAND"
-echo ""
-echo::success "Done"
+echo::debug "Command Name: $COMMAND"
+# Remove the command argument from the argument list
+shift
+
+BACKUP_PATH="$KUBEE_BACKUP_DIR/$(date +%Y%m%d)-namespaces.json"
+
+case "$COMMAND" in
+  "set")
+    set_ns "$@"
+    ;;
+  "get")
+    echo::eval "kubectl config view --minify --output 'jsonpath={..namespace}'"
+    ;;
+  "backup")
+    kubee::set_kubeconfig_env
+    if ! echo::eval "kubectl get -ojson namespace >| $BACKUP_PATH"; then
+      echo::err "Error on namespace backup"
+      exit 1;
+    fi
+    echo::success "Namespace are available at $BACKUP_PATH"
+
+    ;;
+  "restore")
+    kubee::set_kubeconfig_env
+    # Note: `.metadata.annotations["kubectl.kubernetes.io/last-applied-configuration"] = (. | tostring)` is to delete this
+          #warning:
+    # Warning: resource namespaces/vault is missing the kubectl.kubernetes.io/last-applied-configuration annotation which is required by kubectl apply.
+    # kubectl apply should only be used on resources created declaratively by either kubectl create --save-config or kubectl apply.
+    #The missing annotation will be patched automatically.
+
+    # Walk start at list and goes though all levels
+    jq 'walk(if type == "object" and has("metadata") then .metadata |= (del(.uid) | del(.resourceVersion) | .annotations["kubectl.kubernetes.io/last-applied-configuration"] = (. | tostring) ) else . end)' "$BACKUP_PATH" | kubectl apply -f -
+
+    ;;
+  *)
+    doc::help synopsis
+    echo::err "Command $COMMAND is unknown"
+    exit 1
+    ;;
+esac
+
+
+
+
 
 

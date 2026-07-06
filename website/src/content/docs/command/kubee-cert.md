@@ -8,9 +8,9 @@ title: kubee cert command
 
 Print cert in plain text
 
-## List
+## Commands
 
-### Kubeconfig client
+### config-client (Kubeconfig client)
 
 The cert in [kubeconfig](../general/kubeconfig-connection.md) at `user.client-certificate-data`
 
@@ -19,7 +19,7 @@ export KUBECONFIG=~/.kube/config
 kubee cert config-client
 ```
 
-### Kubeconfig cluster TLS CA
+### config-certificate-authority (Kubeconfig cluster TLS CA)
 
 The cert in [kubeconfig](../general/kubeconfig-connection.md) at `cluster.certificate-authority-data`
 
@@ -30,7 +30,7 @@ export KUBECONFIG=~/.kube/config
 kubee cert config-certificate-authority
 ```
 
-### Cluster TLS Cert
+### cluster-tls (Cluster TLS Cert)
 
 The TLS cert of the server at `cluster.server`
 
@@ -41,7 +41,7 @@ export KUBECONFIG=~/.kube/config
 kubee cert cluster-tls
 ```
 
-### TLS Cert stored as secret in Kubernetes
+### secret-tls (TLS Cert stored as secret in Kubernetes)
 
 Print the tls certificate stored in a secret in plain text
 
@@ -52,7 +52,7 @@ kubee cert secret-tls
 
 It executes a `kubectl get secret` with a selection at `.data.tls.crt`
 
-### CA Cert stored as secret in Kubernetes
+### secret-ca (CA Cert stored as secret in Kubernetes)
 
 Print the ca certificate stored in a secret in plain text
 
@@ -63,7 +63,24 @@ kubee cert secret-ca
 
 It executes a `kubectl get secret` with a selection at `.data.ca.crt`
 
-### Backup
+### backup
 
-The backup command downloads the `issuer`,`clusterissuer` and `cert` in
-the [backup directory](../general/kubee-env.md#kubee_backup_dir)
+The backup command downloads:
+
+* the cert manager resources. ie `issuer`,`clusterissuer` and `cert` resources
+* the issued tls secret
+
+in the [backup directory](../general/kubee-env.md#kubee_backup_dir)
+
+### restore
+
+The restore command applies in a `out-of-place` mode, meaning that it will not restore / filter out:
+
+* the `sslip.io` and `nip.io` cert and tls secret resources
+* the `kube-system` resources to not replace the API `k3s-serving` certs.
+
+Example:
+
+```bash
+kubee --cluster $KUBEE_CLUSTER_NAME cert restore
+```
