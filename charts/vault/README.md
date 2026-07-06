@@ -33,14 +33,16 @@ kubee --cluster cluster-name helmet play vault
 | namespace | string | `"vault"` | The installation namespace |
 | vault | object | | The [vault values](https://github.com/hashicorp/vault-helm/blob/v0.28.0/values.yaml) |
 
-## Init after installation
+## Operations
+
+### Init after installation
 
 To [init](https://developer.hashicorp.com/vault/docs/commands/operator/init) and unsealed the vault, you can do it:
-* with the [vault-init-unseal script](../../website/src/content/docs/command/kubee-vault-init-unseal.md) on the
+* with the [kubee vault init script](../../website/src/content/docs/command/kubee-vault.md)
 * manually by going to the hostname with your browser
 
 Manually, on the home page,
-* choose your key-shares and key-threshold. The default are:
+* choose your key-shares and key-threshold. The default in `kubee` are:
     * `5` for key-shares (ie the number of key created)
     * `3` for key-threshold (the number of keys to give to unseal the vault when it was restarted)
 * download the key file. Example of key file for `3` key-shares
@@ -63,8 +65,9 @@ where:
 * the `keys` are asked every time the vault restart to unsealed
 * the `root_token` is a root login token
 
-## Operation
+If you want to use the `kubee vault unseal` command, you need to store your keys in `pass`
+at `kube/vault/keys`
 
-### Backup / restore scripts
+### Other operations (backup, ...)
 
-* [vault-backup](scripts/vault-backup)
+See the [kubee vault command](https://kubee.combostrap.com/command/kubee-vault)

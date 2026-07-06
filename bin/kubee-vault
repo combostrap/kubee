@@ -1,0 +1,262 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+# Vault commands
+
+synopsis() {
+  cat << EOF
+\`\`\`bash
+kubee vault command options
+\`\`\`
+
+where:
+* \`command\` can be:
+  * \`up\`     - Scale to zero the vault deployment
+  * \`down\`   - Scale up to 1
+  * \`backup\` - Perform a backup of the data directory
+  * \`unseal\` - Unseal a vault with keys stored in pass
+  * \`init\`   - Init a vault with 5 keys, 3 threshold
+
+EOF
+
+}
+
+function down(){
+  # Stop vault
+  echo::eval "kubectl scale statefulset vault --replicas=0 -n $VAULT_NAMESPACE"
+}
+
+function up(){
+  # Start vault
+  echo::eval "kubectl scale statefulset vault --replicas=1 -n $VAULT_NAMESPACE"
+  # One stdout, we get for the first iteration
+  # error: Internal error occurred: unable to upgrade connection: container not found ("vault-backup")
+  # so we just
+  UP_MESSAGE="Waiting for pod $VAULT_POD to be up ..."
+  echo "$UP_MESSAGE"
+  until kubectl exec pod/$VAULT_POD -n "$VAULT_NAMESPACE" -- echo ok > /dev/null 2>&1; do
+    echo "$UP_MESSAGE";
+    sleep 2
+  done
+}
+
+# Start a volume only pod for backup
+function create_volume_pod(){
+
+    BUSYBOX_IMAGE=ghcr.io/gerardnico/busybox:latest
+    if ! kubectl run "$VOLUME_POD" \
+      --image=$BUSYBOX_IMAGE \
+      --restart=Never \
+      --overrides="{
+        \"spec\": {
+          \"containers\": [{
+              \"name\":\"vault-backup\",
+              \"image\":\"$BUSYBOX_IMAGE\",
+              \"command\": [\"sleep\",\"1d\"],
+              \"volumeMounts\":[{
+                \"name\":\"data\",
+                \"mountPath\":\"/vault/data\"
+                }]
+            }],
+          \"volumes\": [{
+            \"name\":\"data\",
+            \"persistentVolumeClaim\": {
+                \"claimName\":\"data-vault-0\"
+              }
+          }]
+        }
+      }" \
+      -n "$VAULT_NAMESPACE"; then
+      echo:err "Error while starting the pod $VOLUME_POD"
+      exit 1
+    fi
+
+    # One stdout, we get for the first iteration
+    # error: Internal error occurred: unable to upgrade connection: container not found ("vault-backup")
+    # so we just
+    until kubectl exec pod/$VOLUME_POD -n "$VAULT_NAMESPACE" -- echo ok > /dev/null 2>&1; do
+      echo "Waiting for pod $VOLUME_POD to be up ..."; sleep 2
+    done
+
+}
+
+function delete_volume_pod(){
+  # Done, delete temporary pod
+  if ! echo::eval "kubectl delete pod/$VOLUME_POD -n $VAULT_NAMESPACE --grace-period=0"; then
+    echo:err "Error while starting the volume pod $VOLUME_POD"
+    exit 1
+  fi
+}
+
+function backup(){
+
+  down
+
+  create_volume_pod
+
+  FILE_VOLUME_NAME="vault-backup-$(date +%Y%m%d).tar.gz"
+  # $HOME is mandatory, no tilde as there is no substitution
+  # Why? tilde is seen as a character, not a path and
+  # it will result in a file created locally with a name starting with tilde
+  LOCAL_VOLUME_DIR="$HOME/tmp/vault"
+  mkdir -p "$LOCAL_VOLUME_DIR"
+  # c change the current directory
+  # the point is what you archive
+  POD_VOLUME_FILE_PATH="/tmp/$FILE_VOLUME_NAME"
+  if ! echo::eval "kubectl exec pod/$VOLUME_POD -n $VAULT_NAMESPACE -- sh -c 'rm -f $POD_VOLUME_FILE_PATH && tar czf $POD_VOLUME_FILE_PATH -C $VAULT_DATA_DIR .'"; then
+    echo::err "Error while creating the backup archive"
+    exit 1
+  fi
+  LOCAL_TAR="$LOCAL_VOLUME_DIR/$FILE_VOLUME_NAME"
+  # in cp command, the first part is the namespace!, not the type
+  if ! echo::eval "kubectl cp vault/$VOLUME_POD:$POD_VOLUME_FILE_PATH $LOCAL_TAR"; then
+    echo::err "Error while downloading the backup archive"
+    exit 1
+  fi
+  echo::info "Backup downloaded at $LOCAL_TAR"
+
+  # Up
+  delete_volume_pod
+  up
+  unseal
+
+  # Final
+  echo::success "Backup is successful. The file is available at $LOCAL_TAR"
+
+}
+
+function init(){
+  # Initialize Vault and save the output
+  # after vault-init initializes a Vault server creates/stores master keys and root token.
+  # Do not run an unsealed Vault in production with a single key share and a single key threshold.
+  # https://developer.hashicorp.com/vault/docs/commands/operator/init
+  # Note: 5 and 3 are the defaults but are added here for better readability
+  KEY_SHARES=5
+  KEY_THRESHOLD=3
+
+  INIT_OUTPUT=$(kubectl exec "pod/$VAULT_POD" -n "$VAULT_NAMESPACE" -- vault operator init \
+      -key-shares="$KEY_SHARES" \
+      -key-threshold="$KEY_THRESHOLD")
+  echo::info "Init Output\n:$INIT_OUTPUT"
+
+  # in the output file
+  # keys is the shares (unsealed key)
+  # keys_base64 is the shares (but in base64)
+  # root_token is the root token to login
+
+  # Init should run only once, otherwise
+  # Error initializing: Error making API request.
+  #
+  # URL: PUT https://vault.i.eraldy.com/v1/sys/init
+  # Code: 400. Errors:
+  #
+  #* Vault is already initialized
+  # vault status -format=json
+
+  # Extract unseal keys and root token from the init output
+  UNSEAL_KEYS=()
+  for (( i=1; i<=KEY_SHARES; i++ )) do
+    UNSEAL_KEYS+=("$(grep "Unseal Key $i:" "$INIT_OUTPUT" | awk '{print $4}')")
+  done
+  echo::info "UNSEAL_KEYS Keys: ${UNSEAL_KEYS[*]}"
+  ROOT_TOKEN=$(grep "Initial Root Token:" "$INIT_OUTPUT" | awk '{print $4}')
+  echo::info "Root Token: $ROOT_TOKEN"
+
+  # Save unseal keys and root token to pass
+  echo "${UNSEAL_KEYS[@]}" > pass insert -m "$PASS_KEYS_PATH"
+  echo "$ROOT_TOKEN" > pass insert -m "$PASS_ROOT_TOKEN"
+
+}
+
+function unseal(){
+
+  SEALED_STATE=$(kubectl exec "pod/$VAULT_POD" -n "$VAULT_NAMESPACE" -- vault status -format=json | jq '.sealed')
+  if [ "$SEALED_STATE" == "false" ]; then
+    echo::warning "The vault is already unsealed. Exiting"
+    exit 0
+  fi
+
+  if ! KEYS="$(pass $PASS_KEYS_PATH)"; then
+    echo:err "No keys found in pass at $PASS_KEYS_PATH"
+    exit 1
+  fi
+
+  i=0
+  while IFS= read -r KEY; do
+    ((i++))
+    echo::info "Unseal with Key $i"
+    if ! kubectl exec "pod/$VAULT_POD" -n "$VAULT_NAMESPACE" -- vault operator unseal "$KEY" > /dev/null 2>&1; then
+      echo:err "Unable to unseal with key $i"
+      exit 1
+    fi
+  done <<< "$KEYS"
+
+
+  echo::info "Status"
+  echo::eval "kubectl exec pod/$VAULT_POD -n $VAULT_NAMESPACE -- vault status"
+
+  SEALED_STATE=$(kubectl exec "pod/$VAULT_POD" -n "$VAULT_NAMESPACE" -- vault status -format=json | jq '.sealed')
+  if [ "$SEALED_STATE" != "false" ]; then
+    echo::err "The vault is still in a sealed state"
+    exit 1
+  else
+    echo::success "The vault is unsealed"
+  fi
+
+}
+
+if [ "${1:-}" == "synopsis" ]; then
+  synopsis
+  exit
+fi
+
+VAULT_NAMESPACE=${VAULT_NAMESPACE:-vault}
+# the data dir
+VAULT_DATA_DIR="/vault/data"
+# the pod
+VAULT_POD="vault-0"
+# the name of the pod created for backup/restoration
+VOLUME_POD="vault-volume"
+# the pass where to store the keys
+PASS_KEYS_PATH="kube/vault/keys"
+# the pass where to store the root token
+PASS_ROOT_TOKEN="kube/vault/token"
+
+# Get the command
+COMMAND=${1:-}
+if [ "$COMMAND" = "" ]; then
+  doc::help
+  echo::err "A command is mandatory"
+  exit 1
+fi
+
+echo::debug "Command Name: $COMMAND"
+# Remove the command argument from the argument list
+shift
+
+case "$COMMAND" in
+  "up")
+    kubee::set_kubeconfig_env
+    up
+    ;;
+  "down")
+    kubee::set_kubeconfig_env
+    down
+    ;;
+  "backup")
+    kubee::set_kubeconfig_env
+    backup "$@"
+    ;;
+  "unseal")
+    kubee::set_kubeconfig_env
+    unseal "$@"
+    ;;
+  "init")
+    kubee::set_kubeconfig_env
+    init "$@"
+    ;;
+  *)
+    doc::help synopsis
+    echo::err "Command $COMMAND is unknown"
+    exit 1
+    ;;
+esac

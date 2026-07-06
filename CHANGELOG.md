@@ -4,7 +4,7 @@
 
 New:
 
-* [Vault backup script](charts/vault/scripts/vault-backup)
+* [kubee vault command](website/src/content/docs/command/kubee-vault.md) (backup, unseal, init, up, down) to automate all vault operations.
 
 Fix:
 

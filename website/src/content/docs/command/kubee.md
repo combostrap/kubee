@@ -8,9 +8,6 @@ title: kubee command
 
 ## Extras
 
-### Vault
-
-Init a vault after installation with [kubee-vault-init](kubee-vault-init-unseal.md)
 
 ### PromTool
 
@@ -37,6 +34,7 @@ Generate an Ephemere Kubeconfig from pass with [kubeconfig-pass](../general/kube
 * [kubee-volume-explorer](kubee-volume-explorer.md) - Explore the files of an app via SCP/SFTP
 * [kubee-logs](kubee-logs.md) - print the logs of pods by app name
 * [kubee-pods](kubee-pods.md) - watch/list the pods of the cluster
+* [kubee-vault](kubee-vault.md) - Vault operations (init, unseal, backup, restore) 
 * [kubee-app-restart](kubee-app-restart.md) - execute a rollout restart
 * [kubee app top](kubee-app-top.md) - shows the top processes of an app
 * [kubee cert](kubee-cert.md) - print the kubeconfig cert in plain text

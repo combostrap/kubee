@@ -42,6 +42,7 @@ where:
   * \`kubectl\`                  : Kubectl cluster aware command
   * \`helmet\`                   : Kubee Package Manager
   * \`helm\`                     : Helm Package Manager
+  * \`vault\`                    : Vault Management
 
 * \`kubee options\` are:
   * \`-n|--namespace name\`      : the \`connection namespace name\` default to \`KUBEE_CONNECTION_NAMESPACE\`, ultimately to \`default\`.
@@ -185,6 +186,9 @@ case "$KUBEE_COMMAND" in
   "jwt")
     # Deprecated
     source "kubee-jwt" "$@" || error::exit $?
+    ;;
+  "vault")
+    source "kubee-vault" "$@" || error::exit $?
     ;;
   *)
     doc::help synopsis
