@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+# Take a snapshot of the vault data
+# The vault will be sealed at the end, you need to unseal it
+
+# Stop vault
+kubee kubectl scale statefulset vault --replicas=0 -n vault
+
+# Start a pod
+BUSYBOX_IMAGE=ghcr.io/gerardnico/busybox:latest
+BACKUP_POD_NAME="vault-backup"
+kubee kubectl run "$BACKUP_POD_NAME" \
+  --image=$BUSYBOX_IMAGE \
+  --restart=Never \
+  --overrides="{
+    \"spec\": {
+      \"containers\": [{
+              \"name\":\"vault-backup\",
+              \"image\":\"$BUSYBOX_IMAGE\",
+              \"command\": [\"sleep\",\"1d\"],
+              \"volumeMounts\":[{
+                \"name\":\"data\",
+                \"mountPath\":\"/vault/data\"
+                }]
+            }],
+      \"volumes\": [{
+        \"name\":\"data\",
+        \"persistentVolumeClaim\": {
+            \"claimName\":\"data-vault-0\"
+          }
+      }]
+    }
+  }" \
+  -n vault
+
+
+FILE_BACKUP_NAME="vault-backup-$(date +%Y%m%d).tar.gz"
+# $HOME is mandatory, no tilde as there is no substitution
+# Why? tilde is seen as a character, not a path and
+# it will result in a file created locally with a name starting with tilde
+LOCAL_BACKUP_DIR="$HOME/tmp/vault"
+mkdir -p "$LOCAL_BACKUP_DIR"
+# c change the current directory
+# the point is what you archive
+POD_BACKUP_FILE_PATH="/tmp/$FILE_BACKUP_NAME"
+VAULT_DIR="/vault/data"
+kubee kubectl exec "pod/$BACKUP_POD_NAME" -n vault -- sh -c "rm -f $POD_BACKUP_FILE_PATH && tar czf $POD_BACKUP_FILE_PATH -C $VAULT_DIR ."
+LOCAL_TAR="$LOCAL_BACKUP_DIR/$FILE_BACKUP_NAME"
+# in cp command, the first part is the namespace!, not the type
+kubee kubectl cp vault/$BACKUP_POD_NAME:"$POD_BACKUP_FILE_PATH" "$LOCAL_TAR"
+
+# Done, delete temporary pod
+kubee kubectl delete "pod/$BACKUP_POD_NAME" -n vault
+
+# Start vault
+kubee kubectl scale statefulset vault --replicas=1 -n vault
+

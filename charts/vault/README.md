@@ -63,3 +63,8 @@ where:
 * the `keys` are asked every time the vault restart to unsealed
 * the `root_token` is a root login token
 
+## Operation
+
+### Backup / restore scripts
+
+* [vault-backup](scripts/vault-backup)

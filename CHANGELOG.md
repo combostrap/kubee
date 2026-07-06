@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+New:
+
+* [Vault backup script](charts/vault/scripts/vault-backup)
+
 Fix:
 
 * Errors on jsonnet postprocessing due:
