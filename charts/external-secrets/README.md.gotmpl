@@ -14,9 +14,13 @@ It will optionally configure {{ template "kubee-chart-page-label" "vault" }} as 
 
 {{ template "kubee-chart-features-section" . }}
 
+## Installation
 
-{{ template "kubee-installation-instruction" . }}
+```bash
+kubee --cluster $KUBEE_CLUSTER_NAME helmet --skip-schema-validation play external-secrets
+```
 
+Note: `--skip-schema-validation` is mandatory due to a bug in schema validation
 
 {{ template "chart.valuesSection" . }}
 | external-secrets | object | | [Optional External-secrets Chart values](https://github.com/external-secrets/external-secrets/blob/v{{ template "chart.appVersion" . }}/deploy/charts/external-secrets/values.yaml) |

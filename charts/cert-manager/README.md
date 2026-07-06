@@ -106,7 +106,7 @@ When configured, you can:
 * issue wildcard certificate
 * use a dns name without creating A records.
 
-Example after getting a [cloudflare api token](https://kubee.combostrap.com/cloudflare)
+Example after getting a [cloudflare api token](https://kubee.combostrap.com/general/cloudflare)
 
 ```yaml
 cert_manager:

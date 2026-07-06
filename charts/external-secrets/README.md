@@ -24,8 +24,10 @@ It will optionally configure [vault](https://github.com/combostrap/kubee/blob/ma
 ## Installation
 
 ```bash
-kubee --cluster cluster-name helmet play external-secrets
+kubee --cluster $KUBEE_CLUSTER_NAME helmet --skip-schema-validation play external-secrets
 ```
+
+Note: `--skip-schema-validation` is mandatory due to a bug in schema validation
 
 ## Values
 

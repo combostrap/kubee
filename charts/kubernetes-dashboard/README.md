@@ -6,7 +6,11 @@
 
 # Kubee Kubernetes Dashboard Chart
 
-The `Kubee Kubernetes Dashboard Chart` is a [Kubee App Chart](https://kubee.combostrap.com/helmet/app-chart) that installs the [kubernetes-dashboard](https://github.com/kubernetes/dashboard).
+> [!WARNING] The kubernetes dashboard project has been [retired](https://github.com/kubernetes-retired/dashboard).
+> Therefore it's not recommended to install this chart.
+
+The `Kubee Kubernetes Dashboard Chart` is a [Kubee App Chart](https://kubee.combostrap.com/helmet/app-chart) that installs
+the [kubernetes-dashboard](https://github.com/kubernetes/dashboard).
 
 ## Features
 
@@ -53,7 +57,8 @@ Access the Kubernetes dashboard at https://dash.example.tld
 
 > [!Note]
 > You can still access it without Ingress
-> For Information, you can see how on this section: [How to access the dashboard without Ingress](contrib/contrib.md#how-to-access-the-dashboard-without-ingress)
+> For Information, you can see how on this
+section: [How to access the dashboard without Ingress](contrib/contrib.md#how-to-access-the-dashboard-without-ingress)
 
 ## Create Access Credentials
 
@@ -63,7 +68,8 @@ By default, this chart does not use an authentication middleware (`use_auth_midd
 
 To access your dashboard, you need to generate a `token` for this Service account
 
-* Get the `cluster.auth.admin_user` value in your cluster file. If empty, the default is [admin](../cluster/values.yaml).
+* Get the `cluster.auth.admin_user` value in your cluster file. If empty, the default
+  is [admin](../cluster/values.yaml).
 ```bash
 # Syntax
 kubectl -n kubernetes-dashboard create token USER_NAME --duration=8400h
@@ -87,9 +93,9 @@ The Admin user Rbac authorizations are created by the [dex](../dex/Chart.yaml)
 | hostname | string | `""` | The public hostname If not empty, an ingress is created |
 | namespace | string | `"kubernetes-dashboard"` | The installation namespace |
 | use_auth_middleware | bool | `false` | Use the auth proxy middleware to login. If false, you need to enter a service account token to login. If true, you are redirected to the authentication app (ie dex) via the proxy middleware chain (ie oauth2-proxy, dex and kubernetes oidc connect) |
-| kubernetes-dashboard | object | | [The kubernetes dashboard chart values](https://github.com/kubernetes/dashboard/blob/kubernetes-dashboard-7.11.0/charts/kubernetes-dashboard/values.yaml) |
+| kubernetes-dashboard |
+object | | [The kubernetes dashboard chart values](https://github.com/kubernetes/dashboard/blob/kubernetes-dashboard-7.11.0/charts/kubernetes-dashboard/values.yaml) |
 
 ## Contrib / Dev
 
 See [contrib](contrib/contrib.md)
-

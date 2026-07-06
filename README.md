@@ -88,7 +88,7 @@ By doing so, you can:
 | [Keycloak ](https://github.com/combostrap/kubee/blob/main/charts/keycloak/README.md) | [alpha](https://kubee.combostrap.com/helmet/helmet-chart#status) | app | auth  |
 | [Kuberhealthy ](https://github.com/combostrap/kubee/blob/main/charts/kuberhealthy/README.md) | [stable](https://kubee.combostrap.com/helmet/helmet-chart#status) | app | test  |
 | [kuberhealthy Crds ](https://github.com/combostrap/kubee/blob/main/charts/kuberhealthy-crds/README.md) | [stable](https://kubee.combostrap.com/helmet/helmet-chart#status) | crds | monitoring  |
-| [Kubernetes Dashboard ](https://github.com/combostrap/kubee/blob/main/charts/kubernetes-dashboard/README.md) | [stable](https://kubee.combostrap.com/helmet/helmet-chart#status) | app | kubernetes  |
+| [Kubernetes Dashboard ](https://github.com/combostrap/kubee/blob/main/charts/kubernetes-dashboard/README.md) | [retired](https://kubee.combostrap.com/helmet/helmet-chart#status) | app | kubernetes  |
 | [Kubernetes Monitoring ](https://github.com/combostrap/kubee/blob/main/charts/kubernetes-monitoring/README.md) | [stable](https://kubee.combostrap.com/helmet/helmet-chart#status) | app | kubernetes  |
 | [Mailpit ](https://github.com/combostrap/kubee/blob/main/charts/mailpit/README.md) | [stable](https://kubee.combostrap.com/helmet/helmet-chart#status) | app | mail  |
 | [Mail ](https://github.com/combostrap/kubee/blob/main/charts/mailu/README.md) | [alpha](https://kubee.combostrap.com/helmet/helmet-chart#status) | app | mail  |
