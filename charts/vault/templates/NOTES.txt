@@ -1,0 +1,6 @@
+If you changed a property that made the vault restart,
+don't forget to unseal it manually or with the below command.
+
+```bash
+kubee --cluster clusterName vault unseal
+```

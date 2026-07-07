@@ -228,10 +228,15 @@ function init(){
 
 function unseal(){
 
+  if kubectl get pod "$VAULT_POD" -n "$VAULT_NAMESPACE" >/dev/null 2>&1; then
+    echo::error "Vault pod ($VAULT_POD) does not exists, nothing to unseal. Returning."
+    exit 1
+  fi
+
   SEALED_STATE=$(kubectl exec "pod/$VAULT_POD" -n "$VAULT_NAMESPACE" -- vault status -format=json | jq '.sealed')
   if [ "$SEALED_STATE" == "false" ]; then
-    echo::warning "The vault is already unsealed. Exiting"
-    exit 0
+    echo::warning "The vault is already unsealed. Returning."
+    return;
   fi
 
   if ! KEYS="$(pass $PASS_KEYS_PATH)"; then
