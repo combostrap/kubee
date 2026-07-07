@@ -89,11 +89,12 @@ local blackBoxExporterKubee = blackBoxExporterKp {
   [if values.rbac_enabled == false then 'service']+: {
     spec+: {
       ports: [
-        if port.name != 'https' then port else port {
-          name: 'http',
-          targetPort: 'http',
-        }
+        if port.name == 'https' then port {
+           name: 'http',
+           targetPort: 'http',
+        } else port
         for port in blackBoxExporterKp.service.spec.ports
+        if port.name != 'probe' // same port as https
       ],
     },
   },

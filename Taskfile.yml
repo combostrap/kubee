@@ -41,7 +41,7 @@ tasks:
   dep-force-all:
     cmds:
       - |
-        find "{{.TASK_DIR}}/charts" -maxdepth 2 -mindepth 1 -type f  -name "Chart.yaml"  | sort | awk -F/ '{dir=$(NF-1)} dir >= "kubernetes-dashboard"' | xargs -I {} bash -c 'chartPath="$(dirname {})"; cd "$chartPath"; [[ "$chartPath" == *-crds  ]] && exit 0; [[ "$chartPath" == *k3s-ansible  ]] && exit 0; [[ "$chartPath" == *values  ]] && exit 0; statusline="$(grep chart.kubee/status Chart.yaml)" && [[ "$statusline" == *retired* ]] && exit 0; task dep-force || exit 255'
+        find "{{.TASK_DIR}}/charts" -maxdepth 2 -mindepth 1 -type f  -name "Chart.yaml"  | sort | awk -F/ '{dir=$(NF-1)} dir >= "kubernetes-dashboard"' | xargs -I {} bash -c 'chartPath="$(dirname {})"; cd "$chartPath"; [[ "$chartPath" == *-crds  ]] && exit 0; [[ "$chartPath" == *k3s-ansible  ]] && exit 0; [[ "$chartPath" == *values  ]] && exit 0; statusline="$(grep chart.kubee/status Chart.yaml)"; [[ "$statusline" == *retired* ]] && exit 0; [[ "$statusline" == *deprecated* ]] && exit 0; task dep-force || exit 255'
   # Generate the values.schema.json
   schema:
     cmds:
