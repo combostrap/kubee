@@ -14,7 +14,7 @@ synopsis(){
   where:
   * \`command\` can be:
     * \`backup\`  - Backup all namespaces into the KUBEE_BACKUP_DIR
-    * \`get\`     - Show the current connection namespace in KUBECONFIG
+    * \`get\`     - Show the current connection namespace in KUBECONFIG and KUBEE_CONNECTION_NAMESPACE
     * \`restore\` - Restore all namespaces from the KUBEE_BACKUP_DIR
     * \`set\`     - Set the current namespace in KUBECONFIG
 EOF
@@ -55,7 +55,10 @@ case "$COMMAND" in
     set_ns "$@"
     ;;
   "get")
-    echo::eval "kubectl config view --minify --output 'jsonpath={..namespace}'"
+    kubee::set_kubeconfig_env
+    namespace=$(echo::eval "kubectl config view --minify --output 'jsonpath={..namespace}'")
+    echo "Kubeconfig Namespace: $namespace"
+    echo "KUBEE_CONNECTION_NAMESPACE: ${KUBEE_CONNECTION_NAMESPACE:-}"
     ;;
   "backup")
     kubee::set_kubeconfig_env
@@ -64,7 +67,6 @@ case "$COMMAND" in
       exit 1;
     fi
     echo::success "Namespace are available at $BACKUP_PATH"
-
     ;;
   "restore")
     kubee::set_kubeconfig_env

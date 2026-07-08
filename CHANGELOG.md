@@ -14,7 +14,8 @@ Fix:
 * Errors on jsonnet postprocessing due:
   * to a space (L223 of kubee-helm-post-renderer)
   * jsonnet vendor symlink, not copied/created in the release file by jreleaser
-* fixed service (2 named port with same port number) in blackbox exporter.  On newer k8s version, you cannot have two name port with the same ip. 
+* fixed service (2 named port with same port number) in blackbox exporter.  On newer k8s version, you cannot have two named ports with the same ip.
+* `KUBEE_CONNECTION_NAMESPACE` or `kubee -n namespace` was not used in `kubectl` when set.
 
 ## 0.1.2
 

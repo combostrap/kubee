@@ -5,9 +5,8 @@
 {{ fail "proxy_user must be set when require_auth is true" }}
 {{- end }}
 apiVersion: apps/v1
-kind: StatefulSet
+kind: StatefulSet {{- /* Stateful so that the pod name is known */}}
 metadata:
-  {{- /* Stateful so that the pod name is known */ }}
   name: {{ index .Chart.Annotations "app.kubernetes.io/name" }}
   namespace: {{.Values.namespace}}
   labels:

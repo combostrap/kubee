@@ -47,5 +47,9 @@ if [ "$BASHLIB_ECHO_LEVEL" == "$BASHLIB_ECHO_DEBUG_LEVEL" ]; then
   kube::test_connection
 fi
 
-echo::debug "Executing: kubectl $*"
-kubectl "$@"
+ARGS=()
+if [ "${KUBEE_CONNECTION_NAMESPACE:-}" != "" ]; then
+  ARGS+=(-n "${KUBEE_CONNECTION_NAMESPACE}")
+fi
+ARGS+=("$@")
+echo::eval "kubectl ${ARGS[*]}"
