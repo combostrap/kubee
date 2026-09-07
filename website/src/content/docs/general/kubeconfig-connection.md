@@ -6,6 +6,8 @@ title: kubeconfig
 
 ## Structure
 
+Example
+
 ```yml
 apiVersion: v1
 kind: Config
@@ -36,7 +38,6 @@ It contains:
 ### Context
 
 The context is the pair user / cluster that is used to connect.
-
 
 ## Order of Precedence
 
