@@ -16,8 +16,8 @@ Kubernetes records most provisioning and mounting problems as Events:
 Look at the Events section at the bottom of the output.
 
 ```bash
-kubee kubectl describe pvc <PVC-NAME>
-kubee kubectl describe pod <POD-NAME>
+kubee -n namespace kubectl describe pvc <PVC-NAME>
+kubee -n namespace kubectl describe pod <POD-NAME>
 ```
 
 ### Check the controller logs
@@ -66,6 +66,49 @@ in API group "storage.k8s.io" at the cluster scope: no relationship found betwee
 2026-06-24T20:09:46.020271099Z E0624 20:09:46.018997       1 reflector.go:204] "Failed to watch" err="pods is forbidden: User \"system:serviceaccount:kube-system:hetzner-csi-controller\" cannot watch resource \"pods\" in API group \"\" at the cluster scope" logger="UnhandledError" reflector="k8s.io/client-go/informers/factory.go:161" type="*v1.Pod"
 ```
 
-### More - https://github.com/hetznercloud/csi-driver/blob/main/docs/kubernetes/guides/troubleshooting.md
+### More Info
 
-[c](https://github.com/hetznercloud/csi-driver/blob/main/docs/kubernetes/guides/troubleshooting.md)
+[Troubleshooting guide](https://github.com/hetznercloud/csi-driver/blob/main/docs/kubernetes/guides/troubleshooting.md)
+
+## Known Error
+
+### The file /dev/disk/by-id/scsi-0HC_Volume_xxx does not exist
+
+Check that the volume is not attached in the Hetzner console.
+
+If not, the `volumeattachment` must be deleted if one exists.
+[as proposed on this comment](https://github.com/hetznercloud/csi-driver/issues/278#issuecomment-1273883892)
+
+Steps:
+
+* Check that there is an attachment and get the name (ie `csi-id`) of the `volumeattachment`
+
+```bash
+kubee kubectl get volumeattachment | grep your-pvc-name
+```
+
+* Delete it if it exists
+
+```bash
+kubee kubectl delete volumeattachment csi-id
+kubee kubectl delete volumeattachment csi-0f1e84ed8e2b316a4b746d0f0xxxx
+```
+
+Example output:
+
+```
+Warning: deleting cluster-scoped resources, not scoped to the provided namespace
+volumeattachment.storage.k8s.io "csi-0f1e84ed8e2b316a4b746d0f0xxxx" deleted
+```
+
+* The volume should then appear in the list of disk.
+
+```bash
+# on the node
+ls -la /dev/disk/by-id/
+```
+
+```
+scsi-0HC_Volume_xxxx -> ../../sdb
+scsi-0HC_Volume_xxxx -> ../../sdc
+```

@@ -113,6 +113,7 @@ while [[ $# -gt 0 ]]; do
         exit 1
       fi
       KUBEE_CONNECTION_NAMESPACE="$1"
+      export HELM_NAMESPACE="$1"
       ;;
     -c | --cluster)
       shift

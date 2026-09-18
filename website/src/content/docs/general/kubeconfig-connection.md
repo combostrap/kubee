@@ -15,7 +15,7 @@ clusters:
   - cluster:
       certificate-authority-data: LS0tL
       server: https://x.x.x.x:6443
-    name: clustert-name
+    name: cluster-name
 contexts:
   - context:
       cluster: cluster-name
@@ -85,6 +85,11 @@ kubee kubectl cluster-info
 ### How to encrypt
 
 We allow also to store in encrypted with [pass](kubeconfig-pass.md)
+
+### How to use ODIC as user to login
+
+You can also define the user as an `oidc login`.
+Check the [runbook: configure oidc with kubelogin](../runbooks/config-kubelogin.md).
 
 ## Support/Runbook
 
