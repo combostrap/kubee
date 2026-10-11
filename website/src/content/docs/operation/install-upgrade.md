@@ -1,5 +1,5 @@
 ---
-title: How to installation and upgrade the kubee client
+title: How to install and upgrade the kubee client
 ---
 
 ## List
@@ -15,6 +15,9 @@ brew install --HEAD combostrap/tap/kubee
 ### Version
 
 ```bash
+kubee --version
+# or
+brew list --versions kubee
 brew list --versions combostrap/tap/kubee
 ```
 
@@ -24,7 +27,9 @@ brew list --versions combostrap/tap/kubee
 # refresh brew's package index first
 brew update
 # check if there is a new version
+brew outdated kubee
 brew outdated combostrap/tap/kubee
 # upgrade
+brew upgrade kubee
 brew upgrade combostrap/tap/kubee
 ```

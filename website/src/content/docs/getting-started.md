@@ -8,8 +8,6 @@ On Mac / Linux / Windows WSL with HomeBrew
 
 ```bash
 brew install combostrap/tap/kubee
-# for the actual last/dev version
-brew install --HEAD combostrap/tap/kubee
 ```
 
 ## Create your first cluster

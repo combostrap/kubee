@@ -9,7 +9,7 @@ RED='\033[0;31m' # Red
 function synopsis() {
   cat << EOF
 
-  Deprecated see Task file in website directory
+  Deprecated see Task file deploy task
 
   Release $PROJECT_NAME:
 

@@ -18,7 +18,7 @@ release major # will release a major ie x.0.0
 
 Then
 
+[upgrade](../../website/src/content/docs/operation/install-upgrade.md#upgrade)
 ```bash
-brew upgrade kubee
-brew info kubee
+brew update && brew upgrade kubee
 ```

@@ -156,3 +156,8 @@ tasks:
           {{.TASK_DIR}}/bin/kubee helmet update-dependencies $CHART_NAME
           echo Symlink $CHART_NAME Done
         ' _ {} \;
+  # deploy website
+  deploy:
+    cmds:
+      - |
+        git tag -f early-access && git push -f origin early-access
