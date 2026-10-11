@@ -26,6 +26,14 @@
       "title": "global",
       "type": "object"
     },
+    "hostname": {
+      "default": "",
+      "description": "The public hostname (Be sure to secure it)",
+      "format": "hostname",
+      "minLength": 1,
+      "required": [],
+      "title": "Hostname"
+    },
     "kubee_internal": {
       "description": "@ignored Internal Kubee constant",
       "properties": {
@@ -84,7 +92,8 @@
   "required": [
     "enabled",
     "namespace",
-    "require_auth"
+    "require_auth",
+    "hostname"
   ],
   "type": "object"
 }

@@ -11,6 +11,10 @@ if [ "${BASHLIB_PATH:-}" == "" ]; then
 fi
 export PATH="$BASHLIB_PATH:$PATH"
 
+# Version
+# Injected at installation
+export KUBEE_VERSION="${KUBEE_VERSION:-next}"
+
 # shellcheck source=../..//bash-lib/lib/bashlib-error.sh
 source "bashlib-error.sh"
 error::set_strict_mode
@@ -51,6 +55,7 @@ where:
   * \`--debug\`                  : Print debug statements.
   * \`--print-commands\`         : Print the command statements.
   * \`--no-garbage-collection\`  : Don't delete generated artifacts
+  * \`--version\`                : Print the version
 
 
 Example:
@@ -132,6 +137,10 @@ while [[ $# -gt 0 ]]; do
       BASHLIB_ECHO_LEVEL="$BASHLIB_ECHO_DEBUG_LEVEL"
       COMMAND_STDOUT_FD=$(echo::get_file_descriptor)
       ;;
+    "--version")
+      echo "$KUBEE_VERSION"
+      exit
+    ;;
     *)
       echo::debug "Command ($1)"
       KUBEE_COMMAND=${1}

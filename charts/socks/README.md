@@ -23,6 +23,7 @@ kubee --cluster cluster-name helmet play socks
 | allowed_dest_fqdn | string | `""` | Allowed destination address with regular expression pattern (Default allows all) |
 | allowed_ips | string | `""` | Allowed IP's that can connect to proxy separated with a comma |
 | enabled | bool | `false` | Boolean to indicate that this chart is or will be installed in the cluster |
+| hostname | string | `""` | The public hostname (Be sure to secure it) |
 | namespace | string | `"socks"` | The installation namespace |
 | proxy_password | string | `""` | Set Proxy Password |
 | proxy_port | int | `1080` | Set the Proxy Port |
@@ -30,7 +31,10 @@ kubee --cluster cluster-name helmet play socks
 | replicas | int | `0` | Number of replicas (Not up by default) |
 | require_auth | bool | `true` | Is Authentication Required |
 
-## How it works
+## How it works without public hostname?
+
+If you don't specify a public hostname, you can
+still reach it with port forwarding.
 
 * Scale it to one
 ```bash

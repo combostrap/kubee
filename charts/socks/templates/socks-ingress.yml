@@ -1,0 +1,30 @@
+{{- if (ne .Values.hostname "") }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ index .Chart.Annotations "app.kubernetes.io/name" }}
+  namespace: {{.Values.namespace}}
+  labels:
+    {{- include "kubee-manifest-labels" . | nindent 4 }}
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.tls: "true"
+    {{- if ne ((.Values).cert_manager).enabled false }}
+    cert-manager.io/cluster-issuer: '{{ .Values.cert_manager.issuers.public.name }}'
+    {{- end }}
+spec:
+  rules:
+    - host: {{ required "hostname is required" .Values.hostname }}
+      http:
+        paths:
+          - backend:
+              service:
+                name: {{ index .Chart.Annotations "app.kubernetes.io/name" }}
+                port:
+                  number: {{.Values.proxy_port}}
+            path: /
+            pathType: Prefix
+  tls:
+    - hosts:
+        - {{ .Values.hostname }}
+      secretName: {{ index .Chart.Annotations "app.kubernetes.io/name" }}-cert
+{{- end}}

@@ -11,7 +11,10 @@ proxy local traffic via your cluster.
 
 {{ template "chart.valuesSection" . }}
 
-## How it works
+## How it works without public hostname?
+
+If you don't specify a public hostname, you can
+still reach it with port forwarding.
 
 * Scale it to one
 ```bash

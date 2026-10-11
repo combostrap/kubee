@@ -73,6 +73,16 @@ allowed_dest_fqdn: ""
 allowed_ips: ""
 
 # @schema
+# title: Hostname
+# description: The public hostname
+# required: true
+# minLength: 1
+# format: hostname
+# @schema
+# -- The public hostname (Be sure to secure it)
+hostname: ''
+
+# @schema
 # title: The number of replicas
 # description: The number of pods
 # required: false

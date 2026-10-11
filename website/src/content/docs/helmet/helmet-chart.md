@@ -19,8 +19,8 @@ A `Kubee Helmet Chart`:
   * that installs only one application
   * with the name of the app installed (ie grafana, not grafana operator)
   * that depends on:
-    * the [kubee Cluster Library Chart](https://github.com/combostrap/kubee/tree/main/charts/cluster) to share cluster and
-      installation wide
+    * the [kubee Cluster Library Chart](https://github.com/combostrap/kubee/tree/main/charts/cluster) to share cluster
+      and installation wide
       * `values.yaml` file
       * and `library`
     * and optionally:
@@ -65,3 +65,7 @@ The values file should contain different nodes for:
 * `beta`: the chart can be installed but is not yet dully tested
 * `stable`: the chart can be installed
 * `depreacted`: the chart has been deprecated. An installation may work.
+
+## How to develop a chart?
+
+See [How to develop helmet chart?](helmet-chart-dev.md)

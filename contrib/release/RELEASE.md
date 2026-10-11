@@ -5,7 +5,7 @@
 * To test jsonnet processing, run a postprocessing chart such as argocd
 * Delete all `jsonnet/vendor` directory in release
 
-##
+## Steps
 
 A release happens with the [release script](../scripts/release)
 

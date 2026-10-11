@@ -63,7 +63,7 @@ class {{brewFormulaName}} < Formula
             KUBEE_CHARTS_PATH="$KUBEE_CHARTS_PATH:#{libexec}/charts"
         fi
         export KUBEE_RESOURCES_DIR="#{libexec}"
-        PROJECT_VERSION="{{projectVersion}}"
+        export KUBEE_VERSION="{{projectVersion}}"
       EOS
 
       File.write(f, new_header + content.drop(1).join)

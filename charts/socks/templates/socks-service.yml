@@ -1,0 +1,17 @@
+{{- if (ne .Values.hostname "") }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ index .Chart.Annotations "app.kubernetes.io/name" }}
+  namespace: {{.Values.namespace}}
+  labels:
+    {{- include "kubee-manifest-labels" . | nindent 4 }}
+spec:
+  type: ClusterIP
+  selector: {{ include "kubee-pod-labels" . | nindent 6}}
+  ports:
+    - name: {{ index .Chart.Annotations "app.kubernetes.io/name" }}
+      port: {{.Values.proxy_port}}
+      protocol: TCP
+      targetPort: {{.Values.proxy_port}}
+{{- end}}
